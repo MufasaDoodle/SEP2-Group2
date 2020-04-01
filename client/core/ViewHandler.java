@@ -1,0 +1,83 @@
+package client.core;
+
+import client.view.ViewController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class ViewHandler
+{
+  private Scene loginScene;
+  private Stage stage;
+  private ViewModelFactory vmf;
+  private Scene accountScene;
+
+  public ViewHandler(ViewModelFactory vmf)
+  {
+    this.vmf = vmf;
+  }
+
+  public void start()
+  {
+    stage = new Stage();
+    openLogInScene();
+  }
+
+  //change
+  public void openLogInScene()
+  {
+    if (loginScene == null)
+    {
+      try
+      {
+        Parent root = loadFXML("../views/login/Login.fxml");
+
+        stage.setTitle("Chat - Log in");
+        loginScene = new Scene(root);
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    stage.setScene(loginScene);
+    stage.show();
+  }
+
+  //change
+  public void openAccountCreateScene()
+  {
+    if (accountScene == null)
+    {
+      try
+      {
+        Parent root = loadFXML("../views/accountcreate/Account.fxml");
+
+        accountScene = new Scene(root);
+        stage.setTitle("Chat - Create account");
+
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    stage.setScene(accountScene);
+    stage.show();
+  }
+
+  private Parent loadFXML(String path) throws IOException
+  {
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation(getClass().getResource(path));
+    Parent root = loader.load();
+
+    ViewController ctrl = loader.getController();
+    ctrl.init(this, vmf);
+    return root;
+  }
+
+}
