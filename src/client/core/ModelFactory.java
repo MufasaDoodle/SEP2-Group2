@@ -13,7 +13,7 @@ public class ModelFactory
     this.cf = cf;
   }
 
-  public ClientModel getChatSystem()
+  public ClientModel getClientModel()
   {
     if (clientModel == null)
     {
