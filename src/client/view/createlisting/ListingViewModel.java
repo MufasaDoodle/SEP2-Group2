@@ -24,8 +24,8 @@ public class ListingViewModel
   {
     if (!title.equals("") && !descText.equals("") && !price.equals("") && !category.equals("") && !location.equals("") && !duration.equals("") && !date.equals(""))
     {
-      clientModel.createListing(title, descText, price, category, location, duration, date);
       error.set("Listing created!");
+      clientModel.createListing(title, descText, price, category, location, duration, date);
     }
     else
     {

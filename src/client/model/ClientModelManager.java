@@ -13,7 +13,7 @@ public class ClientModelManager implements ClientModel
 
   @Override public void createListing(String title, String descText, String price, String category, String location, String duration, String date)
   {
-    client.createListing(title, descText, price, category, location, duration, date);
     System.out.println("Listing created! (but not really)");
+    client.createListing(title, descText, price, category, location, duration, date);
   }
 }
