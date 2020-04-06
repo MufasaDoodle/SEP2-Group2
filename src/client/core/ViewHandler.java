@@ -14,6 +14,7 @@ public class ViewHandler
   private Stage stage;
   private ViewModelFactory vmf;
   private Scene accountScene;
+  private Scene listingScene;
 
   public ViewHandler(ViewModelFactory vmf)
   {
@@ -44,6 +45,26 @@ public class ViewHandler
       }
     }
     stage.setScene(loginScene);
+    stage.show();
+  }
+
+  public void openListingScene()
+  {
+    if (listingScene == null)
+    {
+      try
+      {
+        Parent root = loadFXML("../view/createlisting/CreateListing.fxml");
+
+        stage.setTitle("Renting thingy - Create Listing");
+        listingScene = new Scene(root);
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    stage.setScene(listingScene);
     stage.show();
   }
 
