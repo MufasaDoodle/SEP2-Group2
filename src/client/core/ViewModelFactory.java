@@ -8,8 +8,6 @@ public class ViewModelFactory
 {
   private final ModelFactory mf;
   private ListingViewModel listingViewModel;
-  //other viewmodels
-
   private CreateAccountViewModel createAccountViewModel;
 
   public ViewModelFactory(ModelFactory mf)
@@ -21,17 +19,13 @@ public class ViewModelFactory
   {
     if (listingViewModel == null)
     {
-      return (listingViewModel = new ListingViewModel(mf.getRentSystem()));
+      return (listingViewModel = new ListingViewModel(mf.getClientModel()));
     }
     else
     {
       return listingViewModel;
     }
   }
-
-  //methods for getting viewmodels
-
-
 
   public CreateAccountViewModel getCreateAccountViewModel()
   {

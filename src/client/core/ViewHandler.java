@@ -24,10 +24,10 @@ public class ViewHandler
   public void start()
   {
     stage = new Stage();
-    openLogInScene();
+    //openLogInScene();
+    openAccountCreateScene();
   }
 
-  //change
   public void openLogInScene()
   {
     if (loginScene == null)
