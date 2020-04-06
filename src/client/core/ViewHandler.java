@@ -75,10 +75,10 @@ public class ViewHandler
     {
       try
       {
-        Parent root = loadFXML("../views/accountcreate/Account.fxml");
+        Parent root = loadFXML("../view/createaccount/createAccount.fxml");
 
         accountScene = new Scene(root);
-        stage.setTitle("Chat - Create account");
+        stage.setTitle("Create account");
 
       }
       catch (IOException e)
