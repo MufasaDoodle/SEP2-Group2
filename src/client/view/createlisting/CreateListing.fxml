@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.createlisting.ListingController">
+   <children>
+      <Label layoutX="240.0" layoutY="14.0" text="Create Listing">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <VBox layoutX="55.0" layoutY="58.0">
+         <children>
+            <HBox layoutX="55.0" layoutY="58.0">
+               <children>
+                  <Label layoutX="55.0" layoutY="62.0" text="Title">
+                     <HBox.margin>
+                        <Insets right="30.0" top="3.5" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="titleLabel" layoutX="91.0" layoutY="58.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="10.0">
+               <children>
+                  <Label layoutX="55.0" layoutY="62.0" text="Description">
+                     <HBox.margin>
+                        <Insets right="5.0" top="3.5" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <TextArea fx:id="descriptionArea" prefHeight="99.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </TextArea>
+            <HBox layoutX="10.0" layoutY="40.0">
+               <children>
+                  <Label layoutX="55.0" layoutY="62.0" text="Price">
+                     <HBox.margin>
+                        <Insets right="27.0" top="3.5" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="priceLabel" layoutX="91.0" layoutY="58.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="65.0">
+               <children>
+                  <Label layoutX="55.0" layoutY="62.0" text="Category">
+                     <HBox.margin>
+                        <Insets right="5.0" top="3.5" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="catLabel" layoutX="91.0" layoutY="58.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="90.0">
+               <children>
+                  <Label layoutX="55.0" layoutY="62.0" text="Location">
+                     <HBox.margin>
+                        <Insets right="7.0" top="3.5" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="locLabel" layoutX="91.0" layoutY="58.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="130.0">
+               <children>
+                  <Label layoutX="55.0" layoutY="62.0" text="Picture &lt;Upload?&gt;">
+                     <HBox.margin>
+                        <Insets right="16.0" top="3.5" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="160.0">
+               <children>
+                  <Label layoutX="55.0" layoutY="62.0" text="Duration">
+                     <HBox.margin>
+                        <Insets right="5.0" top="3.5" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="durationLabel" layoutX="91.0" layoutY="58.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="185.0">
+               <children>
+                  <Label layoutX="55.0" layoutY="62.0" text="Date">
+                     <HBox.margin>
+                        <Insets right="27.0" top="3.5" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="dateLabel" layoutX="91.0" layoutY="58.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button layoutX="371.0" layoutY="325.0" mnemonicParsing="false" onAction="#createListingBtn" text="Create Listing" />
+      <Button layoutX="494.0" layoutY="325.0" mnemonicParsing="false" onAction="#backBtn" text="Back" />
+      <Label fx:id="listingErrorLabel" layoutX="371.0" layoutY="367.0" />
+   </children>
+</AnchorPane>
