@@ -12,13 +12,13 @@ import javafx.scene.control.TextField;
 public class ListingController implements ViewController
 {
   @FXML private Label listingErrorLabel;
-  @FXML private TextField titleLabel;
+  @FXML private TextField titleField;
   @FXML private TextArea descriptionArea;
-  @FXML private TextField priceLabel;
-  @FXML private TextField catLabel;
-  @FXML private TextField locLabel;
-  @FXML private TextField durationLabel;
-  @FXML private TextField dateLabel;
+  @FXML private TextField priceField;
+  @FXML private TextField catField;
+  @FXML private TextField locField;
+  @FXML private TextField durationField;
+  @FXML private TextField dateField;
 
   private ListingViewModel viewModel;
   private ViewHandler vh;
@@ -32,11 +32,12 @@ public class ListingController implements ViewController
 
   public void createListingBtn(ActionEvent actionEvent)
   {
-    viewModel.createListing(titleLabel.getText(), descriptionArea.getText(), priceLabel.getText(), catLabel.getText(), locLabel.getText(), durationLabel.getText(), dateLabel.getText());
+    viewModel.createListing(titleField.getText(), descriptionArea.getText(), priceField.getText(), catField.getText(), locField.getText(), durationField.getText(), dateField.getText());
   }
 
   public void backBtn(ActionEvent actionEvent)
   {
+    viewModel.errorProperty().set("");
     //vh.openSomeScene();
   }
 }

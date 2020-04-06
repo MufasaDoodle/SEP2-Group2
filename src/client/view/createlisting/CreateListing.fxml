@@ -16,118 +16,37 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <VBox layoutX="55.0" layoutY="58.0">
+      <Label layoutX="46.0" layoutY="53.0" style="-fx-font-weight: BOLD;" text="Product details:" />
+      <Label layoutX="307.0" layoutY="53.0" style="-fx-font-weight: BOLD;" text="Pricing and other details:" />
+      <VBox layoutX="55.0" layoutY="84.0">
          <children>
-            <HBox layoutX="55.0" layoutY="58.0">
-               <children>
-                  <Label layoutX="55.0" layoutY="62.0" text="Title">
-                     <HBox.margin>
-                        <Insets right="30.0" top="3.5" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="titleLabel" layoutX="91.0" layoutY="58.0" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="10.0">
-               <children>
-                  <Label layoutX="55.0" layoutY="62.0" text="Description">
-                     <HBox.margin>
-                        <Insets right="5.0" top="3.5" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </HBox>
+            <Label text="Title" />
+            <TextField fx:id="titleField"/>
+            <Label text="Description" />
             <TextArea fx:id="descriptionArea" prefHeight="99.0" prefWidth="200.0">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </TextArea>
-            <HBox layoutX="10.0" layoutY="40.0">
-               <children>
-                  <Label layoutX="55.0" layoutY="62.0" text="Price">
-                     <HBox.margin>
-                        <Insets right="27.0" top="3.5" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="priceLabel" layoutX="91.0" layoutY="58.0" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="65.0">
-               <children>
-                  <Label layoutX="55.0" layoutY="62.0" text="Category">
-                     <HBox.margin>
-                        <Insets right="5.0" top="3.5" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="catLabel" layoutX="91.0" layoutY="58.0" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="90.0">
-               <children>
-                  <Label layoutX="55.0" layoutY="62.0" text="Location">
-                     <HBox.margin>
-                        <Insets right="7.0" top="3.5" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="locLabel" layoutX="91.0" layoutY="58.0" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="130.0">
-               <children>
-                  <Label layoutX="55.0" layoutY="62.0" text="Picture &lt;Upload?&gt;">
-                     <HBox.margin>
-                        <Insets right="16.0" top="3.5" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="160.0">
-               <children>
-                  <Label layoutX="55.0" layoutY="62.0" text="Duration">
-                     <HBox.margin>
-                        <Insets right="5.0" top="3.5" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="durationLabel" layoutX="91.0" layoutY="58.0">
-                     <HBox.margin>
-                        <Insets bottom="5.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="185.0">
-               <children>
-                  <Label layoutX="55.0" layoutY="62.0" text="Date">
-                     <HBox.margin>
-                        <Insets right="27.0" top="3.5" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="dateLabel" layoutX="91.0" layoutY="58.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
+            <Label text="Category" />
+            <TextField fx:id="catField"/>
+            <Label text="Location" />
+            <TextField fx:id="locField"/>
          </children>
       </VBox>
+      <VBox layoutX="315.0" layoutY="84.0">
+         <children>
+            <Label layoutX="323.0" layoutY="70.0" text="Price" />
+            <TextField fx:id="priceField" layoutX="323.0" layoutY="87.0" />
+            <Label layoutX="314.0" layoutY="128.0" text="Duration" />
+            <TextField fx:id="durationField" layoutX="314.0" layoutY="145.0" />
+            <Label layoutX="322.0" layoutY="191.0" text="Date" />
+            <TextField fx:id="dateField" layoutX="322.0" layoutY="208.0" />
+            <Label layoutX="321.0" layoutY="263.0" text="Picture &lt;Upload?&gt;" />
+         </children>
+      </VBox>
+      <Label fx:id="listingErrorLabel" layoutX="369.0" layoutY="297.0" />
       <Button layoutX="371.0" layoutY="325.0" mnemonicParsing="false" onAction="#createListingBtn" text="Create Listing" />
       <Button layoutX="494.0" layoutY="325.0" mnemonicParsing="false" onAction="#backBtn" text="Back" />
-      <Label fx:id="listingErrorLabel" layoutX="371.0" layoutY="367.0" />
    </children>
 </AnchorPane>
