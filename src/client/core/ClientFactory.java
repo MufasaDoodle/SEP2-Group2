@@ -1,6 +1,7 @@
 package client.core;
 
 import client.networking.Client;
+import client.networking.RMIClient;
 
 public class ClientFactory
 {
@@ -10,8 +11,7 @@ public class ClientFactory
   {
     if (client == null)
     {
-      //TODO
-      //client = new SocketClient();
+      client = new RMIClient();
     }
     return client;
   }
