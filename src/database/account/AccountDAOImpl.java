@@ -26,14 +26,14 @@ public class AccountDAOImpl implements AccountDAO
 
   private Connection getConnection() throws SQLException
   {
-    return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres?currentSchema=SEP2", "group2", "password");
+    return DriverManager.getConnection("jdbc:postgresql://localhost:5432/projectsep2", "group2", "password");
   }
 
   @Override public Account createAccount(String name, String email, String password, String address, String phoneNumber, String bio) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("INSERT INTO Account (name, email, password, address, telNumber, bio) " + "VALUES (?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement statement = connection.prepareStatement("INSERT INTO \"SEP2\".account (name, email, password, address, telNumber, bio) " + "VALUES (?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
       statement.setString(1, name);
       statement.setString(2, email);
       statement.setString(3, password);
@@ -57,7 +57,7 @@ public class AccountDAOImpl implements AccountDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("INSERT INTO Account (name, email, password, address, telNumber) " + "VALUES (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement statement = connection.prepareStatement("INSERT INTO  \"SEP2\".account (name, email, password, address, telNumber) " + "VALUES (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
       statement.setString(1, name);
       statement.setString(2, email);
       statement.setString(3, password);
