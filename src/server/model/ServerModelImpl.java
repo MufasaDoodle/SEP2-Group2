@@ -74,14 +74,17 @@ public class ServerModelImpl implements ServerModel
   {
     try
     {
-      Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber);
-      if (temp != null)
+      if (accountDAO.readByEmail(email) == null)
       {
-        return true;
-      }
-      else
-      {
-        return false;
+        Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber);
+        if (temp != null)
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
       }
     }
     catch (SQLException e)
@@ -120,7 +123,7 @@ public class ServerModelImpl implements ServerModel
   {
     try
     {
-      if (accountDAO.readByEmail(email) != null)
+      if (accountDAO.readByEmail(email) == null)
       {
         Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber, bio);
         if (temp != null)
