@@ -27,7 +27,6 @@ public class CreateAccountViewController implements ViewController
   private CreateAccountViewModel viewModel;
   private ViewHandler vh;
 
-
   @Override public void init(ViewHandler vh, ViewModelFactory vmf)
   {
     this.vh = vh;
@@ -37,7 +36,15 @@ public class CreateAccountViewController implements ViewController
 
   public void OnAccountCreate(ActionEvent actionEvent)
   {
-    viewModel.createAccount(nameField.getText(), emailField.getText(),password1Field.getText(), password2Field.getText(),addressField.getText(), phoneNumberField.getText());
+    if (bioField.getText().equals(""))
+    {
+      viewModel.createAccount(nameField.getText(), emailField.getText(), password1Field.getText(), password2Field.getText(), addressField.getText(), phoneNumberField.getText());
+    }
+    else
+    {
+      viewModel.createAccount(nameField.getText(), emailField.getText(), password1Field.getText(), password2Field.getText(), addressField.getText(), phoneNumberField.getText(), bioField.getText());
+    }
+
   }
 
   public void OnLogInView(ActionEvent actionEvent)
