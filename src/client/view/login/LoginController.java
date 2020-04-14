@@ -6,6 +6,7 @@ import client.view.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class LoginController implements ViewController
@@ -13,7 +14,7 @@ public class LoginController implements ViewController
 
   @FXML private Label errorLabel;
   @FXML private TextField emailField;
-  @FXML private TextField passwordField;
+  @FXML private PasswordField passwordField;
   private LoginViewModel viewModel;
   private ViewHandler vh;
 

@@ -3,6 +3,7 @@ package client.view.login;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import shared.util.EmailCheck;
 
 public class LoginViewModel
 {
@@ -17,12 +18,20 @@ public class LoginViewModel
 
   public boolean checkLogIn(String email, String password)
   {
-    boolean temp = clientModel.checkLogIn(email, password);
-    if (!temp)
+    if (EmailCheck.isValid(email))
     {
-      error.set("Password or email is wrong");
+      boolean temp = clientModel.checkLogIn(email, password);
+      if (!temp)
+      {
+        error.set("Password or email is wrong");
+      }
+      return temp;
     }
-    return temp;
+    else
+    {
+      error.set("Email is not valid");
+      return false;
+    }
   }
 
   public StringProperty errorProperty()

@@ -4,6 +4,10 @@ import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ListingViewModel
 {
   private ClientModel clientModel;
@@ -20,12 +24,15 @@ public class ListingViewModel
     return error;
   }
 
-  public void createListing(String title, String descText, String price, String category, String location, String duration, String date)
+  public void createListing(String title, String descText, String price, String category, String location, String duration)
   {
-    if (!title.equals("") && !descText.equals("") && !price.equals("") && !category.equals("") && !location.equals("") && !duration.equals("") && !date.equals(""))
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    Date date = new Date();
+
+    if (!title.equals("") && !descText.equals("") && !price.equals("") && !category.equals("") && !location.equals("") && !duration.equals(""))
     {
       error.set("Listing created!");
-      clientModel.createListing(title, descText, price, category, location, duration, date);
+      clientModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date));
     }
     else
     {

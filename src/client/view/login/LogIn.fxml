@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -7,12 +8,24 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.login.LoginController">
+<AnchorPane prefHeight="304.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.login.LoginController">
    <children>
-      <Button layoutX="59.0" layoutY="254.0" mnemonicParsing="false" onAction="#onLogIn" text="Login" />
-      <TextField fx:id="emailField" layoutX="43.0" layoutY="105.0" />
-      <TextField fx:id="passwordField" layoutX="37.0" layoutY="165.0" />
-      <Button layoutX="160.0" layoutY="254.0" mnemonicParsing="false" onAction="#onCreateAccountView" text="Create account" />
-      <Label fx:id="errorLabel" layoutX="59.0" layoutY="56.0" text="Label" />
+      <Label layoutX="70.0" layoutY="15.0" text="Log in">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="14.0" layoutY="79.0">
+         <children>
+            <PasswordField fx:id="passwordField" layoutX="2.0" layoutY="94.0" />
+            <Label fx:id="errorLabel" layoutX="4.0" layoutY="179.0" text="Label" />
+            <Label layoutX="2.0" text="Email:" />
+            <Label layoutX="56.0" layoutY="149.0" text="or" />
+            <Button layoutX="77.0" layoutY="145.0" mnemonicParsing="false" onAction="#onCreateAccountView" text="Create account" />
+            <Label layoutX="3.0" layoutY="72.0" text="Password:" />
+            <Button layoutY="145.0" mnemonicParsing="false" onAction="#onLogIn" text="Log in" />
+            <TextField fx:id="emailField" layoutX="2.0" layoutY="23.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

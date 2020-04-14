@@ -81,13 +81,16 @@ public class ServerModelImpl implements ServerModel
     try
     {
       Account temp = accountDAO.readByEmail(email);
-      if (temp.getEmail().equals(email) && temp.getPassword().equals(password))
+      if (temp != null)
       {
-        return true;
-      }
-      else
-      {
-        return false;
+        if (temp.getEmail().equals(email) && temp.getPassword().equals(password))
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
       }
     }
     catch (SQLException e)
@@ -95,5 +98,6 @@ public class ServerModelImpl implements ServerModel
       System.out.println(e.getMessage());
       return false;
     }
+    return false;
   }
 }
