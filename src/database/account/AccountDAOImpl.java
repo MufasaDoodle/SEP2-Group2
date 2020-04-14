@@ -26,21 +26,14 @@ public class AccountDAOImpl implements AccountDAO
 
   private Connection getConnection() throws SQLException
   {
-    return DriverManager.getConnection(
-        "jdbc:postgresql://localhost:5432/postgres?currentSchema=SEP2",
-        "group2", "password");
+    return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres?currentSchema=SEP2", "group2", "password");
   }
 
-  @Override public Account createAccount(String name, String email,
-      String password, String address, String phoneNumber, String bio)
-      throws SQLException
+  @Override public Account createAccount(String name, String email, String password, String address, String phoneNumber, String bio) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement(
-          "INSERT INTO Account (name, email, password, address, telNumber, bio) "
-              + "VALUES (?,?,?,?,?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement statement = connection.prepareStatement("INSERT INTO Account (name, email, password, address, telNumber, bio) " + "VALUES (?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
       statement.setString(1, name);
       statement.setString(2, email);
       statement.setString(3, password);
@@ -51,8 +44,7 @@ public class AccountDAOImpl implements AccountDAO
       ResultSet keys = statement.getGeneratedKeys();
       if (keys.next())
       {
-        return new Account(keys.getInt(1), name, email, password, address,
-            phoneNumber, bio);
+        return new Account(keys.getInt(1), name, email, password, address, phoneNumber, bio);
       }
       else
       {
@@ -61,14 +53,11 @@ public class AccountDAOImpl implements AccountDAO
     }
   }
 
-  @Override public Account createAccount(String name, String email,
-      String password, String address, String phoneNumber) throws SQLException
+  @Override public Account createAccount(String name, String email, String password, String address, String phoneNumber) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement(
-          "INSERT INTO Account (name, email, password, address, telNumber) "
-              + "VALUES (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement statement = connection.prepareStatement("INSERT INTO Account (name, email, password, address, telNumber) " + "VALUES (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
       statement.setString(1, name);
       statement.setString(2, email);
       statement.setString(3, password);
@@ -78,8 +67,8 @@ public class AccountDAOImpl implements AccountDAO
       ResultSet keys = statement.getGeneratedKeys();
       if (keys.next())
       {
-        return new Account(keys.getInt(1), name, email, password, address,
-            phoneNumber);
+        System.out.println("Account created in database");
+        return new Account(keys.getInt(1), name, email, password, address, phoneNumber);
       }
       else
       {
@@ -92,8 +81,7 @@ public class AccountDAOImpl implements AccountDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection
-          .prepareStatement("SELECT * FROM Account WHERE accountId = ? ");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Account WHERE accountId = ? ");
       statement.setInt(1, id);
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next())
@@ -105,7 +93,33 @@ public class AccountDAOImpl implements AccountDAO
         String address = resultSet.getString("address");
         String bio = resultSet.getString("bio");
 
-        return new Account(id, name, email, password, telNumber, address,bio);
+        return new Account(id, name, email, password, telNumber, address, bio);
+      }
+      else
+      {
+        return null;
+      }
+    }
+  }
+
+  @Override public Account readByEmail(String email) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Account WHERE email = ? ");
+      statement.setString(1, email);
+      ResultSet resultSet = statement.executeQuery();
+      if (resultSet.next())
+      {
+        int id = resultSet.getInt("accountId");
+        String name = resultSet.getString("name");
+        String localEmail = resultSet.getString("email");
+        String password = resultSet.getString("password");
+        String telNumber = resultSet.getString("telNumber");
+        String address = resultSet.getString("address");
+        String bio = resultSet.getString("bio");
+
+        return new Account(id, name, localEmail, password, telNumber, address, bio);
       }
       else
       {
@@ -118,8 +132,7 @@ public class AccountDAOImpl implements AccountDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection
-          .prepareStatement("SELECT * FROM Account WHERE name LIKE ? ");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Account WHERE name LIKE ? ");
       statement.setString(1, "%" + searchString + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Account> result = new ArrayList<>();
@@ -142,7 +155,7 @@ public class AccountDAOImpl implements AccountDAO
 
   @Override public void update(Account account) throws SQLException
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement("UPDATE Account SET name = ?, email = ?, password = ?, telNumber = ?, address = ?, bio = ? WHERE accountId=?");
       statement.setString(1, account.getName());
@@ -158,7 +171,7 @@ public class AccountDAOImpl implements AccountDAO
 
   @Override public void delete(Account account) throws SQLException
   {
-    try(Connection connection = getConnection())
+    try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement("DELETE FROM Account WHERE accountId = ?");
       statement.setInt(1, account.getId());

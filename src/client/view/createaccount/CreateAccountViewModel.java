@@ -20,12 +20,9 @@ public class CreateAccountViewModel
     return error;
   }
 
-  public void createAccount(String name, String email, String password1,
-      String password2, String address, String phoneNumber)
+  public void createAccount(String name, String email, String password1, String password2, String address, String phoneNumber)
   {
-    if (!name.equals("") && !email.equals("") && !password1.equals("")
-        && !password2.equals("") && !address.equals("") && !phoneNumber
-        .equals(""))
+    if (!name.equals("") && !email.equals("") && !password1.equals("") && !password2.equals("") && !address.equals("") && !phoneNumber.equals(""))
     {
       if (password1.equals(password2))
       {

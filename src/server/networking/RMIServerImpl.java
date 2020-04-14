@@ -29,11 +29,11 @@ public class RMIServerImpl implements RMIServer
     System.out.println("Server started");
   }
 
-  @Override public void createListing()
+  @Override public void createListing(String title, String descText, String price, String category, String location, String duration, String date)
   {
     try
     {
-      serverModel.createListing();
+      serverModel.createListing(title, descText, price, category, location, duration, date);
     }
     catch (RemoteException e)
     {
@@ -41,11 +41,11 @@ public class RMIServerImpl implements RMIServer
     }
   }
 
-  @Override public void createAccount() throws RemoteException
+  @Override public void createAccount(String name, String email, String password1, String address, String phoneNumber) throws RemoteException
   {
     try
     {
-      serverModel.createAccount();
+      serverModel.createAccount(name, email, password1, address, phoneNumber);
     }
     catch (RemoteException e)
     {

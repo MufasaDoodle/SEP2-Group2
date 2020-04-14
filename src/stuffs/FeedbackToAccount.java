@@ -19,7 +19,7 @@ public class FeedbackToAccount
     this.id = id;
   }
 
-  public FeedbackToAccount(int id, int startRating, String writtenFeedback,  int accountDd){
+  public FeedbackToAccount(int id, int startRating, String writtenFeedback,  int accountId){
     this.startRating = startRating;
     this.writtenFeedback = writtenFeedback;
     this.accountId = accountId;

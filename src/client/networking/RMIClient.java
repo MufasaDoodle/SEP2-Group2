@@ -44,7 +44,7 @@ public class RMIClient implements Client, ClientCallback
   {
     try
     {
-      server.createListing();
+      server.createListing(title, descText, price, category, location, duration, date);
     }
     catch (RemoteException e)
     {
@@ -56,7 +56,7 @@ public class RMIClient implements Client, ClientCallback
   {
     try
     {
-      server.createAccount();
+      server.createAccount(name, email, password1, address, phoneNumber);
     }
     catch (RemoteException e)
     {
