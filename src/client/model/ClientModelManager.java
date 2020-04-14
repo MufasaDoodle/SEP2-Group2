@@ -43,4 +43,9 @@ public class ClientModelManager implements ClientModel
     System.out.println("Listing created! (but not really)");
     client.createListing(title, descText, price, category, location, duration, date);
   }
+
+  @Override public boolean checkLogIn(String email, String password)
+  {
+    return client.checkLogIn(email, password);
+  }
 }

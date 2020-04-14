@@ -24,8 +24,7 @@ public class ViewHandler
   public void start()
   {
     stage = new Stage();
-    //openLogInScene();
-    openAccountCreateScene();
+    openLogInScene();
   }
 
   public void openLogInScene()
@@ -34,9 +33,9 @@ public class ViewHandler
     {
       try
       {
-        Parent root = loadFXML("../views/login/Login.fxml");
+        Parent root = loadFXML("../view/login/LogIn.fxml");
 
-        stage.setTitle("Chat - Log in");
+        stage.setTitle("Rent - Log in");
         loginScene = new Scene(root);
       }
       catch (IOException e)

@@ -2,13 +2,14 @@ package client.core;
 
 import client.view.createaccount.CreateAccountViewModel;
 import client.view.createlisting.ListingViewModel;
-
+import client.view.login.LoginViewModel;
 
 public class ViewModelFactory
 {
   private final ModelFactory mf;
   private ListingViewModel listingViewModel;
   private CreateAccountViewModel createAccountViewModel;
+  private LoginViewModel loginViewModel;
 
   public ViewModelFactory(ModelFactory mf)
   {
@@ -34,5 +35,14 @@ public class ViewModelFactory
       createAccountViewModel = new CreateAccountViewModel(mf.getClientModel());
     }
     return createAccountViewModel;
+  }
+
+  public LoginViewModel getLoginViewModel()
+  {
+    if (loginViewModel == null)
+    {
+      loginViewModel = new LoginViewModel(mf.getClientModel());
+    }
+    return loginViewModel;
   }
 }

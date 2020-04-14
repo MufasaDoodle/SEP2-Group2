@@ -53,6 +53,22 @@ public class RMIServerImpl implements RMIServer
     }
   }
 
+  @Override public boolean checkLogIn(String email, String password)
+  {
+    try
+    {
+      if (serverModel.checkLogIn(email, password))
+      {
+        return true;
+      }
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   @Override public void RegisterClient(ClientCallback client)
   {
     PropertyChangeListener listener = null;

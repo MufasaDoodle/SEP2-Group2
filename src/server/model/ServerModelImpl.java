@@ -8,6 +8,7 @@ import database.feedback.toaccount.FeedbackToAccountDAO;
 import database.feedback.toaccount.FeedbackToAccountDAOImpl;
 import database.feedback.toitem.FeedbackToItemDAO;
 import database.feedback.toitem.FeedbackToItemDAOImpl;
+import stuffs.Account;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -73,8 +74,24 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
-  @Override public void checkLogIn(String email, String password)
+  @Override public boolean checkLogIn(String email, String password)
   {
-    //todo
+    try
+    {
+      Account temp = accountDAO.readByEmail(email);
+      if (temp.getEmail().equals(email) && temp.getPassword().equals(password))
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    catch (SQLException e)
+    {
+      System.out.println(e.getMessage());
+      return false;
+    }
   }
 }

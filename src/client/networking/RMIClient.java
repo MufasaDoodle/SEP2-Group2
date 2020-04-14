@@ -35,6 +35,21 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
+  @Override public boolean checkLogIn(String email, String password)
+  {
+    boolean temp = false;
+    try
+    {
+      temp = server.checkLogIn(email, password);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      System.out.println("Could not contact server");
+    }
+    return temp;
+  }
+
   @Override public void update(Message message)
   {
     support.firePropertyChange("newMessage", null, message);

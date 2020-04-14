@@ -81,7 +81,7 @@ public class AccountDAOImpl implements AccountDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Account WHERE accountId = ? ");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Account WHERE accountId = ? ");
       statement.setInt(1, id);
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next())
@@ -106,7 +106,7 @@ public class AccountDAOImpl implements AccountDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Account WHERE email = ? ");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Account WHERE email = ? ");
       statement.setString(1, email);
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next())
@@ -132,7 +132,7 @@ public class AccountDAOImpl implements AccountDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Account WHERE name LIKE ? ");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Account WHERE name LIKE ? ");
       statement.setString(1, "%" + searchString + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Account> result = new ArrayList<>();
@@ -157,7 +157,7 @@ public class AccountDAOImpl implements AccountDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("UPDATE Account SET name = ?, email = ?, password = ?, telNumber = ?, address = ?, bio = ? WHERE accountId=?");
+      PreparedStatement statement = connection.prepareStatement("UPDATE \"SEP2\".Account SET name = ?, email = ?, password = ?, telNumber = ?, address = ?, bio = ? WHERE accountId=?");
       statement.setString(1, account.getName());
       statement.setString(2, account.getEmail());
       statement.setString(3, account.getPassword());
@@ -173,7 +173,7 @@ public class AccountDAOImpl implements AccountDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("DELETE FROM Account WHERE accountId = ?");
+      PreparedStatement statement = connection.prepareStatement("DELETE FROM \"SEP2\".Account WHERE accountId = ?");
       statement.setInt(1, account.getId());
       statement.executeUpdate();
     }
