@@ -41,7 +41,6 @@ public class CreateAccountViewController implements ViewController
 
   public void OnLogInView(ActionEvent actionEvent)
   {
-    //vh.openLogInScene();
-    vh.openListingScene();
+    vh.openLogInScene();
   }
 }

@@ -27,50 +27,50 @@ public class ListingDAOImpl implements ListingDAO
 
   private Connection getConnection() throws SQLException
   {
-    return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres?currentSchema=SEP2", "group2", "password");
+    return DriverManager.getConnection("jdbc:postgresql://localhost:5432/projectsep2", "group2", "password");
   }
 
-  @Override public Listing create(String title, String description, String category, String location, double price, String duration, String date) throws SQLException
+  @Override public Listing create(String title, String description, String category, String location, double price, String duration, Date date) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("INSERT INTO Listings(title, description, category, location, price, duration, date) VALUES(?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement statement = connection.prepareStatement("INSERT INTO \"SEP2\".listings(title, description, category, location, price, duration, date) VALUES(?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
       statement.setString(1, title);
       statement.setString(2, description);
       statement.setString(3, category);
       statement.setString(4, location);
-      statement.setString(5, String.valueOf(price));
+      statement.setDouble(5, price);
       statement.setString(6, duration);
-      statement.setString(7, date);
+      statement.setDate(7, date);
       statement.executeUpdate();
 
       ResultSet keys = statement.getGeneratedKeys();
       if (keys.next())
       {
         System.out.println("Listing created in database");
-        return new Listing(title, description, category, location, price, duration, date, keys.getInt(8));
+        return new Listing(title, description, category, location, price, duration, date.toString(), keys.getInt(8));
       }
       else
         throw new SQLException("No keys generated");
     }
   }
 
-  @Override public Listing createWithoutDescription(String title, String category, String location, double price, String duration, String date) throws SQLException
+  @Override public Listing createWithoutDescription(String title, String category, String location, double price, String duration, Date date) throws SQLException
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("INSERT INTO Listings(title, category, location, price, duration, date) VALUES(?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+      PreparedStatement statement = connection.prepareStatement("INSERT INTO \"SEP2\".Listings(title, category, location, price, duration, date) VALUES(?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
       statement.setString(1, title);
       statement.setString(3, category);
       statement.setString(4, location);
-      statement.setString(5, String.valueOf(price));
+      statement.setDouble(5, price);
       statement.setString(6, duration);
-      statement.setString(7, date);
+      statement.setDate(7, date);
       statement.executeUpdate();
 
       ResultSet keys = statement.getGeneratedKeys();
       if (keys.next())
-        return new Listing(title, category, location, price, duration, date, keys.getInt(1));
+        return new Listing(title, category, location, price, duration, date.toString(), keys.getInt(1));
       else
         throw new SQLException("No keys generated");
     }
@@ -80,7 +80,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings WHERE id = ?");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings WHERE id = ?");
       statement.setInt(1, id);
       ResultSet resultSet = statement.executeQuery();
 
@@ -106,7 +106,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings WHERE title LIKE ?");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings WHERE title LIKE ?");
       statement.setString(1, "%" + title + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -130,7 +130,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings WHERE category LIKE ?");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings WHERE category LIKE ?");
       statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -154,7 +154,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings WHERE location LIKE ?");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings WHERE location LIKE ?");
       statement.setString(1, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -178,7 +178,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ?");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ?");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       statement.setString(3, "%" + location + "%");
@@ -202,7 +202,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings WHERE title LIKE ? AND category LIKE ?");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ?");
       statement.setString(1, "%" + title + "%");
       statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -226,7 +226,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings WHERE title LIKE ? AND location LIKE ?");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ?");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -250,7 +250,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings WHERE category LIKE ? AND location LIKE ?");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ?");
       statement.setString(1, "%" + category + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -274,7 +274,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings GROUP BY avgStarRating ORDER BY ASC");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings GROUP BY avgStarRating ORDER BY ASC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -298,7 +298,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings GROUP BY avgStarRating ORDER BY DESC");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings GROUP BY avgStarRating ORDER BY DESC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -322,7 +322,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings GROUP BY price ORDER BY ASC");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings GROUP BY price ORDER BY ASC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -346,7 +346,7 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM Listings GROUP BY price ORDER BY DESC");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings GROUP BY price ORDER BY DESC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())

@@ -13,6 +13,7 @@ import stuffs.Account;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 public class ServerModelImpl implements ServerModel
@@ -52,7 +53,8 @@ public class ServerModelImpl implements ServerModel
   {
     try
     {
-      listingDAO.create(title, descText, category, location, Double.parseDouble(price), duration, date);
+      listingDAO.create(title, descText, category, location, Double.parseDouble(price), duration,
+          Date.valueOf(date));
       System.out.println("Listing created");
     }
     catch (SQLException e)

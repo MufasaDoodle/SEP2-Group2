@@ -27,7 +27,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
   private Connection getConnection() throws SQLException
   {
     return DriverManager.getConnection(
-        "jdbc:postgresql://localhost:5432/postgres?currentSchema=SEP2",
+        "jdbc:postgresql://localhost:5432/projectsep2",
         "group2", "password");
   }
 
@@ -37,7 +37,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "INSERT INTO FeedbackToItem (starRating,itemId) " + "VALUES (?,?)",
+          "INSERT INTO \"SEP2\".FeedbackToItem (starRating,itemId) " + "VALUES (?,?)",
           PreparedStatement.RETURN_GENERATED_KEYS);
       statement.setInt(1, starRating);
       statement.setInt(2, itemId);
@@ -60,7 +60,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "INSERT INTO FeedbackToItem (starRating,writtenFeedback, itemId) "
+          "INSERT INTO \"SEP2\".FeedbackToItem (starRating,writtenFeedback, itemId) "
               + "VALUES (?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
       statement.setInt(1, starRating);
       statement.setString(2, writtenFeedback);
@@ -85,7 +85,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "INSERT INTO FeedbackToItem (writtenFeedback,itemId) "
+          "INSERT INTO \"SEP2\".FeedbackToItem (writtenFeedback,itemId) "
               + "VALUES (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
       statement.setString(1, writtenFeedback);
       statement.setInt(2, itemId);
@@ -117,7 +117,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
   {
     try(Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("UPDATE FeedbackToItem SET  starRating = ?, writtenFeedback = ? WHERE itemId = ? AND id =?");
+      PreparedStatement statement = connection.prepareStatement("UPDATE \"SEP2\".FeedbackToItem SET  starRating = ?, writtenFeedback = ? WHERE itemId = ? AND id =?");
       statement.setInt(1, feedbackToItem.getStartRating());
       statement.setString(2, feedbackToItem.getWrittenFeedback());
       statement.setInt(3, feedbackToItem.getItemId());
@@ -131,7 +131,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
   {
     try(Connection connection = getConnection())
     {
-      PreparedStatement statement = connection.prepareStatement("DELETE FROM FeedbackToItem WHERE id = ?");
+      PreparedStatement statement = connection.prepareStatement("DELETE FROM \"SEP2\".FeedbackToItem WHERE id = ?");
       statement.setInt(1, feedbackToItem.getId());
       statement.executeUpdate();
     }
