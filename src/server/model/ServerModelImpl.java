@@ -66,7 +66,8 @@ public class ServerModelImpl implements ServerModel
     catch (SQLException e)
     {
       e.printStackTrace();
-    } return false;
+    }
+    return false;
   }
 
   @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
@@ -119,14 +120,17 @@ public class ServerModelImpl implements ServerModel
   {
     try
     {
-      Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber, bio);
-      if (temp != null)
+      if (accountDAO.readByEmail(email) != null)
       {
-        return true;
-      }
-      else
-      {
-        return false;
+        Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber, bio);
+        if (temp != null)
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
       }
     }
     catch (SQLException e)

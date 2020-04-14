@@ -31,17 +31,15 @@ public class ListingController implements ViewController
 
   public void createListingBtn(ActionEvent actionEvent)
   {
-    viewModel.createListing(titleField.getText(), descriptionArea.getText(),
-        priceField.getText(), catField.getText(), locField.getText(),
-        durationField.getText());
-
-    listingErrorLabel.setText("");
-    titleField.setText("");
-    descriptionArea.setText("");
-    priceField.setText("");
-    catField.setText("");
-    locField.setText("");
-    durationField.setText("");
+    if (viewModel.createListing(titleField.getText(), descriptionArea.getText(), priceField.getText(), catField.getText(), locField.getText(), durationField.getText()))
+    {
+      titleField.setText("");
+      descriptionArea.setText("");
+      priceField.setText("");
+      catField.setText("");
+      locField.setText("");
+      durationField.setText("");
+    }
   }
 
   public void backBtn(ActionEvent actionEvent)
