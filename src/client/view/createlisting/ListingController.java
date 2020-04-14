@@ -5,12 +5,9 @@ import client.core.ViewModelFactory;
 import client.view.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
-import java.util.Date;
 
 public class ListingController implements ViewController
 {
@@ -34,7 +31,17 @@ public class ListingController implements ViewController
 
   public void createListingBtn(ActionEvent actionEvent)
   {
-    viewModel.createListing(titleField.getText(), descriptionArea.getText(), priceField.getText(), catField.getText(), locField.getText(), durationField.getText());
+    viewModel.createListing(titleField.getText(), descriptionArea.getText(),
+        priceField.getText(), catField.getText(), locField.getText(),
+        durationField.getText());
+
+    listingErrorLabel.setText("");
+    titleField.setText("");
+    descriptionArea.setText("");
+    priceField.setText("");
+    catField.setText("");
+    locField.setText("");
+    durationField.setText("");
   }
 
   public void backBtn(ActionEvent actionEvent)

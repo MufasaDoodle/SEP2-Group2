@@ -26,7 +26,7 @@ public class ListingViewModel
 
   public void createListing(String title, String descText, String price, String category, String location, String duration)
   {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
 
     if (!title.equals("") && !descText.equals("") && !price.equals("") && !category.equals("") && !location.equals("") && !duration.equals(""))

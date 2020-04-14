@@ -42,5 +42,14 @@ public class CreateAccountViewController implements ViewController
   public void OnLogInView(ActionEvent actionEvent)
   {
     vh.openLogInScene();
+    nameField.setText("");
+    emailField.setText("");
+    password1Field.setText("");
+    password2Field.setText("");
+    addressField.setText("");
+    phoneNumberField.setText("");
+    pictureField.setText("");
+    bioField.setText("");
+    viewModel.errorProperty().set("");
   }
 }

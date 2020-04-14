@@ -30,7 +30,10 @@ public class LoginController implements ViewController
     if (viewModel.checkLogIn(emailField.getText(), passwordField.getText()))
     {
       vh.openListingScene();
+      emailField.setText("");
+      passwordField.setText("");
     }
+
   }
 
   public void onCreateAccountView(ActionEvent actionEvent)
