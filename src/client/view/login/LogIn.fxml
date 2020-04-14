@@ -7,7 +7,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="304.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.login.LoginController">
    <children>
       <Label layoutX="70.0" layoutY="15.0" text="Log in">
@@ -27,5 +26,6 @@
             <TextField fx:id="emailField" layoutX="2.0" layoutY="23.0" />
          </children>
       </AnchorPane>
+      <Button layoutX="123.0" layoutY="275.0" mnemonicParsing="false" onAction="#onChatView" text="to chat" />
    </children>
 </AnchorPane>

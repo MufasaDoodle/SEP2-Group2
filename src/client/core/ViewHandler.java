@@ -15,6 +15,7 @@ public class ViewHandler
   private ViewModelFactory vmf;
   private Scene accountScene;
   private Scene listingScene;
+  private Scene chatScene;
 
   public ViewHandler(ViewModelFactory vmf)
   {
@@ -100,4 +101,22 @@ public class ViewHandler
     return root;
   }
 
+  public void openChatScene(){
+    if (chatScene == null){
+      try
+      {
+        Parent root = loadFXML("../view/chatView/chatView.fxml");
+
+        chatScene = new Scene(root);
+        stage.setTitle("Chat");
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+
+    }
+    stage.setScene(chatScene);
+    stage.show();
+  }
 }

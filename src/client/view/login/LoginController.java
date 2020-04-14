@@ -40,4 +40,9 @@ public class LoginController implements ViewController
   {
     vh.openAccountCreateScene();
   }
+
+  public void onChatView(ActionEvent actionEvent)
+  {
+    vh.openChatScene();
+  }
 }

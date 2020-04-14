@@ -47,4 +47,9 @@ public class ListingController implements ViewController
     viewModel.errorProperty().set("");
     vh.openLogInScene();
   }
+
+  public void onChatView(ActionEvent actionEvent)
+  {
+    vh.openChatScene();
+  }
 }

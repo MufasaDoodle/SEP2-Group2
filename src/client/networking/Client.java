@@ -1,6 +1,9 @@
 package client.networking;
 
+import shared.transferobjects.Message;
 import shared.util.Subject;
+
+import java.util.List;
 
 public interface Client extends Subject
 {
@@ -9,4 +12,7 @@ public interface Client extends Subject
   void startClient();
   boolean checkLogIn(String email, String password);
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio);
+  String broadCastMessage(String msg);
+  List<Message> getMessage();
+  void unRegisterClient();
 }

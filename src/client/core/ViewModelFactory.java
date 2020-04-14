@@ -1,5 +1,6 @@
 package client.core;
 
+import client.view.chatView.ChatViewModel;
 import client.view.createaccount.CreateAccountViewModel;
 import client.view.createlisting.ListingViewModel;
 import client.view.login.LoginViewModel;
@@ -10,6 +11,7 @@ public class ViewModelFactory
   private ListingViewModel listingViewModel;
   private CreateAccountViewModel createAccountViewModel;
   private LoginViewModel loginViewModel;
+  private ChatViewModel chatViewModel;
 
   public ViewModelFactory(ModelFactory mf)
   {
@@ -44,5 +46,12 @@ public class ViewModelFactory
       loginViewModel = new LoginViewModel(mf.getClientModel());
     }
     return loginViewModel;
+  }
+
+  public ChatViewModel getChatViewModel()
+  {
+    if (chatViewModel == null)
+      chatViewModel = new ChatViewModel(mf.getClientModel());
+    return chatViewModel;
   }
 }

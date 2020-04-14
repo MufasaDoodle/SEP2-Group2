@@ -8,6 +8,7 @@ import database.feedback.toaccount.FeedbackToAccountDAO;
 import database.feedback.toaccount.FeedbackToAccountDAOImpl;
 import database.feedback.toitem.FeedbackToItemDAO;
 import database.feedback.toitem.FeedbackToItemDAOImpl;
+import shared.transferobjects.Message;
 import stuffs.Account;
 import stuffs.Listing;
 
@@ -15,6 +16,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerModelImpl implements ServerModel
 {
@@ -23,6 +26,7 @@ public class ServerModelImpl implements ServerModel
   private ListingDAO listingDAO;
   private FeedbackToAccountDAO feedbackToAccountDAO;
   private FeedbackToItemDAO feedbackToItemDAO;
+  private List<Message> messages;
 
   public ServerModelImpl()
   {
@@ -32,21 +36,12 @@ public class ServerModelImpl implements ServerModel
       listingDAO = ListingDAOImpl.getInstance();
       feedbackToAccountDAO = FeedbackToAccountDAOImpl.getInstance();
       feedbackToItemDAO = FeedbackToItemDAOImpl.getInstance();
+      messages = new ArrayList<>();
     }
     catch (SQLException e)
     {
       e.printStackTrace();
     }
-  }
-
-  @Override public void addListener(String eventName, PropertyChangeListener listener)
-  {
-    support.addPropertyChangeListener(eventName, listener);
-  }
-
-  @Override public void removeListener(String eventName, PropertyChangeListener listener)
-  {
-    support.removePropertyChangeListener(eventName, listener);
   }
 
   @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
@@ -141,5 +136,29 @@ public class ServerModelImpl implements ServerModel
       e.printStackTrace();
     }
     return false;
+  }
+
+  @Override
+  public List<Message> getMessage()
+  {
+    return new ArrayList<>(messages);
+  }
+
+  @Override public String broadCastMessage(String msg)
+  {
+    Message message = new Message(msg);
+    messages.add(message);
+    support.firePropertyChange("NewMessage",null,message);
+    return message.getMessage();
+  }
+
+  @Override public void addListener(String eventName, PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(eventName, listener);
+  }
+
+  @Override public void removeListener(String eventName, PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(eventName, listener);
   }
 }

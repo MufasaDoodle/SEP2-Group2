@@ -10,6 +10,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 public class RMIClient implements Client, ClientCallback
 {
@@ -25,8 +27,10 @@ public class RMIClient implements Client, ClientCallback
   {
     try
     {
+      UnicastRemoteObject.exportObject(this, 0);
       Registry registry = LocateRegistry.getRegistry("localhost", 1099);
       server = (RMIServer) registry.lookup("Server");
+      server.registerClient(this);
       System.out.println("Connected to server");
     }
     catch (RemoteException | NotBoundException e)
@@ -63,11 +67,6 @@ public class RMIClient implements Client, ClientCallback
     return false;
   }
 
-  @Override public void update(Message message)
-  {
-    support.firePropertyChange("newMessage", null, message);
-  }
-
   @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
   {
     try
@@ -92,6 +91,47 @@ public class RMIClient implements Client, ClientCallback
       e.printStackTrace();
     }
     return false;
+  }
+
+  @Override public void unRegisterClient()
+  {
+    try
+    {
+      server.unRegisterClient(this);
+    }
+    catch (RemoteException e)
+    {
+      System.out.println("unRegisterClient error..");
+    }
+  }
+
+  @Override public String broadCastMessage(String msg)
+  {
+    try
+    {
+      return server.broadCastMessage(msg);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (broadCastMessage)...");
+    }
+  }
+
+  @Override public List<Message> getMessage()
+  {
+    try
+    {
+      return server.getMessages();
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (getMessage)...");
+    }
+  }
+
+  @Override public void update(Message msg)
+  {
+    support.firePropertyChange("NewMessage", null, msg);
   }
 
   @Override public void addListener(String eventName, PropertyChangeListener listener)

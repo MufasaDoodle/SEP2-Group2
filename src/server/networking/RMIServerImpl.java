@@ -11,10 +11,15 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RMIServerImpl implements RMIServer
 {
   private ServerModel serverModel;
+  private Map<ClientCallback, PropertyChangeListener> listeners = new HashMap<>();
 
   public RMIServerImpl(ServerModel serverModel) throws RemoteException
   {
@@ -84,7 +89,7 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
-  @Override public void RegisterClient(ClientCallback client)
+  @Override public void registerClient(ClientCallback client)
   {
     PropertyChangeListener listener = null;
     PropertyChangeListener finalListener = listener;
@@ -96,9 +101,45 @@ public class RMIServerImpl implements RMIServer
       }
       catch (RemoteException e)
       {
-        serverModel.removeListener("newMessage", finalListener);
+        serverModel.removeListener("NewMessage", finalListener);
       }
     };
-    serverModel.addListener("newMessage", listener);
+    serverModel.addListener("NewMessage", listener);
+  }
+
+  @Override public String broadCastMessage(String msg)
+  {
+    try
+    {
+      return serverModel.broadCastMessage(msg);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return "";
+  }
+
+  @Override public List<Message> getMessages()
+  {
+    try
+    {
+      return serverModel.getMessage();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return new ArrayList<Message>();
+  }
+
+  @Override public void unRegisterClient(ClientCallback client)
+  {
+    PropertyChangeListener listener = listeners.get(client);
+    if (listener != null)
+    {
+      serverModel.removeListener("NewMessage", listener);
+    }
+    int stop = 0;
   }
 }

@@ -39,7 +39,7 @@ public class CreateAccountViewModel
           }
           else
           {
-            error.set("Could not contact server");
+            error.set("Email already in use");
           }
         }
         else
