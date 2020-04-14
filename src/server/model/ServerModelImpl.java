@@ -9,10 +9,10 @@ import database.feedback.toaccount.FeedbackToAccountDAOImpl;
 import database.feedback.toitem.FeedbackToItemDAO;
 import database.feedback.toitem.FeedbackToItemDAOImpl;
 import stuffs.Account;
+import stuffs.Listing;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -49,31 +49,45 @@ public class ServerModelImpl implements ServerModel
     support.removePropertyChangeListener(eventName, listener);
   }
 
-  @Override public void createListing(String title, String descText, String price, String category, String location, String duration, String date)
+  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
   {
     try
     {
-      listingDAO.create(title, descText, category, location, Double.parseDouble(price), duration,
-          Date.valueOf(date));
-      System.out.println("Listing created");
+      Listing temp = listingDAO.create(title, descText, category, location, Double.parseDouble(price), duration, Date.valueOf(date));
+      if (temp != null)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
     catch (SQLException e)
     {
       e.printStackTrace();
-    }
+    } return false;
   }
 
-  @Override public void createAccount(String name, String email, String password1, String address, String phoneNumber)
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
   {
     try
     {
-      accountDAO.createAccount(name, email, password1, address, phoneNumber);
-      System.out.println("Account created");
+      Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber);
+      if (temp != null)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
     catch (SQLException e)
     {
       e.printStackTrace();
     }
+    return false;
   }
 
   @Override public boolean checkLogIn(String email, String password)
@@ -97,6 +111,27 @@ public class ServerModelImpl implements ServerModel
     {
       System.out.println(e.getMessage());
       return false;
+    }
+    return false;
+  }
+
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
+  {
+    try
+    {
+      Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber, bio);
+      if (temp != null)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
     }
     return false;
   }

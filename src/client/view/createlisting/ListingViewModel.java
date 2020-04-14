@@ -3,6 +3,7 @@ package client.view.createlisting;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import shared.util.NumericCheck;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,8 +32,21 @@ public class ListingViewModel
 
     if (!title.equals("") && !descText.equals("") && !price.equals("") && !category.equals("") && !location.equals("") && !duration.equals(""))
     {
-      error.set("Listing created!");
-      clientModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date));
+      if (NumericCheck.isNumeric(price))
+      {
+        if (clientModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date)))
+        {
+          error.set("Listing created");
+        }
+        else
+        {
+          error.set("Could not contact server");
+        }
+      }
+      else
+      {
+        error.set("Price must be a number");
+      }
     }
     else
     {

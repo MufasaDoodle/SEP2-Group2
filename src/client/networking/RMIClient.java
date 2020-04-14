@@ -50,33 +50,48 @@ public class RMIClient implements Client, ClientCallback
     return temp;
   }
 
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
+  {
+    try
+    {
+      return server.createAccount(name, email, password1, address, phoneNumber, bio);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
   @Override public void update(Message message)
   {
     support.firePropertyChange("newMessage", null, message);
   }
 
-  @Override public void createListing(String title, String descText, String price, String category, String location, String duration, String date)
+  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
   {
     try
     {
-      server.createListing(title, descText, price, category, location, duration, date);
+      return server.createListing(title, descText, price, category, location, duration, date);
     }
     catch (RemoteException e)
     {
       e.printStackTrace();
     }
+    return false;
   }
 
-  @Override public void createAccount(String name, String email, String password1, String address, String phoneNumber)
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
   {
     try
     {
-      server.createAccount(name, email, password1, address, phoneNumber);
+      return server.createAccount(name, email, password1, address, phoneNumber);
     }
     catch (RemoteException e)
     {
       e.printStackTrace();
     }
+    return false;
   }
 
   @Override public void addListener(String eventName, PropertyChangeListener listener)

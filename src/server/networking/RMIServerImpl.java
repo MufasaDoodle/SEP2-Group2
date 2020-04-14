@@ -29,28 +29,30 @@ public class RMIServerImpl implements RMIServer
     System.out.println("Server started");
   }
 
-  @Override public void createListing(String title, String descText, String price, String category, String location, String duration, String date)
+  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
   {
     try
     {
-      serverModel.createListing(title, descText, price, category, location, duration, date);
+      return serverModel.createListing(title, descText, price, category, location, duration, date);
     }
     catch (RemoteException e)
     {
       e.printStackTrace();
     }
+    return false;
   }
 
-  @Override public void createAccount(String name, String email, String password1, String address, String phoneNumber) throws RemoteException
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber) throws RemoteException
   {
     try
     {
-      serverModel.createAccount(name, email, password1, address, phoneNumber);
+      return serverModel.createAccount(name, email, password1, address, phoneNumber);
     }
     catch (RemoteException e)
     {
       e.printStackTrace();
     }
+    return false;
   }
 
   @Override public boolean checkLogIn(String email, String password)
@@ -61,6 +63,19 @@ public class RMIServerImpl implements RMIServer
       {
         return true;
       }
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
+  {
+    try
+    {
+      return serverModel.createAccount(name, email, password1, address, phoneNumber, bio);
     }
     catch (RemoteException e)
     {

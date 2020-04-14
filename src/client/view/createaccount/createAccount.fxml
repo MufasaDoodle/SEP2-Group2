@@ -71,11 +71,11 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="password1Field" prefHeight="33.0" prefWidth="250.0">
+                  <PasswordField fx:id="password1Field" prefHeight="33.0" prefWidth="250.0">
                      <HBox.margin>
                         <Insets top="16.0" />
                      </HBox.margin>
-                  </TextField>
+                  </PasswordField>
                </children>
             </HBox>
             <HBox prefHeight="66.0" prefWidth="500.0">
@@ -88,11 +88,11 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="password2Field" prefHeight="33.0" prefWidth="250.0">
+                  <PasswordField fx:id="password2Field" prefHeight="33.0" prefWidth="250.0">
                      <HBox.margin>
                         <Insets top="16.0" />
                      </HBox.margin>
-                  </TextField>
+                  </PasswordField>
                </children>
             </HBox>
             <HBox prefHeight="66.0" prefWidth="500.0">

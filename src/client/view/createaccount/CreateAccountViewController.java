@@ -6,6 +6,7 @@ import client.view.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -14,8 +15,8 @@ public class CreateAccountViewController implements ViewController
 {
   @FXML private TextField nameField;
   @FXML private TextField emailField;
-  @FXML private TextField password1Field;
-  @FXML private TextField password2Field;
+  @FXML private PasswordField password1Field;
+  @FXML private PasswordField password2Field;
   @FXML private TextField addressField;
   @FXML private TextField phoneNumberField;
   @FXML private TextField pictureField;

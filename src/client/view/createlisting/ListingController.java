@@ -47,6 +47,6 @@ public class ListingController implements ViewController
   public void backBtn(ActionEvent actionEvent)
   {
     viewModel.errorProperty().set("");
-    vh.openAccountCreateScene();
+    vh.openLogInScene();
   }
 }
