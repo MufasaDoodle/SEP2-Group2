@@ -16,6 +16,8 @@ public class ViewHandler
   private Scene accountScene;
   private Scene listingScene;
   private Scene chatScene;
+  private Scene itemScene;
+
 
   public ViewHandler(ViewModelFactory vmf)
   {
@@ -117,6 +119,25 @@ public class ViewHandler
 
     }
     stage.setScene(chatScene);
+    stage.show();
+  }
+
+  public void openItemScene(){
+    if (itemScene == null){
+      try
+      {
+        Parent root = loadFXML("../view/itemView/itemView.fxml");
+
+        itemScene = new Scene(root);
+        stage.setTitle("Item");
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+
+    }
+    stage.setScene(itemScene);
     stage.show();
   }
 }
