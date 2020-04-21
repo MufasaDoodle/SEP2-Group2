@@ -4,13 +4,16 @@ import server.model.ServerModel;
 import shared.networking.ClientCallback;
 import shared.networking.RMIServer;
 import shared.transferobjects.Message;
+import stuffs.Listing;
 
+import javax.lang.model.util.SimpleElementVisitor7;
 import java.beans.PropertyChangeListener;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +23,7 @@ public class RMIServerImpl implements RMIServer
 {
   private ServerModel serverModel;
   private Map<ClientCallback, PropertyChangeListener> listeners = new HashMap<>();
+
 
   public RMIServerImpl(ServerModel serverModel) throws RemoteException
   {
@@ -89,6 +93,25 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
+  @Override
+  public List<Listing> getSorting(String request, String title, String category, String location) throws RemoteException {
+    return serverModel.getSorting(request, title, category, location);
+  }
+
+  @Override
+  public List<Listing> getListings() throws RemoteException {
+    try
+    {
+      return serverModel.getListings();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve listings");
+    }
+  }
+
+
   @Override public void registerClient(ClientCallback client)
   {
     PropertyChangeListener listener = null;
@@ -142,4 +165,5 @@ public class RMIServerImpl implements RMIServer
     }
     int stop = 0;
   }
+
 }

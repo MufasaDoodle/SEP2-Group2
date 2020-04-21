@@ -1,6 +1,7 @@
 package shared.networking;
 
 import shared.transferobjects.Message;
+import stuffs.Listing;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
@@ -9,6 +10,8 @@ import java.util.List;
 
 public interface RMIServer extends Remote
 {
+  List<Listing> getSorting(String request, String title, String category, String location) throws RemoteException;
+  List<Listing> getListings() throws RemoteException;
   void registerClient(ClientCallback client) throws RemoteException;
   void startServer() throws RemoteException, AlreadyBoundException;
   boolean createListing(String title, String descText, String price, String category, String location, String duration, String date) throws RemoteException;
@@ -18,4 +21,5 @@ public interface RMIServer extends Remote
   String broadCastMessage(String msg) throws RemoteException;
   List<Message> getMessages() throws RemoteException;
   void unRegisterClient(ClientCallback client) throws RemoteException;
+
 }

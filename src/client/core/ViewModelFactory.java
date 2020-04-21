@@ -3,11 +3,13 @@ package client.core;
 import client.view.chatView.ChatViewModel;
 import client.view.createaccount.CreateAccountViewModel;
 import client.view.createlisting.ListingViewModel;
+import client.view.listingView.SeeListingViewModel;
 import client.view.login.LoginViewModel;
 
 public class ViewModelFactory
 {
   private final ModelFactory mf;
+  private SeeListingViewModel seeListingViewModel;
   private ListingViewModel listingViewModel;
   private CreateAccountViewModel createAccountViewModel;
   private LoginViewModel loginViewModel;
@@ -30,6 +32,17 @@ public class ViewModelFactory
     }
   }
 
+  public SeeListingViewModel getSeeListingViewModel()
+  {
+    if(seeListingViewModel == null)
+    {
+      return (seeListingViewModel = new SeeListingViewModel(mf.getClientModel()));
+    }
+    else
+    {
+      return seeListingViewModel;
+    }
+  }
   public CreateAccountViewModel getCreateAccountViewModel()
   {
     if (createAccountViewModel == null)

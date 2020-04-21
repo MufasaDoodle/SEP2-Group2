@@ -1,6 +1,7 @@
 package shared.networking;
 
 import shared.transferobjects.Message;
+import stuffs.Listing;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
