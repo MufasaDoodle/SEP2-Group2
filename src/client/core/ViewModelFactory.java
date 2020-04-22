@@ -4,6 +4,7 @@ import client.view.chatView.ChatViewModel;
 import client.view.createaccount.CreateAccountViewModel;
 import client.view.createlisting.ListingViewModel;
 import client.view.listingView.SeeListingViewModel;
+import client.view.itemView.ItemViewModel;
 import client.view.login.LoginViewModel;
 
 public class ViewModelFactory
@@ -14,6 +15,7 @@ public class ViewModelFactory
   private CreateAccountViewModel createAccountViewModel;
   private LoginViewModel loginViewModel;
   private ChatViewModel chatViewModel;
+  private ItemViewModel itemViewModel;
 
   public ViewModelFactory(ModelFactory mf)
   {
@@ -66,5 +68,12 @@ public class ViewModelFactory
     if (chatViewModel == null)
       chatViewModel = new ChatViewModel(mf.getClientModel());
     return chatViewModel;
+  }
+
+  public ItemViewModel getItemViewModel()
+  {
+    if (itemViewModel == null)
+      itemViewModel = new ItemViewModel(mf.getClientModel());
+    return itemViewModel;
   }
 }
