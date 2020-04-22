@@ -5,6 +5,7 @@ import client.core.ViewModelFactory;
 import client.view.ViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -15,9 +16,9 @@ public class ListingController implements ViewController
   @FXML private TextField titleField;
   @FXML private TextArea descriptionArea;
   @FXML private TextField priceField;
-  @FXML private TextField catField;
   @FXML private TextField locField;
   @FXML private TextField durationField;
+  @FXML private ComboBox<String> categoryBox;
 
   private ListingViewModel viewModel;
   private ViewHandler vh;
@@ -27,16 +28,22 @@ public class ListingController implements ViewController
     this.vh = vh;
     this.viewModel = vmf.getListingViewModel();
     listingErrorLabel.textProperty().bind(viewModel.errorProperty());
+    categoryBox.getItems().add("Gardening");
+    categoryBox.getItems().add("Gaming");
+    categoryBox.getItems().add("Cooking");
+    categoryBox.getItems().add("Electronics");
+    categoryBox.getItems().add("Home appliances");
+    categoryBox.getItems().add("Sports");
   }
 
   public void createListingBtn(ActionEvent actionEvent)
   {
-    if (viewModel.createListing(titleField.getText(), descriptionArea.getText(), priceField.getText(), catField.getText(), locField.getText(), durationField.getText()))
+    if (viewModel.createListing(titleField.getText(), descriptionArea.getText(), priceField.getText(),categoryBox.getSelectionModel().getSelectedItem(), locField.getText(), durationField.getText()))
     {
       titleField.setText("");
       descriptionArea.setText("");
       priceField.setText("");
-      catField.setText("");
+      categoryBox.getSelectionModel().selectFirst();
       locField.setText("");
       durationField.setText("");
     }
@@ -51,5 +58,9 @@ public class ListingController implements ViewController
   public void onChatView(ActionEvent actionEvent)
   {
     vh.openChatScene();
+  }
+  public void onSeeListing()
+  {
+    vh.openSeeListingScene();
   }
 }

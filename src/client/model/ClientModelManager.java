@@ -2,6 +2,7 @@ package client.model;
 
 import client.networking.Client;
 import shared.transferobjects.Message;
+import stuffs.Listing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -20,11 +21,27 @@ public class ClientModelManager implements ClientModel
     this.client = client;
     client.startClient();
     client.addListener("NewMessage", this::onNewMessage);
+    //client.addListener("NewListing", this::onNewListing);
   }
 
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
   {
     support.firePropertyChange(propertyChangeEvent);
+  }
+  private void onNewListing(PropertyChangeEvent event)
+  {
+    support.firePropertyChange(event);
+  }
+  @Override
+  public List<Listing> getListings() {
+    System.out.println("All listings have been retrieved");
+    return client.getListings();
+  }
+
+  @Override
+  public List<Listing> getSorting(String request, String title, String category, String location) {
+    System.out.println("Listings have been retrieved");
+    return client.getSorting(request, title, category, location);
   }
 
   @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)

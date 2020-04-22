@@ -3,6 +3,7 @@ package client.networking;
 import shared.networking.ClientCallback;
 import shared.networking.RMIServer;
 import shared.transferobjects.Message;
+import stuffs.Listing;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -65,6 +66,30 @@ public class RMIClient implements Client, ClientCallback
       e.printStackTrace();
     }
     return false;
+  }
+
+  @Override
+  public List<Listing> getListings() {
+
+    try {
+      return server.getListings();
+    } catch (RemoteException e) {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve listings");
+    }
+  }
+
+  @Override
+  public List<Listing> getSorting(String request, String title, String category, String location) {
+    try
+    {
+      return server.getSorting(request, title, category, location);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("There was some problem");
+    }
   }
 
   @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)

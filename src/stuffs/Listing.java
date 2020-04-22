@@ -1,6 +1,8 @@
 package stuffs;
 
-public class Listing
+import java.io.Serializable;
+
+public class Listing implements Serializable
 {
     private String title;
     private String description;

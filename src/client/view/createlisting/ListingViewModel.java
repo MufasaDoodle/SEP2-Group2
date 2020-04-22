@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import shared.util.NumericCheck;
 
+import java.beans.PropertyChangeEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +25,7 @@ public class ListingViewModel
   {
     return error;
   }
+
 
   public boolean createListing(String title, String descText, String price, String category, String location, String duration)
   {
