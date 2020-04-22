@@ -13,9 +13,10 @@ public class ItemViewController implements ViewController
 {
   private @FXML Label ownerName;
   private @FXML Label itemName;
-  private @FXML Label price;
-  private @FXML Label location;
-  private @FXML Label itemRate;
+  private @FXML Label priceLabel;
+  private @FXML Label locationLabel;
+  private @FXML Label itemRateLabel;
+  private @FXML Label itemRatingLabel;
   private @FXML Label errorLabel;
 
   //private @FXML  TableView<> tableView;
