@@ -76,5 +76,6 @@ public class ChatViewController implements ViewController
   public void onBackButton()
   {
     //Todo
+    vh.openItemScene();
   }
 }
