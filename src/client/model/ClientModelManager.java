@@ -15,6 +15,7 @@ public class ClientModelManager implements ClientModel
   private PropertyChangeSupport support = new PropertyChangeSupport(this);
   private String username;
   private String itemName;
+  private int currentItemID;
 
   public ClientModelManager(Client client)
   {
@@ -83,6 +84,15 @@ public class ClientModelManager implements ClientModel
     return client.getMessage();
   }
 
+  @Override public int getCurrentItemID()
+  {
+    return currentItemID;
+  }
+
+  @Override public void setCurrentItemID(int itemID)
+  {
+    currentItemID = itemID;
+  }
   @Override public void setUsername(String username)
   {
     this.username = username;
@@ -108,6 +118,5 @@ public class ClientModelManager implements ClientModel
   @Override public void removeListener(String eventName, PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(eventName, listener);
-
   }
 }

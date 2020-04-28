@@ -23,4 +23,8 @@ public interface ClientModel extends Subject
   String getUsername();
   String getItemName();
 
+  int getCurrentItemID();
+  void setCurrentItemID(int itemID);
+
+
 }
