@@ -1,6 +1,7 @@
 package shared.networking;
 
 import shared.transferobjects.Message;
+import stuffs.Account;
 import stuffs.Listing;
 
 import java.rmi.AlreadyBoundException;
@@ -21,5 +22,6 @@ public interface RMIServer extends Remote
   String broadCastMessage(String msg) throws RemoteException;
   List<Message> getMessages() throws RemoteException;
   void unRegisterClient(ClientCallback client) throws RemoteException;
+  Account getAccountById(int id) throws  RemoteException;
 
 }

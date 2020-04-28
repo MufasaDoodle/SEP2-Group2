@@ -2,6 +2,7 @@ package client.networking;
 
 import shared.transferobjects.Message;
 import shared.util.Subject;
+import stuffs.Account;
 import stuffs.Listing;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public interface Client extends Subject
   String broadCastMessage(String msg);
   List<Message> getMessage();
   void unRegisterClient();
+  Account getAccountById(int id);
 }

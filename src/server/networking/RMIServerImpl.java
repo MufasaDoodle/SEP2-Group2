@@ -4,16 +4,15 @@ import server.model.ServerModel;
 import shared.networking.ClientCallback;
 import shared.networking.RMIServer;
 import shared.transferobjects.Message;
+import stuffs.Account;
 import stuffs.Listing;
 
-import javax.lang.model.util.SimpleElementVisitor7;
 import java.beans.PropertyChangeListener;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +22,6 @@ public class RMIServerImpl implements RMIServer
 {
   private ServerModel serverModel;
   private Map<ClientCallback, PropertyChangeListener> listeners = new HashMap<>();
-
 
   public RMIServerImpl(ServerModel serverModel) throws RemoteException
   {
@@ -38,11 +36,15 @@ public class RMIServerImpl implements RMIServer
     System.out.println("Server started");
   }
 
-  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
+  @Override public boolean createListing(String title, String descText,
+      String price, String category, String location, String duration,
+      String date)
   {
     try
     {
-      return serverModel.createListing(title, descText, price, category, location, duration, date);
+      return serverModel
+          .createListing(title, descText, price, category, location, duration,
+              date);
     }
     catch (RemoteException e)
     {
@@ -51,11 +53,14 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber) throws RemoteException
+  @Override public boolean createAccount(String name, String email,
+      String password1, String address, String phoneNumber)
+      throws RemoteException
   {
     try
     {
-      return serverModel.createAccount(name, email, password1, address, phoneNumber);
+      return serverModel
+          .createAccount(name, email, password1, address, phoneNumber);
     }
     catch (RemoteException e)
     {
@@ -80,11 +85,13 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
+  @Override public boolean createAccount(String name, String email,
+      String password1, String address, String phoneNumber, String bio)
   {
     try
     {
-      return serverModel.createAccount(name, email, password1, address, phoneNumber, bio);
+      return serverModel
+          .createAccount(name, email, password1, address, phoneNumber, bio);
     }
     catch (RemoteException e)
     {
@@ -93,13 +100,22 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
-  @Override
-  public List<Listing> getSorting(String request, String title, String category, String location) throws RemoteException {
-    return serverModel.getSorting(request, title, category, location);
+  @Override public List<Listing> getSorting(String request, String title,
+      String category, String location)
+  {
+    try
+    {
+      return serverModel.getSorting(request, title, category, location);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve soring");
+    }
   }
 
-  @Override
-  public List<Listing> getListings() throws RemoteException {
+  @Override public List<Listing> getListings()
+  {
     try
     {
       return serverModel.getListings();
@@ -110,7 +126,6 @@ public class RMIServerImpl implements RMIServer
       throw new RuntimeException("Could not retrieve listings");
     }
   }
-
 
   @Override public void registerClient(ClientCallback client)
   {
@@ -164,6 +179,19 @@ public class RMIServerImpl implements RMIServer
       serverModel.removeListener("NewMessage", listener);
     }
     int stop = 0;
+  }
+
+  @Override public Account getAccountById(int id)
+  {
+    try
+    {
+      return serverModel.getAccountById(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve account");
+    }
   }
 
 }
