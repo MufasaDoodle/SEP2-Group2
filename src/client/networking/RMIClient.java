@@ -139,8 +139,9 @@ public class RMIClient implements Client, ClientCallback
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (get account)...");
+      e.printStackTrace();
     }
+    return null;
   }
 
   @Override public String broadCastMessage(String msg)
