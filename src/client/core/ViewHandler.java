@@ -13,11 +13,12 @@ public class ViewHandler
   private Scene loginScene;
   private Stage stage;
   private ViewModelFactory vmf;
-  private Scene accountScene;
+  private Scene createAccountScene;
   private Scene listingScene;
   private Scene chatScene;
   private Scene seeListingScene;
   private Scene itemScene;
+  private Scene accountScene;
 
 
   public ViewHandler(ViewModelFactory vmf)
@@ -50,6 +51,28 @@ public class ViewHandler
     stage.setScene(loginScene);
     stage.show();
   }
+
+  public void openAccountScene()
+  {
+    if (accountScene == null)
+    {
+      try
+      {
+        Parent root = loadFXML("../view/accountView/accountView.fxml");
+
+        stage.setTitle("Account");
+        accountScene = new Scene(root);
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    stage.setScene(accountScene);
+    stage.show();
+  }
+
+
 
   public void openListingScene()
   {
@@ -92,13 +115,13 @@ public class ViewHandler
   //change
   public void openAccountCreateScene()
   {
-    if (accountScene == null)
+    if (createAccountScene == null)
     {
       try
       {
         Parent root = loadFXML("../view/createaccount/createAccount.fxml");
 
-        accountScene = new Scene(root);
+        createAccountScene = new Scene(root);
         stage.setTitle("Create account");
 
       }
@@ -107,7 +130,7 @@ public class ViewHandler
         e.printStackTrace();
       }
     }
-    stage.setScene(accountScene);
+    stage.setScene(createAccountScene);
     stage.show();
   }
 
