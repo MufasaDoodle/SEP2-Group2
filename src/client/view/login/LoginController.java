@@ -29,7 +29,7 @@ public class LoginController implements ViewController
   {
     if (viewModel.checkLogIn(emailField.getText(), passwordField.getText()))
     {
-      vh.openListingScene();
+      vh.openCreateListingScene();
       emailField.setText("");
       passwordField.setText("");
     }

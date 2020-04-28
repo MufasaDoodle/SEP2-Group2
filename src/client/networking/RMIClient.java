@@ -92,6 +92,19 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
+  @Override public Listing getListingByID(int id)
+  {
+    try
+    {
+      return server.getListingByID(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Server could not be contacted");
+    }
+  }
+
   @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
   {
     try

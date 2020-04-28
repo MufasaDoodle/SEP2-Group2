@@ -15,6 +15,7 @@ public class ClientModelManager implements ClientModel
   private PropertyChangeSupport support = new PropertyChangeSupport(this);
   private String username;
   private String itemName;
+  private int currentItemID;
 
   public ClientModelManager(Client client)
   {
@@ -42,6 +43,11 @@ public class ClientModelManager implements ClientModel
   public List<Listing> getSorting(String request, String title, String category, String location) {
     System.out.println("Listings have been retrieved");
     return client.getSorting(request, title, category, location);
+  }
+
+  @Override public Listing getListingByID(int id)
+  {
+    return client.getListingByID(id);
   }
 
   @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
@@ -81,6 +87,16 @@ public class ClientModelManager implements ClientModel
   @Override public List<Message> getMessage()
   {
     return client.getMessage();
+  }
+
+  @Override public int getCurrentItemID()
+  {
+    return currentItemID;
+  }
+
+  @Override public void setCurrentItemID(int itemID)
+  {
+    currentItemID = itemID;
   }
 
   @Override public void setUsername(String username)

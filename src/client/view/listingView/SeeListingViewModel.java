@@ -44,4 +44,9 @@ public class SeeListingViewModel
        List<Listing> list = clientModel.getSorting(request, title, category, location);
        listings = FXCollections.observableArrayList(list);
    }
+
+  public void setItem(int itemID)
+  {
+    clientModel.setCurrentItemID(itemID);
+  }
 }
