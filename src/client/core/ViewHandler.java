@@ -51,7 +51,7 @@ public class ViewHandler
     stage.show();
   }
 
-  public void openListingScene()
+  public void openCreateListingScene()
   {
     if (listingScene == null)
     {
@@ -86,6 +86,7 @@ public class ViewHandler
         e.printStackTrace();
       }
     }
+    itemScene = null; //must be set to null in order to initialize properly with new items
     stage.setScene(seeListingScene);
     stage.show();
   }
@@ -137,6 +138,7 @@ public class ViewHandler
       }
 
     }
+    itemScene = null; //must be set to null in order to initialize properly with new items
     stage.setScene(chatScene);
     stage.show();
   }

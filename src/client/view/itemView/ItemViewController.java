@@ -38,6 +38,13 @@ public class ItemViewController implements ViewController
   {
     this.vh = vh;
     this.viewModel = vmf.getItemViewModel();
+    ownerName.textProperty().bind(viewModel.ownerProperty());
+    itemName.textProperty().bind(viewModel.itemNameProperty());
+    priceLabel.textProperty().bind(viewModel.priceProperty());
+    locationLabel.textProperty().bind(viewModel.locationProperty());
+    itemRatingLabel.textProperty().bind(viewModel.ratingProperty());
+    descriptionTextArea.textProperty().bind(viewModel.descriptionProperty());
+    viewModel.setItem();
     /*ownerName.textProperty().setValue("Owner: " + viewModel.getOwnerName());
     //Todo itemName ownerName
     itemName.textProperty().setValue("Item: " + viewModel.getItemName());
@@ -49,7 +56,6 @@ public class ItemViewController implements ViewController
     //tableView.setItems((ObservableList<Feedback>) viewModel.getFeedback());
     feedbackTextArea.textProperty().set("");
     viewModel.loadFeedback();*/
-
   }
 
   public void onLeaveFeedback()
@@ -66,7 +72,8 @@ public class ItemViewController implements ViewController
     }
   }
 
-  public void onRateButtons(ActionEvent actionEvent){
+  public void onRateButtons(ActionEvent actionEvent)
+  {
 
     //Todo
 
@@ -79,8 +86,7 @@ public class ItemViewController implements ViewController
 
   public void onBackToListing()
   {
-    //Todo
-
+    vh.openSeeListingScene();
   }
 }
 

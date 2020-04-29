@@ -12,6 +12,7 @@ public interface RMIServer extends Remote
 {
   List<Listing> getSorting(String request, String title, String category, String location) throws RemoteException;
   List<Listing> getListings() throws RemoteException;
+  Listing getListingByID(int id) throws RemoteException;
   void registerClient(ClientCallback client) throws RemoteException;
   void startServer() throws RemoteException, AlreadyBoundException;
   boolean createListing(String title, String descText, String price, String category, String location, String duration, String date) throws RemoteException;

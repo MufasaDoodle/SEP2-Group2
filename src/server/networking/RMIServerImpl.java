@@ -111,6 +111,18 @@ public class RMIServerImpl implements RMIServer
     }
   }
 
+  @Override public Listing getListingByID(int id)
+  {
+    try
+    {
+      return serverModel.getListingByID(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve listing");
+    }
+  }
 
   @Override public void registerClient(ClientCallback client)
   {

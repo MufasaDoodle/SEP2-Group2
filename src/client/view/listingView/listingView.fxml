@@ -36,7 +36,7 @@
                   <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
               </columns>
             </TableView>
-            <Button mnemonicParsing="false" text="See item" />
+            <Button mnemonicParsing="false" onAction="#onSeeItem" text="See item" />
             <Button mnemonicParsing="false" onAction="#onCreateListing" text="Create Listing" />
             <Label fx:id="errorLabel" prefHeight="18.0" prefWidth="250.0" />
          </children>
