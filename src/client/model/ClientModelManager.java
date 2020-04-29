@@ -46,6 +46,11 @@ public class ClientModelManager implements ClientModel
     return client.getSorting(request, title, category, location);
   }
 
+  @Override public Listing getListingByID(int id)
+  {
+    return client.getListingByID(id);
+  }
+
   @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
   {
     System.out.println("Account created! (but not really)");

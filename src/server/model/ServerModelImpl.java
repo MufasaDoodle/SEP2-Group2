@@ -180,6 +180,18 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
+  @Override public Listing getListingByID(int id) throws RemoteException
+  {
+    try
+    {
+      return listingDAO.readById(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve listings");
+    }
+  }
 
   @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
   {

@@ -11,6 +11,7 @@ public interface Client extends Subject
 {
   List<Listing> getListings();
   List<Listing> getSorting(String request, String title, String category, String location);
+  Listing getListingByID(int id);
   boolean createListing(String title, String descText, String price, String category, String location, String duration, String date);
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber);
   void startClient();

@@ -3,6 +3,7 @@ package client.view.listingView;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -64,7 +65,7 @@ public class SeeListingController implements ViewController {
     }
     public void onCreateListing()
     {
-        vh.openListingScene();
+        vh.openCreateListingScene();
     }
     public void onSearchButton()
     {
@@ -389,5 +390,13 @@ public class SeeListingController implements ViewController {
                 listingTable.setItems(vm.getListings());
             }
         }
+    }
+
+    public void onSeeItem(ActionEvent actionEvent)
+    {
+        int selectIndex = listingTable.getSelectionModel().getFocusedIndex();
+        int itemID = listingTable.getItems().get(selectIndex).getId();
+        vm.setItem(itemID);
+        vh.openItemScene();
     }
 }
