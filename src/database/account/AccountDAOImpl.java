@@ -93,7 +93,7 @@ public class AccountDAOImpl implements AccountDAO
         String address = resultSet.getString("address");
         String bio = resultSet.getString("bio");
 
-        return new Account(id, name, email, password, telNumber, address, bio);
+        return new Account(id, name, email, password, address, telNumber, bio);
       }
       else
       {

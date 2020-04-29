@@ -302,6 +302,19 @@ public class ServerModelImpl implements ServerModel
     return message.getMessage();
   }
 
+  @Override public Account getAccountById(int id) throws RemoteException
+  {
+    try
+    {
+      return accountDAO.readById(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
   @Override public void addListener(String eventName, PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(eventName, listener);

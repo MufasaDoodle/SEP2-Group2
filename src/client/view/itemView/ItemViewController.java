@@ -81,7 +81,7 @@ public class ItemViewController implements ViewController
 
   public void onContactOwner()
   {
-    vh.openChatScene();
+    vh.openAccountScene();
   }
 
   public void onBackToListing()

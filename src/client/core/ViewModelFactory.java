@@ -1,5 +1,6 @@
 package client.core;
 
+import client.view.accountView.AccountViewModel;
 import client.view.chatView.ChatViewModel;
 import client.view.createaccount.CreateAccountViewModel;
 import client.view.createlisting.ListingViewModel;
@@ -16,6 +17,7 @@ public class ViewModelFactory
   private LoginViewModel loginViewModel;
   private ChatViewModel chatViewModel;
   private ItemViewModel itemViewModel;
+  private AccountViewModel accountViewModel;
 
   public ViewModelFactory(ModelFactory mf)
   {
@@ -31,6 +33,18 @@ public class ViewModelFactory
     else
     {
       return listingViewModel;
+    }
+  }
+
+  public AccountViewModel getAccountViewModel()
+  {
+    if (accountViewModel == null)
+    {
+      return (accountViewModel = new AccountViewModel(mf.getClientModel()));
+    }
+    else
+    {
+      return accountViewModel;
     }
   }
 

@@ -2,6 +2,7 @@ package client.model;
 
 import client.networking.Client;
 import shared.transferobjects.Message;
+import stuffs.Account;
 import stuffs.Listing;
 
 import java.beans.PropertyChangeEvent;
@@ -99,6 +100,11 @@ public class ClientModelManager implements ClientModel
     currentItemID = itemID;
   }
 
+  @Override public Account getAccountById(int id)
+  {
+    return client.getAccountById(id);
+  }
+
   @Override public void setUsername(String username)
   {
     this.username = username;
@@ -124,6 +130,5 @@ public class ClientModelManager implements ClientModel
   @Override public void removeListener(String eventName, PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(eventName, listener);
-
   }
 }

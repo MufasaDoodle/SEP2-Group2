@@ -3,6 +3,7 @@ package client.networking;
 import shared.networking.ClientCallback;
 import shared.networking.RMIServer;
 import shared.transferobjects.Message;
+import stuffs.Account;
 import stuffs.Listing;
 
 import java.beans.PropertyChangeListener;
@@ -141,6 +142,19 @@ public class RMIClient implements Client, ClientCallback
     {
       System.out.println("unRegisterClient error..");
     }
+  }
+
+  @Override public Account getAccountById(int id)
+  {
+    try
+    {
+      return server.getAccountById(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   @Override public String broadCastMessage(String msg)

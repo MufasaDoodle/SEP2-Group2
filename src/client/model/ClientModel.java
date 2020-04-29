@@ -2,6 +2,7 @@ package client.model;
 
 import shared.transferobjects.Message;
 import shared.util.Subject;
+import stuffs.Account;
 import stuffs.Listing;
 
 import java.io.IOException;
@@ -25,5 +26,11 @@ public interface ClientModel extends Subject
   void setUsername(String username);
   String getUsername();
   String getItemName();
+
+  int getCurrentItemID();
+  void setCurrentItemID(int itemID);
+
+  Account getAccountById(int id);
+
 
 }
