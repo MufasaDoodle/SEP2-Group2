@@ -19,6 +19,7 @@ public class ViewHandler
   private Scene seeListingScene;
   private Scene itemScene;
   private Scene accountScene;
+  private Scene editItemScene;
 
 
   public ViewHandler(ViewModelFactory vmf)
@@ -52,6 +53,28 @@ public class ViewHandler
     stage.show();
   }
 
+  public void openEditItemScene()
+  {
+    if (editItemScene == null)
+    {
+      try
+      {
+        Parent root = loadFXML("../view/editItem/editItem.fxml");
+
+        stage.setTitle("Edit item");
+        editItemScene = new Scene(root);
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    seeListingScene = null;
+    accountScene = null;
+    stage.setScene(editItemScene);
+    stage.show();
+  }
+
   public void openAccountScene()
   {
     if (accountScene == null)
@@ -69,6 +92,7 @@ public class ViewHandler
       }
     }
     itemScene = null;
+    editItemScene = null;
     stage.setScene(accountScene);
     stage.show();
   }
@@ -89,6 +113,7 @@ public class ViewHandler
         e.printStackTrace();
       }
     }
+    seeListingScene = null;
     stage.setScene(listingScene);
     stage.show();
   }

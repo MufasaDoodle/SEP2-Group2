@@ -1614,11 +1614,30 @@ public class ListingDAOImpl implements ListingDAO
 
   @Override public void update(Listing listing) throws SQLException
   {
-
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement("UPDATE \"SEP2\".Listings SET title = ?, description = ?, category = ?, location = ?, price = ?, duration = ?, date = ?, avgstarrating = ?, accountid = ? WHERE id=?");
+      statement.setString(1, listing.getTitle());
+      statement.setString(2, listing.getDescription());
+      statement.setString(3, listing.getCategory());
+      statement.setString(4, listing.getLocation());
+      statement.setDouble(5, listing.getPrice());
+      statement.setString(6, listing.getDuration());
+      statement.setDate(7, Date.valueOf(listing.getDate()));
+      statement.setDouble(8, listing.getAvgStarRating());
+      statement.setInt(9, listing.getAccountId());
+      statement.setInt(10, listing.getId());
+      statement.executeUpdate();
+    }
   }
 
-  @Override public void delete(Listing listing) throws SQLException
+  @Override public void delete(int id) throws SQLException
   {
-
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement("DELETE FROM \"SEP2\".Listings WHERE id = ?");
+      statement.setInt(1, id);
+      statement.executeUpdate();
+    }
   }
 }

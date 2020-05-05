@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import stuffs.Listing;
 
+import javax.swing.*;
+
 public class AccountViewController implements ViewController
 {
   private @FXML Label editErrorLabel;
@@ -25,6 +27,7 @@ public class AccountViewController implements ViewController
   private @FXML Label phoneLabel;
   private @FXML Label bioLabel;
   private @FXML Label avgRateLabel;
+  private @FXML Button editItemButton;
 
   @FXML private TableView<Listing> listingTable;
   @FXML private TableColumn<String, String> titleColumn;
@@ -49,14 +52,19 @@ public class AccountViewController implements ViewController
     bioLabel.textProperty().bind(viewModel.bioProperty());
     avgRateLabel.textProperty().bind(viewModel.avgRateProperty());
     emailField.textProperty().bindBidirectional(viewModel.emailEditProperty());
-    addressField.textProperty().bindBidirectional(viewModel.addressEditProperty());
-    numberField.textProperty().bindBidirectional(viewModel.numberEditProperty());
+    addressField.textProperty()
+        .bindBidirectional(viewModel.addressEditProperty());
+    numberField.textProperty()
+        .bindBidirectional(viewModel.numberEditProperty());
     bioField.textProperty().bindBidirectional(viewModel.bioEditProperty());
     passField.textProperty().bindBidirectional(viewModel.pass1Property());
     passField2.textProperty().bindBidirectional(viewModel.pass2Property());
     editErrorLabel.textProperty().bind(viewModel.errorProperty());
 
     setOwner();
+
+
+
 
     if (!viewModel.checkOwner(nameLabel.getText()))
     {
@@ -67,7 +75,8 @@ public class AccountViewController implements ViewController
     listingTable.setItems(viewModel.getListings());
     titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-    descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+    descriptionColumn
+        .setCellValueFactory(new PropertyValueFactory<>("description"));
     locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
     durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
     priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -92,6 +101,18 @@ public class AccountViewController implements ViewController
     vh.openItemScene();
   }
 
+  public void onEditItem()
+  {
+    int selectIndex = listingTable.getSelectionModel().getFocusedIndex();
+    int itemID = listingTable.getItems().get(selectIndex).getId();
+    viewModel.setItem(itemID);
+
+    if (viewModel.checkOwner(nameLabel.getText()))
+    {
+      vh.openEditItemScene();
+    }
+  }
+
   public void tabEvent(Event event)
   {
     if (editTab.isSelected())
@@ -102,7 +123,9 @@ public class AccountViewController implements ViewController
 
   public void onUpdate(ActionEvent actionEvent)
   {
-    viewModel.updateAccountInfo(emailField.getText(), passField.getText(), passField2.getText(), addressField.getText(), numberField.getText(), bioField.getText());
+    viewModel.updateAccountInfo(emailField.getText(), passField.getText(),
+        passField2.getText(), addressField.getText(), numberField.getText(),
+        bioField.getText());
   }
 
   /*
