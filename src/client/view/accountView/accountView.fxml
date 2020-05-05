@@ -76,9 +76,9 @@
                                     <Label fx:id="avgRateLabel" prefHeight="50.0" prefWidth="220.0" />
                                  </children>
                               </HBox>
-                              <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="70.0" text="Message">
+                              <Button mnemonicParsing="false" onAction="#onBackButton" prefHeight="35.0" prefWidth="90.0" text="Back To Item">
                                  <VBox.margin>
-                                    <Insets left="107.0" />
+                                    <Insets left="100.0" />
                                  </VBox.margin>
                               </Button>
                            </children>
@@ -100,6 +100,7 @@
                               </HBox>
                            </children>
                         </Pane>
+                        <Button layoutX="415.0" layoutY="303.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="70.0" text="Message" />
                      </children>
                   </AnchorPane>
             </content>
@@ -108,18 +109,18 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="310.0" prefWidth="600.0">
+                        <TableView fx:id="listingTable" prefHeight="310.0" prefWidth="600.0">
                           <columns>
-                            <TableColumn prefWidth="88.0" text="Title" />
-                            <TableColumn minWidth="0.0" prefWidth="82.0" text="Category" />
-                              <TableColumn prefWidth="110.0" text="Description" />
-                              <TableColumn prefWidth="70.0" text="Location" />
-                              <TableColumn text="Duration" />
-                              <TableColumn prefWidth="82.0" text="Price" />
-                              <TableColumn prefWidth="87.0" text="Date" />
+                            <TableColumn fx:id="titleColumn" prefWidth="88.0" text="Title" />
+                            <TableColumn fx:id="categoryColumn" minWidth="0.0" prefWidth="82.0" text="Category" />
+                              <TableColumn fx:id="descriptionColumn" prefWidth="110.0" text="Description" />
+                              <TableColumn fx:id="locationColumn" prefWidth="70.0" text="Location" />
+                              <TableColumn fx:id="durationColumn" text="Duration" />
+                              <TableColumn fx:id="priceColumn" prefWidth="82.0" text="Price" />
+                              <TableColumn fx:id="dateColumn" prefWidth="87.0" text="Date" />
                           </columns>
                         </TableView>
-                        <Button layoutX="130.0" layoutY="322.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="See Item" />
+                        <Button layoutX="130.0" layoutY="322.0" mnemonicParsing="false" onAction="#onSeeItem" prefHeight="35.0" prefWidth="80.0" text="See Item" />
                         <Button layoutX="265.0" layoutY="322.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="Edit Item" />
                         <Button layoutX="399.0" layoutY="322.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="Delete Item" />
                      </children></AnchorPane>

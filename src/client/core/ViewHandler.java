@@ -29,7 +29,7 @@ public class ViewHandler
   public void start()
   {
     stage = new Stage();
-    openAccountScene();
+    openLogInScene();
   }
 
   public void openLogInScene()

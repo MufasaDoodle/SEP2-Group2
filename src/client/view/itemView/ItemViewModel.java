@@ -3,14 +3,19 @@ package client.view.itemView;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import stuffs.Account;
 import stuffs.Listing;
 
 import java.beans.PropertyChangeEvent;
+import java.util.List;
 
 public class ItemViewModel
 {
   private ClientModel clientModel;
   private StringProperty request, reply, owner, itemName, price, location, rating, description;
+
 
   public ItemViewModel(ClientModel clientModel)
   {
@@ -84,9 +89,8 @@ public class ItemViewModel
 
   public void setItem()
   {
-    //set owner property
-    owner.set("Not implemented");
     Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
+    owner.set(clientModel.getAccountById(temp.getAccountId()).getName());
     itemName.set(temp.getTitle());
     price.set(String.valueOf(temp.getPrice()));
     location.set(temp.getLocation());
@@ -94,4 +98,6 @@ public class ItemViewModel
     rating.set("0");
     description.set(temp.getDescription());
   }
+
+
 }

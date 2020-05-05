@@ -14,5 +14,6 @@ public interface AccountDAO
   List<Account> readByName(String searchString) throws SQLException;
   void update(Account account) throws SQLException;
   void delete(Account account) throws SQLException;
+  int getAccountId(String email) throws SQLException;
 
 }
