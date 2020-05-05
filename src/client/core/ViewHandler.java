@@ -68,6 +68,7 @@ public class ViewHandler
         e.printStackTrace();
       }
     }
+    itemScene = null;
     stage.setScene(accountScene);
     stage.show();
   }
@@ -179,6 +180,7 @@ public class ViewHandler
       }
 
     }
+    accountScene = null;
     stage.setScene(itemScene);
     stage.show();
   }

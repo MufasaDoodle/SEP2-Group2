@@ -62,9 +62,6 @@ public class AccountViewController implements ViewController
 
   public void onBackButton()
   {
-    setOwner();
-    viewModel.listOfOwnerListings();
-    listingTable.setItems(viewModel.getListings());
     vh.openItemScene();
   }
 
