@@ -35,4 +35,7 @@ public interface ClientModel extends Subject
 
   boolean updateAccount(String email, String pass, String address, String number, String bio);
   boolean isEmailTaken(String email);
+
+  boolean updateListing(String title, String description, String category, String location, double price, String duration);
+  void deleteListing(int id);
 }

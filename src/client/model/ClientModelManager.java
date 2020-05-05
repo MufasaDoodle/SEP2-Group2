@@ -8,6 +8,9 @@ import stuffs.Listing;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ClientModelManager implements ClientModel
@@ -59,6 +62,28 @@ public class ClientModelManager implements ClientModel
   @Override public boolean isEmailTaken(String email)
   {
     return client.isEmailTaken(email);
+  }
+
+  @Override public boolean updateListing(String title, String description,
+      String category, String location, double price, String duration)
+  {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = new Date();
+
+    Listing currentListing = client.getListingByID(currentItemID);
+    Listing updatedListing = new Listing(title, description, category,location, price, duration, dateFormat.format(date), currentListing.getId(), currentListing.getAccountId());
+    if (client.updateListing(updatedListing))
+    {
+      System.out.println("Listing updated");
+      return true;
+    }
+    return false;
+  }
+
+  @Override public void deleteListing(int id)
+  {
+    System.out.println("Listing deleted");
+    client.deleteListing(id);
   }
 
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)

@@ -249,4 +249,29 @@ public class RMIServerImpl implements RMIServer
     }
     return true;
   }
+
+  @Override public boolean updateListing(Listing listing) throws RemoteException
+  {
+    try
+    {
+      return serverModel.updateListing(listing);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public void deleteListing(int id) throws RemoteException
+  {
+    try
+    {
+      serverModel.deleteListing(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
 }

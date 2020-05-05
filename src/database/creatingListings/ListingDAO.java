@@ -16,7 +16,7 @@ public interface ListingDAO extends Sorting
 
     List<Listing> getAll() throws SQLException;
     void update(Listing listing) throws SQLException;
-    void delete(Listing listing) throws SQLException;
+    void delete(int id) throws SQLException;
 
     List<Listing> readByAccountId(int accountId) throws SQLException;
 

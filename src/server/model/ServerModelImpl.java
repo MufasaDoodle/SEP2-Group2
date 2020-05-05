@@ -374,6 +374,32 @@ public class ServerModelImpl implements ServerModel
     return true;
   }
 
+  @Override public boolean updateListing(Listing listing)
+  {
+    try
+    {
+      listingDAO.update(listing);
+      return true;
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public void deleteListing(int id) throws RemoteException
+  {
+    try
+    {
+      listingDAO.delete(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
   @Override public void addListener(String eventName, PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(eventName, listener);

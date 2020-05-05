@@ -212,6 +212,31 @@ public class RMIClient implements Client, ClientCallback
     return true;
   }
 
+  @Override public boolean updateListing(Listing listing)
+  {
+    try
+    {
+      return server.updateListing(listing);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public void deleteListing(int id)
+  {
+    try
+    {
+       server.deleteListing(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
   @Override public String broadCastMessage(String msg)
   {
     try

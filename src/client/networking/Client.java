@@ -26,4 +26,7 @@ public interface Client extends Subject
 
   boolean updateAccount(Account account);
   boolean isEmailTaken(String email);
+
+  boolean updateListing(Listing listing);
+  void deleteListing(int id);
 }

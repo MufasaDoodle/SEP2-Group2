@@ -27,4 +27,7 @@ public interface ServerModel extends Subject
   List<Listing> getListingsByAccountId(int accountId) throws RemoteException;
   boolean updateAccount(Account account) throws RemoteException;
   boolean isEmailTaken(String email) throws RemoteException;
+
+  boolean updateListing(Listing listing) throws RemoteException;
+  void deleteListing(int id) throws RemoteException;
 }
