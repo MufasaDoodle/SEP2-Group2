@@ -32,11 +32,13 @@ public class ListingViewModel
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
 
+    int accountId = clientModel.getCurrentAccountID();
+
     if (!title.equals("") && !descText.equals("") && !price.equals("") && !category.equals("") && !location.equals("") && !duration.equals(""))
     {
       if (NumericCheck.isNumeric(price))
       {
-        if (clientModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date)))
+        if (clientModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date), accountId))
         {
           error.set("Listing created");
           return true;

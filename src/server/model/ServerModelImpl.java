@@ -193,11 +193,11 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
-  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
+  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId)
   {
     try
     {
-      Listing temp = listingDAO.create(title, descText, category, location, Double.parseDouble(price), duration, Date.valueOf(date));
+      Listing temp = listingDAO.create(title, descText, category, location, Double.parseDouble(price), duration, Date.valueOf(date), accountId);
      // support.firePropertyChange("NewListing", null, temp);
       if (temp != null)
       {
@@ -307,6 +307,32 @@ public class ServerModelImpl implements ServerModel
     try
     {
       return accountDAO.readById(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public int getAccountId(String email) throws RemoteException
+  {
+    try
+    {
+      return accountDAO.getAccountId(email);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
+  @Override public List<Listing> getListingsByAccountId(int accountId)
+  {
+    try
+    {
+      return listingDAO.readByAccountId(accountId);
     }
     catch (SQLException e)
     {

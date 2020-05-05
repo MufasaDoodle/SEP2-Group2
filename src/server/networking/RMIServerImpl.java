@@ -38,13 +38,13 @@ public class RMIServerImpl implements RMIServer
 
   @Override public boolean createListing(String title, String descText,
       String price, String category, String location, String duration,
-      String date)
+      String date, int accountId)
   {
     try
     {
       return serverModel
           .createListing(title, descText, price, category, location, duration,
-              date);
+              date,accountId);
     }
     catch (RemoteException e)
     {
@@ -204,6 +204,33 @@ public class RMIServerImpl implements RMIServer
     {
       e.printStackTrace();
       throw new RuntimeException("Could not retrieve account");
+    }
+  }
+
+  @Override public int getAccountId(String email) throws RemoteException
+  {
+    try
+    {
+      return serverModel.getAccountId(email);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve account id");
+    }
+  }
+
+  @Override public List<Listing> getListingsByAccount(int accountId)
+
+  {
+    try
+    {
+      return serverModel.getListingsByAccountId(accountId);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve items by account id");
     }
   }
 

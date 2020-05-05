@@ -13,8 +13,9 @@ public class Listing implements Serializable
     private String date;
     private int id;
     private double avgStarRating;
+    private int accountId;
 
-    public Listing(String title, String description, String category, String location, double price, String duration, String date, int id)
+    public Listing(String title, String description, String category, String location, double price, String duration, String date, int id, int accountId)
     {
         this.title = title;
         this.description = description;
@@ -24,8 +25,9 @@ public class Listing implements Serializable
         this.duration = duration;
         this.date = date;
         this.id = id;
+        this.accountId = accountId;
     }
-    public Listing(String title, String category, String location, double price, String duration, String date, int id)
+    public Listing(String title, String category, String location, double price, String duration, String date, int id, int accountId)
     {
         this.title=title;
         this.category=category;
@@ -34,12 +36,24 @@ public class Listing implements Serializable
         this.duration=duration;
         this.date=date;
         this.id=id;
+        this.accountId = accountId;
     }
 
     public String getTitle()
     {
         return title;
     }
+
+    public int getAccountId()
+    {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId)
+    {
+        this.accountId = accountId;
+    }
+
     public String getCategory()
     {
         return category;

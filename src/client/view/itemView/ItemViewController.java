@@ -64,7 +64,6 @@ public class ItemViewController implements ViewController
     {
       viewModel.leaveFeedback();
       feedbackTextArea.clear();
-
     }
     else
     {

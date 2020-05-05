@@ -18,6 +18,8 @@ public class ClientModelManager implements ClientModel
   private String itemName;
   private int currentItemID;
 
+  private int currentAccountID;
+
   public ClientModelManager(Client client)
   {
     this.client = client;
@@ -25,6 +27,23 @@ public class ClientModelManager implements ClientModel
     client.addListener("NewMessage", this::onNewMessage);
     //client.addListener("NewListing", this::onNewListing);
   }
+
+  @Override public void setCurrentAccountID(String email)
+  {
+    currentAccountID = client.getAccountId(email);
+  }
+
+  @Override public int getCurrentAccountID()
+  {
+    return currentAccountID;
+  }
+
+  @Override public List<Listing> getListingsByAccount(int accountId)
+  {
+    System.out.println("Owners's listings have been retrieved");
+    return client.getListingsByAccount(accountId);
+  }
+
 
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
   {
@@ -63,10 +82,11 @@ public class ClientModelManager implements ClientModel
     return null;
   }
 
-  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
+  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId)
   {
-    System.out.println("Listing created! (but not really)");
-    return client.createListing(title, descText, price, category, location, duration, date);
+    System.out.println("Listing created!");
+    accountId = getCurrentAccountID();
+    return client.createListing(title, descText, price, category, location, duration, date, accountId );
   }
 
   @Override public boolean checkLogIn(String email, String password)

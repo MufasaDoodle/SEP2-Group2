@@ -106,11 +106,11 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date)
+  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId)
   {
     try
     {
-      return server.createListing(title, descText, price, category, location, duration, date);
+      return server.createListing(title, descText, price, category, location, duration, date, accountId);
     }
     catch (RemoteException e)
     {
@@ -149,6 +149,32 @@ public class RMIClient implements Client, ClientCallback
     try
     {
       return server.getAccountById(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public int getAccountId(String email)
+  {
+    try
+    {
+      return server.getAccountId(email);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
+  @Override public List<Listing> getListingsByAccount(int accountId)
+  {
+    try
+    {
+      return server.getListingsByAccount(accountId);
     }
     catch (RemoteException e)
     {

@@ -15,6 +15,9 @@ public class LoginViewModel
     this.clientModel = clientModel;
     error = new SimpleStringProperty();
   }
+  public void setAccountId(String email){
+    clientModel.setCurrentAccountID(email);
+  }
 
   public boolean checkLogIn(String email, String password)
   {
