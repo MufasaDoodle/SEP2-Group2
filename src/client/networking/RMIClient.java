@@ -69,19 +69,22 @@ public class RMIClient implements Client, ClientCallback
     return false;
   }
 
-  @Override
-  public List<Listing> getListings() {
+  @Override public List<Listing> getListings()
+  {
 
-    try {
+    try
+    {
       return server.getListings();
-    } catch (RemoteException e) {
+    }
+    catch (RemoteException e)
+    {
       e.printStackTrace();
       throw new RuntimeException("Could not retrieve listings");
     }
   }
 
-  @Override
-  public List<Listing> getSorting(String request, String title, String category, String location) {
+  @Override public List<Listing> getSorting(String request, String title, String category, String location)
+  {
     try
     {
       return server.getSorting(request, title, category, location);
@@ -181,6 +184,32 @@ public class RMIClient implements Client, ClientCallback
       e.printStackTrace();
     }
     return null;
+  }
+
+  @Override public boolean updateAccount(Account account)
+  {
+    try
+    {
+      return server.updateAccount(account);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean isEmailTaken(String email)
+  {
+    try
+    {
+      return server.isEmailTaken(email);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return true;
   }
 
   @Override public String broadCastMessage(String msg)

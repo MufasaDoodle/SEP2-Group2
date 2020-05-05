@@ -46,118 +46,119 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
-  @Override
-  public List<Listing> getSorting(String request, String title, String category, String location) throws RemoteException {
-    try {
+  @Override public List<Listing> getSorting(String request, String title, String category, String location) throws RemoteException
+  {
+    try
+    {
       if (request.equals("title"))
         return listingDAO.readByTitle(title);
-      else if(request.equals("category"))
+      else if (request.equals("category"))
         return listingDAO.readByCategory(category);
-      else if(request.equals("location"))
+      else if (request.equals("location"))
         return listingDAO.readByLocation(location);
       else if (request.equals("titleCategory"))
         return listingDAO.titleCategory(title, category);
-      else if(request.equals("titleLocation"))
+      else if (request.equals("titleLocation"))
         return listingDAO.titleLocation(title, location);
       else if (request.equals("categoryLocation"))
         return listingDAO.categoryLocation(category, location);
-      else if(request.equals("titleCategoryLocation"))
+      else if (request.equals("titleCategoryLocation"))
         return listingDAO.titleCategoryLocation(title, category, location);
-      else if(request.equals("oldNew"))
+      else if (request.equals("oldNew"))
         return listingDAO.oldToNew();
-      else if(request.equals("newOld"))
+      else if (request.equals("newOld"))
         return listingDAO.newToOld();
-      else if(request.equals("ratingLowHigh"))
+      else if (request.equals("ratingLowHigh"))
         return listingDAO.starRatingLowToHigh();
-      else if(request.equals("ratingHighLow"))
+      else if (request.equals("ratingHighLow"))
         return listingDAO.starRatingHighToLow();
-      else if(request.equals("priceLowHigh"))
+      else if (request.equals("priceLowHigh"))
         return listingDAO.priceLowToHigh();
-      else if(request.equals("priceHighLow"))
+      else if (request.equals("priceHighLow"))
         return listingDAO.priceHighToLow();
       else if (request.equals("titleOldNew"))
         return listingDAO.titleOldNew(title);
-      else if(request.equals("titleNewOld"))
+      else if (request.equals("titleNewOld"))
         return listingDAO.titleNewOld(title);
-      else if(request.equals("titleRatingLowHigh"))
+      else if (request.equals("titleRatingLowHigh"))
         return listingDAO.titleRatingLowToHigh(title);
-      else if(request.equals("titleRatingHighLow"))
+      else if (request.equals("titleRatingHighLow"))
         return listingDAO.titleRatingHighToLow(title);
       else if (request.equals("titlePriceLowHigh"))
         return listingDAO.titlePriceLowToHigh(title);
-      else if(request.equals("titlePriceHighLow"))
+      else if (request.equals("titlePriceHighLow"))
         return listingDAO.titlePriceHighToLow(title);
-      else if(request.equals("categoryOldNew"))
+      else if (request.equals("categoryOldNew"))
         return listingDAO.categoryOldNew(category);
       else if (request.equals("categoryNewOld"))
         return listingDAO.categoryNewOld(category);
-      else if(request.equals("categoryRatingLowHigh"))
+      else if (request.equals("categoryRatingLowHigh"))
         return listingDAO.categoryRatingLowToHigh(category);
-      else if(request.equals("categoryRatingHighLow"))
+      else if (request.equals("categoryRatingHighLow"))
         return listingDAO.categoryRatingHighToLow(category);
-      else if(request.equals("categoryPriceLowHigh"))
+      else if (request.equals("categoryPriceLowHigh"))
         return listingDAO.categoryPriceLowToHigh(category);
-      else if(request.equals("categoryPriceHighLow"))
+      else if (request.equals("categoryPriceHighLow"))
         return listingDAO.categoryPriceHighToLow(category);
-      else if(request.equals("locationOldNew"))
+      else if (request.equals("locationOldNew"))
         return listingDAO.locationOldNew(location);
-      else if(request.equals("locationNewOld"))
+      else if (request.equals("locationNewOld"))
         return listingDAO.locationNewOld(location);
-      else if(request.equals("locationRatingLowHigh"))
+      else if (request.equals("locationRatingLowHigh"))
         return listingDAO.locationRatingLowToHigh(location);
-      else if(request.equals("locationRatingHighLow"))
+      else if (request.equals("locationRatingHighLow"))
         return listingDAO.locationRatingHighToLow(location);
-      else if(request.equals("locationPriceLowHigh"))
+      else if (request.equals("locationPriceLowHigh"))
         return listingDAO.locationPriceLowToHigh(location);
-      else if(request.equals("locationPriceHighLow"))
+      else if (request.equals("locationPriceHighLow"))
         return listingDAO.locationPriceHighToLow(location);
-      else if(request.equals("titleCategoryOldNew"))
+      else if (request.equals("titleCategoryOldNew"))
         return listingDAO.titleCategoryOldNew(title, category);
-      else if(request.equals("titleCategoryNewOld"))
+      else if (request.equals("titleCategoryNewOld"))
         return listingDAO.titleCategoryNewOld(title, category);
-      else if(request.equals("titleCategoryRatingLowHigh"))
+      else if (request.equals("titleCategoryRatingLowHigh"))
         return listingDAO.titleCategoryRatingLowToHigh(title, category);
-      else if(request.equals("titleCategoryRatingHighLow"))
+      else if (request.equals("titleCategoryRatingHighLow"))
         return listingDAO.titleCategoryRatingHighToLow(title, category);
-      else if(request.equals("titleCategoryPriceLowHigh"))
+      else if (request.equals("titleCategoryPriceLowHigh"))
         return listingDAO.titleCategoryPriceLowToHigh(title, category);
-      else if(request.equals("titleCategoryPriceHighLow"))
+      else if (request.equals("titleCategoryPriceHighLow"))
         return listingDAO.titleCategoryPriceHighToLow(title, category);
-      else if(request.equals("titleLocationOldNew"))
+      else if (request.equals("titleLocationOldNew"))
         return listingDAO.titleLocationOldNew(title, location);
       else if (request.equals("titleLocationNewOld"))
         return listingDAO.titleLocationNewOld(title, location);
-      else if(request.equals("titleLocationRatingLowHigh"))
+      else if (request.equals("titleLocationRatingLowHigh"))
         return listingDAO.titleLocationRatingLowToHigh(title, location);
-      else if(request.equals("titleLocationRatingHighLow"))
+      else if (request.equals("titleLocationRatingHighLow"))
         return listingDAO.titleLocationRatingHighToLow(title, location);
-      else if(request.equals("titleLocationPriceLowHigh"))
+      else if (request.equals("titleLocationPriceLowHigh"))
         return listingDAO.titleLocationPriceLowToHigh(title, location);
-      else if(request.equals("titleLocationPriceHighLow"))
+      else if (request.equals("titleLocationPriceHighLow"))
         return listingDAO.titleLocationPriceHighToLow(title, location);
-      else if(request.equals("categoryLocationOldNew"))
+      else if (request.equals("categoryLocationOldNew"))
         return listingDAO.categoryLocationOldNew(category, location);
-      else if(request.equals("categoryLocationNewOld"))
+      else if (request.equals("categoryLocationNewOld"))
         return listingDAO.categoryLocationNewOld(category, location);
-      else if(request.equals("categoryLocationRatingLowHigh"))
+      else if (request.equals("categoryLocationRatingLowHigh"))
         return listingDAO.categoryLocationRatingLowToHigh(category, location);
-      else if(request.equals("categoryLocationRatingHighLow"))
+      else if (request.equals("categoryLocationRatingHighLow"))
         return listingDAO.categoryLocationRatingHighToLow(category, location);
-      else if(request.equals("categoryLocationPriceLowHigh"))
+      else if (request.equals("categoryLocationPriceLowHigh"))
         return listingDAO.categoryLocationPriceLowToHigh(category, location);
-      else if(request.equals("categoryLocationPriceHighLow"))
+      else if (request.equals("categoryLocationPriceHighLow"))
         return listingDAO.categoryLocationPriceHighToLow(category, location);
-      else if(request.equals("titleCategoryLocationOldNew"))
+      else if (request.equals("titleCategoryLocationOldNew"))
         return listingDAO.titleCategoryLocationOldNew(title, category, location);
-      else if(request.equals("titleCategoryLocationNewOld"))
+      else if (request.equals("titleCategoryLocationNewOld"))
         return listingDAO.titleCategoryLocationNewOld(title, category, location);
-      else if(request.equals("titleCategoryLocationRatingLowHigh"))
+      else if (request.equals("titleCategoryLocationRatingLowHigh"))
         return listingDAO.titleCategoryLocationRatingLowToHigh(title, category, location);
-      else if(request.equals("titleCategoryLocationRatingHighLow"))
+      else if (request.equals("titleCategoryLocationRatingHighLow"))
         return listingDAO.titleCategoryLocationRatingHighToLow(title, category, location);
-      else if(request.equals("titleCategoryLocationPriceLowHigh"))
+      else if (request.equals("titleCategoryLocationPriceLowHigh"))
         return listingDAO.titleCategoryLocationPriceLowToHigh(title, category, location);
-      else if(request.equals("titleCategoryLocationPriceHighLow"))
+      else if (request.equals("titleCategoryLocationPriceHighLow"))
         return listingDAO.titleCategoryLocationPriceHighToLow(title, category, location);
     }
     catch (SQLException e)
@@ -168,9 +169,10 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override
-  public List<Listing> getListings() {
-    try{
+  @Override public List<Listing> getListings()
+  {
+    try
+    {
       return listingDAO.getAll();
     }
     catch (SQLException e)
@@ -198,7 +200,7 @@ public class ServerModelImpl implements ServerModel
     try
     {
       Listing temp = listingDAO.create(title, descText, category, location, Double.parseDouble(price), duration, Date.valueOf(date), accountId);
-     // support.firePropertyChange("NewListing", null, temp);
+      // support.firePropertyChange("NewListing", null, temp);
       if (temp != null)
       {
         return true;
@@ -288,8 +290,7 @@ public class ServerModelImpl implements ServerModel
     return false;
   }
 
-  @Override
-  public List<Message> getMessage()
+  @Override public List<Message> getMessage()
   {
     return new ArrayList<>(messages);
   }
@@ -298,7 +299,7 @@ public class ServerModelImpl implements ServerModel
   {
     Message message = new Message(msg);
     messages.add(message);
-    support.firePropertyChange("NewMessage",null,message);
+    support.firePropertyChange("NewMessage", null, message);
     return message.getMessage();
   }
 
@@ -339,6 +340,38 @@ public class ServerModelImpl implements ServerModel
       e.printStackTrace();
     }
     return null;
+  }
+
+  @Override public boolean updateAccount(Account account)
+  {
+    try
+    {
+      accountDAO.update(account);
+      return true;
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean isEmailTaken(String email)
+  {
+    try
+    {
+      Account temp = accountDAO.readByEmail(email);
+      if (temp == null)
+      {
+        return false;
+      }
+      return true;
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return true;
   }
 
   @Override public void addListener(String eventName, PropertyChangeListener listener)

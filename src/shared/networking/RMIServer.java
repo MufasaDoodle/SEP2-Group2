@@ -32,4 +32,6 @@ public interface RMIServer extends Remote
   int getAccountId(String email) throws RemoteException;
   List<Listing> getListingsByAccount(int accountId) throws RemoteException;
 
+  boolean updateAccount(Account account) throws RemoteException;
+  boolean isEmailTaken(String email) throws RemoteException;
 }

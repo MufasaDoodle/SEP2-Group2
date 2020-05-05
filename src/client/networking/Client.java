@@ -24,4 +24,6 @@ public interface Client extends Subject
   int getAccountId(String email);
   List<Listing> getListingsByAccount(int accountId);
 
+  boolean updateAccount(Account account);
+  boolean isEmailTaken(String email);
 }
