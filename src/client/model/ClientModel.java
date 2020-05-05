@@ -33,4 +33,6 @@ public interface ClientModel extends Subject
   int getCurrentAccountID();
   List<Listing> getListingsByAccount(int accountId);
 
+  boolean updateAccount(String email, String pass, String address, String number, String bio);
+  boolean isEmailTaken(String email);
 }

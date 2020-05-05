@@ -44,23 +44,41 @@ public class ClientModelManager implements ClientModel
     return client.getListingsByAccount(accountId);
   }
 
+  @Override public boolean updateAccount(String email, String pass, String address, String number, String bio)
+  {
+    Account currentAccount = client.getAccountById(currentAccountID);
+    Account updatedAccount = new Account(currentAccount.getId(), currentAccount.getName(), email, pass, address, number, bio);
+    if (client.updateAccount(updatedAccount))
+    {
+      System.out.println("Account updated");
+      return true;
+    }
+    return false;
+  }
+
+  @Override public boolean isEmailTaken(String email)
+  {
+    return client.isEmailTaken(email);
+  }
 
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
   {
     support.firePropertyChange(propertyChangeEvent);
   }
+
   private void onNewListing(PropertyChangeEvent event)
   {
     support.firePropertyChange(event);
   }
-  @Override
-  public List<Listing> getListings() {
+
+  @Override public List<Listing> getListings()
+  {
     System.out.println("All listings have been retrieved");
     return client.getListings();
   }
 
-  @Override
-  public List<Listing> getSorting(String request, String title, String category, String location) {
+  @Override public List<Listing> getSorting(String request, String title, String category, String location)
+  {
     System.out.println("Listings have been retrieved");
     return client.getSorting(request, title, category, location);
   }
@@ -86,7 +104,7 @@ public class ClientModelManager implements ClientModel
   {
     System.out.println("Listing created!");
     accountId = getCurrentAccountID();
-    return client.createListing(title, descText, price, category, location, duration, date, accountId );
+    return client.createListing(title, descText, price, category, location, duration, date, accountId);
   }
 
   @Override public boolean checkLogIn(String email, String password)

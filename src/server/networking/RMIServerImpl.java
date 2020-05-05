@@ -36,15 +36,11 @@ public class RMIServerImpl implements RMIServer
     System.out.println("Server started");
   }
 
-  @Override public boolean createListing(String title, String descText,
-      String price, String category, String location, String duration,
-      String date, int accountId)
+  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId)
   {
     try
     {
-      return serverModel
-          .createListing(title, descText, price, category, location, duration,
-              date,accountId);
+      return serverModel.createListing(title, descText, price, category, location, duration, date, accountId);
     }
     catch (RemoteException e)
     {
@@ -53,14 +49,11 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email,
-      String password1, String address, String phoneNumber)
-      throws RemoteException
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber) throws RemoteException
   {
     try
     {
-      return serverModel
-          .createAccount(name, email, password1, address, phoneNumber);
+      return serverModel.createAccount(name, email, password1, address, phoneNumber);
     }
     catch (RemoteException e)
     {
@@ -85,13 +78,11 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email,
-      String password1, String address, String phoneNumber, String bio)
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
   {
     try
     {
-      return serverModel
-          .createAccount(name, email, password1, address, phoneNumber, bio);
+      return serverModel.createAccount(name, email, password1, address, phoneNumber, bio);
     }
     catch (RemoteException e)
     {
@@ -100,8 +91,7 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
-  @Override public List<Listing> getSorting(String request, String title,
-      String category, String location)
+  @Override public List<Listing> getSorting(String request, String title, String category, String location)
   {
     try
     {
@@ -234,4 +224,29 @@ public class RMIServerImpl implements RMIServer
     }
   }
 
+  @Override public boolean updateAccount(Account account)
+  {
+    try
+    {
+      return serverModel.updateAccount(account);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override public boolean isEmailTaken(String email)
+  {
+    try
+    {
+      return serverModel.isEmailTaken(email);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return true;
+  }
 }
