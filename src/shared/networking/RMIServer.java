@@ -37,4 +37,7 @@ public interface RMIServer extends Remote
 
   boolean updateListing(Listing listing) throws RemoteException;
   void deleteListing(int id) throws RemoteException;
+
+  void addDeletedItemId(int itemId) throws RemoteException;
+  List<Integer> getDeletedItemIds() throws RemoteException;
 }

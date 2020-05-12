@@ -11,7 +11,6 @@ import database.feedback.toitem.FeedbackToItemDAOImpl;
 import shared.transferobjects.Message;
 import stuffs.Account;
 import stuffs.Listing;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
@@ -30,6 +29,8 @@ public class ServerModelImpl implements ServerModel
   private List<Message> messages;
   private List<Listing> listings;
 
+  private List<Integer> deletedItemIds;
+
   public ServerModelImpl()
   {
     try
@@ -39,6 +40,7 @@ public class ServerModelImpl implements ServerModel
       feedbackToAccountDAO = FeedbackToAccountDAOImpl.getInstance();
       feedbackToItemDAO = FeedbackToItemDAOImpl.getInstance();
       messages = new ArrayList<>();
+      deletedItemIds = new ArrayList<>();
     }
     catch (SQLException e)
     {
@@ -303,7 +305,7 @@ public class ServerModelImpl implements ServerModel
     return message.getMessage();
   }
 
-  @Override public Account getAccountById(int id) throws RemoteException
+  @Override public Account getAccountById(int id)
   {
     try
     {
@@ -316,7 +318,7 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override public int getAccountId(String email) throws RemoteException
+  @Override public int getAccountId(String email)
   {
     try
     {
@@ -388,7 +390,7 @@ public class ServerModelImpl implements ServerModel
     return false;
   }
 
-  @Override public void deleteListing(int id) throws RemoteException
+  @Override public void deleteListing(int id)
   {
     try
     {
@@ -398,6 +400,31 @@ public class ServerModelImpl implements ServerModel
     {
       e.printStackTrace();
     }
+  }
+
+  @Override public void addDeletedItemId(int itemId)
+  {
+    try
+    {
+      deletedItemIds.add(itemId);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public List<Integer> getDeletedItemIds()
+  {
+    try
+    {
+      return deletedItemIds;
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   @Override public void addListener(String eventName, PropertyChangeListener listener)

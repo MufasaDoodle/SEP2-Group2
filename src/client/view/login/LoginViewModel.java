@@ -3,6 +3,7 @@ package client.view.login;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 import shared.util.EmailCheck;
 
 public class LoginViewModel
@@ -26,13 +27,21 @@ public class LoginViewModel
       boolean temp = clientModel.checkLogIn(email, password);
       if (!temp)
       {
-        error.set("Password or email is wrong");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Email or password is wrong!");
+        alert.setContentText("Please check your email or password!");
+        alert.showAndWait();
       }
       return temp;
     }
     else
     {
-      error.set("Email is not valid");
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Email is not valid!");
+      alert.setContentText("Please check your email again!");
+      alert.showAndWait();
       return false;
     }
   }

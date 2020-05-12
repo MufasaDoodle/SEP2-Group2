@@ -3,12 +3,9 @@ package client.view.createlisting;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import java.util.Optional;
 
 public class ListingController implements ViewController
 {
@@ -36,26 +33,34 @@ public class ListingController implements ViewController
     categoryBox.getItems().add("Sports");
   }
 
-  public void createListingBtn(ActionEvent actionEvent)
+  public void createListingBtn()
   {
-    if (viewModel.createListing(titleField.getText(), descriptionArea.getText(), priceField.getText(),categoryBox.getSelectionModel().getSelectedItem(), locField.getText(), durationField.getText()))
-    {
-      titleField.setText("");
-      descriptionArea.setText("");
-      priceField.setText("");
-      categoryBox.getSelectionModel().selectFirst();
-      locField.setText("");
-      durationField.setText("");
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Create listing");
+    alert.setHeaderText("Do you want to add this new listing?");
+
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK){
+      if (viewModel.createListing(titleField.getText(), descriptionArea.getText(), priceField.getText(),categoryBox.getSelectionModel().getSelectedItem(), locField.getText(), durationField.getText()))
+      {
+        titleField.setText("");
+        descriptionArea.setText("");
+        priceField.setText("");
+        categoryBox.getSelectionModel().selectFirst();
+        locField.setText("");
+        durationField.setText("");
+      }
     }
   }
 
-  public void backBtn(ActionEvent actionEvent)
+  public void backBtn()
   {
     viewModel.errorProperty().set("");
     vh.openLogInScene();
   }
 
-  public void onChatView(ActionEvent actionEvent)
+  public void onChatView()
   {
     vh.openChatScene();
   }

@@ -5,11 +5,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import shared.util.EmailCheck;
 import stuffs.Account;
 import stuffs.Listing;
-
 import java.util.List;
+import java.util.Optional;
 
 public class AccountViewModel
 {
@@ -117,7 +119,8 @@ public class AccountViewModel
   public void listOfOwnerListings()
   {
     Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
-    List<Listing> list = clientModel.getListingsByAccount(clientModel.getAccountById(temp.getAccountId()).getId());
+    List<Listing> list = clientModel.getListingsByAccount(
+        clientModel.getAccountById(temp.getAccountId()).getId());
     listings = FXCollections.observableArrayList(list);
   }
 
@@ -128,7 +131,8 @@ public class AccountViewModel
 
   public void updateEditFields()
   {
-    Account account = clientModel.getAccountById(clientModel.getCurrentAccountID());
+    Account account = clientModel
+        .getAccountById(clientModel.getCurrentAccountID());
     emailEdit.set(account.getEmail());
     addressEdit.set(account.getAddress());
     numberEdit.set(account.getPhoneNumber());
@@ -137,53 +141,93 @@ public class AccountViewModel
     pass2.set(account.getPassword());
   }
 
-  public void updateAccountInfo(String email, String pass1, String pass2, String address, String number, String bio)
+  public void updateAccountInfo(String email, String pass1, String pass2,
+      String address, String number, String bio)
   {
-    if (!email.equals("") && !pass1.equals("") && !pass2.equals("") && !address.equals("") && !number.equals("") && !bio.equals(""))
+    if (!email.equals("") && !pass1.equals("") && !pass2.equals("") && !address
+        .equals("") && !number.equals("") && !bio.equals(""))
     {
       if (EmailCheck.isValid(email))
       {
         if (pass1.equals(pass2))
         {
-          if (clientModel.isEmailTaken(email) && !clientModel.getAccountById(clientModel.getCurrentAccountID()).getEmail().equals(email))
+          if (clientModel.isEmailTaken(email) && !clientModel
+              .getAccountById(clientModel.getCurrentAccountID()).getEmail()
+              .equals(email))
           {
-            error.set("Email already in use");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Email is already in use!");
+            alert.setContentText("Please choose another!");
+            alert.showAndWait();
           }
           else
           {
-            if (clientModel.updateAccount(email, pass1, address, number, bio))
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Update Account");
+            alert.setHeaderText("Do you want to update your account?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.get() == ButtonType.OK)
             {
-              error.set("Account updated");
-              setOwner();
-            }
-            else
-            {
-              error.set("Account could not be updated, try again later");
+              if (clientModel.updateAccount(email, pass1, address, number, bio))
+              {
+                error.set("Account updated");
+                setOwner();
+              }
+              else
+              {
+                error.set("Account could not be updated, try again later");
+              }
             }
           }
         }
         else
         {
-          error.set("Passwords must match");
+          Alert alert = new Alert(Alert.AlertType.WARNING);
+          alert.setTitle("Warning");
+          alert.setHeaderText("Passwords do not match!");
+          alert.setContentText("Please check your passwords!");
+          alert.showAndWait();
         }
       }
       else
       {
-        error.set("Invalid email");
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText("Email is not valid!");
+        alert.setContentText("Please check your email again!");
+        alert.showAndWait();
       }
     }
     else
     {
-      error.set("All * fields must be filled");
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("All * fields must be filled!");
+      alert.setContentText("Please fill all * fields!");
+      alert.showAndWait();
     }
   }
 
   public boolean checkOwner(String name)
   {
-    if (clientModel.getAccountById(clientModel.getCurrentAccountID()).getName().equals(name))
+    if (clientModel.getAccountById(clientModel.getCurrentAccountID()).getName()
+        .equals(name))
     {
       return true;
     }
     return false;
+  }
+
+  public int getCurrentItemId()
+  {
+    return clientModel.getCurrentItemID();
+  }
+
+  public List<Integer> getDeletedItemIds()
+  {
+    return clientModel.getDeletedItemIds();
   }
 }

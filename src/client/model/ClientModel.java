@@ -38,4 +38,7 @@ public interface ClientModel extends Subject
 
   boolean updateListing(String title, String description, String category, String location, double price, String duration);
   void deleteListing(int id);
+
+  void addDeletedItemId(int itemId);
+  List<Integer> getDeletedItemIds();
 }

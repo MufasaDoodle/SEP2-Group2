@@ -3,8 +3,8 @@ package client.view.itemView;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -71,7 +71,7 @@ public class ItemViewController implements ViewController
     }
   }
 
-  public void onRateButtons(ActionEvent actionEvent)
+  public void onRateButtons()
   {
 
     //Todo
@@ -80,7 +80,18 @@ public class ItemViewController implements ViewController
 
   public void onContactOwner()
   {
-    vh.openAccountScene();
+    if (!(viewModel.getDeletedItemIds().contains(viewModel.getCurrentItemId())))
+    {
+      vh.openAccountScene();
+    }
+    else
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item deleted");
+      alert.setContentText("Item is not available!");
+      alert.showAndWait();
+    }
   }
 
   public void onBackToListing()

@@ -3,9 +3,6 @@ package client.view.itemView;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import stuffs.Account;
 import stuffs.Listing;
 
 import java.beans.PropertyChangeEvent;
@@ -97,6 +94,15 @@ public class ItemViewModel
     //set rating properly
     rating.set("0");
     description.set(temp.getDescription());
+  }
+
+  public int getCurrentItemId(){
+    return clientModel.getCurrentItemID();
+  }
+
+  public List<Integer> getDeletedItemIds()
+  {
+    return clientModel.getDeletedItemIds();
   }
 
 

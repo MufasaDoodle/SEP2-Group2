@@ -10,8 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import stuffs.Listing;
 
-import javax.swing.*;
-
 public class AccountViewController implements ViewController
 {
   private @FXML Label editErrorLabel;
@@ -90,15 +88,42 @@ public class AccountViewController implements ViewController
 
   public void onBackButton()
   {
-    vh.openItemScene();
+    if (!(viewModel.getDeletedItemIds().contains(viewModel.getCurrentItemId())))
+    {
+      vh.openItemScene();
+    }
+    else
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item deleted");
+      alert.setContentText("Item is not available!");
+      alert.showAndWait();
+      vh.openSeeListingScene();
+    }
+
+
   }
 
-  public void onSeeItem(ActionEvent actionEvent)
+  public void onSeeItem()
   {
     int selectIndex = listingTable.getSelectionModel().getFocusedIndex();
     int itemID = listingTable.getItems().get(selectIndex).getId();
     viewModel.setItem(itemID);
-    vh.openItemScene();
+
+    if (!(viewModel.getDeletedItemIds().contains(itemID)))
+    {
+      vh.openItemScene();
+    }
+    else
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item deleted");
+      alert.setContentText("Item is not available!");
+      alert.showAndWait();
+      vh.openSeeListingScene();
+    }
   }
 
   public void onEditItem()
@@ -110,10 +135,16 @@ public class AccountViewController implements ViewController
     if (viewModel.checkOwner(nameLabel.getText()))
     {
       vh.openEditItemScene();
+    }else{
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Not owner");
+      alert.setContentText("You are not the owner of this item!");
+      alert.showAndWait();
     }
   }
 
-  public void tabEvent(Event event)
+  public void tabEvent()
   {
     if (editTab.isSelected())
     {
@@ -121,7 +152,7 @@ public class AccountViewController implements ViewController
     }
   }
 
-  public void onUpdate(ActionEvent actionEvent)
+  public void onUpdate()
   {
     viewModel.updateAccountInfo(emailField.getText(), passField.getText(),
         passField2.getText(), addressField.getText(), numberField.getText(),

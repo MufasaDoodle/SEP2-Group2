@@ -5,7 +5,6 @@ import shared.networking.RMIServer;
 import shared.transferobjects.Message;
 import stuffs.Account;
 import stuffs.Listing;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
@@ -234,6 +233,30 @@ public class RMIClient implements Client, ClientCallback
     catch (RemoteException e)
     {
       e.printStackTrace();
+    }
+  }
+
+  @Override public void addDeletedItemId(int itemId)
+  {
+    try
+    {
+      server.addDeletedItemId(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (add deleted item id)...");
+    }
+  }
+
+  @Override public List<Integer> getDeletedItemIds()
+  {
+    try
+    {
+      return server.getDeletedItemIds();
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (get deleted item ids)...");
     }
   }
 

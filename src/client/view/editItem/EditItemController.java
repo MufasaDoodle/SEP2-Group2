@@ -3,10 +3,8 @@ package client.view.editItem;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.util.Optional;
 
 public class EditItemController implements ViewController
@@ -53,15 +51,13 @@ public class EditItemController implements ViewController
     vh.openSeeListingScene();
   }
 
-  public void onUpdate(ActionEvent actionEvent)
+  public void onUpdate()
   {
     viewModel.updateListing(titleField.getText(), descriptionField.getText(),
         categoryCombo.getSelectionModel().getSelectedItem(),
         locationField.getText(), durationField.getText(),
         Double.parseDouble(priceField.getText()));
   }
-
-
 
   public void DeleteButton()
   {
