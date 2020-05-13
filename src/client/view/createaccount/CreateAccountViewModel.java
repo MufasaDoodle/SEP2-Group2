@@ -3,6 +3,7 @@ package client.view.createaccount;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 import shared.util.EmailCheck;
 
 public class CreateAccountViewModel
@@ -39,22 +40,38 @@ public class CreateAccountViewModel
           }
           else
           {
-            error.set("Email already in use");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Email is already in use!");
+            alert.setContentText("Please choose another!");
+            alert.showAndWait();
           }
         }
         else
         {
-          error.set("Passwords must match");
+          Alert alert = new Alert(Alert.AlertType.WARNING);
+          alert.setTitle("Warning");
+          alert.setHeaderText("Passwords do not match!");
+          alert.setContentText("Please check your passwords!");
+          alert.showAndWait();
         }
       }
       else
       {
-        error.set("Invalid email");
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText("Email is not valid!");
+        alert.setContentText("Please check your email again!");
+        alert.showAndWait();
       }
     }
     else
     {
-      error.set("All * fields must be filled");
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("All * fields must be filled!");
+      alert.setContentText("Please fill all * fields!");
+      alert.showAndWait();
     }
   }
 
@@ -73,25 +90,42 @@ public class CreateAccountViewModel
           if (clientModel.createAccount(name, email, password1, address, phoneNumber, bio))
           {
             error.set("Account created");
+
           }
           else
           {
-            error.set("Email already in use");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Email is already in use!");
+            alert.setContentText("Please choose another!");
+            alert.showAndWait();
           }
         }
         else
         {
-          error.set("Passwords must match");
+          Alert alert = new Alert(Alert.AlertType.WARNING);
+          alert.setTitle("Warning");
+          alert.setHeaderText("Passwords do not match!");
+          alert.setContentText("Please check your passwords!");
+          alert.showAndWait();
         }
       }
       else
       {
-        error.set("Invalid email");
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText("Email is not valid!");
+        alert.setContentText("Please check your email again!");
+        alert.showAndWait();
       }
     }
     else
     {
-      error.set("All * fields must be filled");
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("All * fields must be filled!");
+      alert.setContentText("Please fill all * fields!");
+      alert.showAndWait();
     }
   }
 }

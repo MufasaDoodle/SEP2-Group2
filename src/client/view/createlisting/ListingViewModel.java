@@ -3,9 +3,8 @@ package client.view.createlisting;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 import shared.util.NumericCheck;
-
-import java.beans.PropertyChangeEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,12 +49,19 @@ public class ListingViewModel
       }
       else
       {
-        error.set("Price must be a number");
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText("Price must be a number!");
+        alert.showAndWait();
       }
     }
     else
     {
-      error.set("All fields must be filled");
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("All fields must be filled!");
+      alert.setContentText("You left some fields empty!");
+      alert.showAndWait();
     }
     return false;
   }

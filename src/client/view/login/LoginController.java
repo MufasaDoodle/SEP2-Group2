@@ -3,7 +3,6 @@ package client.view.login;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -25,24 +24,24 @@ public class LoginController implements ViewController
     errorLabel.textProperty().bind(viewModel.errorProperty());
   }
 
-  public void onLogIn(ActionEvent actionEvent)
+  public void onLogIn()
   {
     if (viewModel.checkLogIn(emailField.getText(), passwordField.getText()))
     {
       viewModel.setAccountId(emailField.getText());
-      vh.openCreateListingScene();
+      vh.openSeeListingScene();
       emailField.setText("");
       passwordField.setText("");
     }
 
   }
 
-  public void onCreateAccountView(ActionEvent actionEvent)
+  public void onCreateAccountView()
   {
     vh.openAccountCreateScene();
   }
 
-  public void onChatView(ActionEvent actionEvent)
+  public void onChatView()
   {
     vh.openChatScene();
   }

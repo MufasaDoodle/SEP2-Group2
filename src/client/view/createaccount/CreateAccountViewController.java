@@ -3,13 +3,10 @@ package client.view.createaccount;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
-import java.io.IOException;
+import java.util.Optional;
 
 public class CreateAccountViewController implements ViewController
 {
@@ -34,20 +31,33 @@ public class CreateAccountViewController implements ViewController
     AccountErrorLabel.textProperty().bind(viewModel.errorProperty());
   }
 
-  public void OnAccountCreate(ActionEvent actionEvent)
+  public void OnAccountCreate()
   {
-    if (bioField.getText().equals(""))
-    {
-      viewModel.createAccount(nameField.getText(), emailField.getText(), password1Field.getText(), password2Field.getText(), addressField.getText(), phoneNumberField.getText());
-    }
-    else
-    {
-      viewModel.createAccount(nameField.getText(), emailField.getText(), password1Field.getText(), password2Field.getText(), addressField.getText(), phoneNumberField.getText(), bioField.getText());
-    }
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Create Account");
+    alert.setHeaderText("Do you want to create an account?");
 
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK)
+    {
+      if (bioField.getText().equals(""))
+      {
+        viewModel.createAccount(nameField.getText(), emailField.getText(),
+            password1Field.getText(), password2Field.getText(),
+            addressField.getText(), phoneNumberField.getText());
+      }
+      else
+      {
+        viewModel.createAccount(nameField.getText(), emailField.getText(),
+            password1Field.getText(), password2Field.getText(),
+            addressField.getText(), phoneNumberField.getText(),
+            bioField.getText());
+      }
+    }
   }
 
-  public void OnLogInView(ActionEvent actionEvent)
+  public void OnLogInView()
   {
     vh.openLogInScene();
     nameField.setText("");

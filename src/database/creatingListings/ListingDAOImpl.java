@@ -2,7 +2,6 @@ package database.creatingListings;
 
 import stuffs.Listing;
 
-import java.rmi.RemoteException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -1592,7 +1591,7 @@ public class ListingDAOImpl implements ListingDAO
   @Override
   public List<Listing> getAll() throws SQLException {
     try (Connection connection = getConnection()) {
-      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings");
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Listings WHERE accountid > '1' ");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next()) {

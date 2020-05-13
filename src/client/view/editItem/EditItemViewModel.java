@@ -71,6 +71,7 @@ public class EditItemViewModel
   }
 
   public void deleteItem(){
+    clientModel.addDeletedItemId(clientModel.getCurrentItemID());
     clientModel.deleteListing(clientModel.getCurrentItemID());
   }
 
@@ -79,8 +80,7 @@ public class EditItemViewModel
   }
 
   public Listing getItem(){
-    Listing item = clientModel.getListingByID(clientModel.getCurrentItemID());
-    return item;
+    return clientModel.getListingByID(clientModel.getCurrentItemID());
   }
 
   public void updateListing(String title, String description, String category,
@@ -94,7 +94,7 @@ public class EditItemViewModel
           .updateListing(title, description, category, location, price,
               duration))
       {
-        error.set("Account updated");
+        error.set("Listing updated");
       }
       else
       {
@@ -107,12 +107,5 @@ public class EditItemViewModel
     }
   }
 
-  public boolean checkOwner(String name)
-  {
-    if (clientModel.getAccountById(clientModel.getCurrentAccountID()).getName().equals(name))
-    {
-      return true;
-    }
-    return false;
-  }
+
 }

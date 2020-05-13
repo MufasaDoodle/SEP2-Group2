@@ -1,13 +1,10 @@
 package server.model;
 
-import shared.networking.Sorting;
 import shared.transferobjects.Message;
 import shared.util.Subject;
 import stuffs.Account;
 import stuffs.Listing;
-
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface ServerModel extends Subject
@@ -30,4 +27,7 @@ public interface ServerModel extends Subject
 
   boolean updateListing(Listing listing) throws RemoteException;
   void deleteListing(int id) throws RemoteException;
+
+  void addDeletedItemId(int itemId) throws RemoteException;
+  List<Integer> getDeletedItemIds() throws RemoteException;
 }

@@ -4,7 +4,6 @@ import shared.transferobjects.Message;
 import shared.util.Subject;
 import stuffs.Account;
 import stuffs.Listing;
-
 import java.util.List;
 
 public interface Client extends Subject
@@ -29,4 +28,7 @@ public interface Client extends Subject
 
   boolean updateListing(Listing listing);
   void deleteListing(int id);
+
+  void addDeletedItemId(int itemId);
+  List<Integer> getDeletedItemIds();
 }

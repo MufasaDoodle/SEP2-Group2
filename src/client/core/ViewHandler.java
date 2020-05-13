@@ -41,7 +41,7 @@ public class ViewHandler
       {
         Parent root = loadFXML("../view/login/LogIn.fxml");
 
-        stage.setTitle("Rent - Log in");
+        stage.setTitle("Log in");
         loginScene = new Scene(root);
       }
       catch (IOException e)
@@ -105,7 +105,7 @@ public class ViewHandler
       {
         Parent root = loadFXML("../view/createlisting/CreateListing.fxml");
 
-        stage.setTitle("Renting thingy - Create Listing");
+        stage.setTitle("Create Listing");
         listingScene = new Scene(root);
       }
       catch (IOException e)
@@ -125,7 +125,7 @@ public class ViewHandler
       {
         Parent root = loadFXML("../view/listingView/listingView.fxml");
 
-        stage.setTitle("See Listings");
+        stage.setTitle("Listings");
         seeListingScene = new Scene(root);
       }
       catch (IOException e)
@@ -205,6 +205,7 @@ public class ViewHandler
       }
 
     }
+    seeListingScene = null;
     accountScene = null;
     stage.setScene(itemScene);
     stage.show();

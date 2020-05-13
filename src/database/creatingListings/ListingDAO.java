@@ -2,8 +2,6 @@ package database.creatingListings;
 
 import shared.networking.Sorting;
 import stuffs.Listing;
-
-import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;

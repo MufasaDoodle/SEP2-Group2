@@ -86,6 +86,16 @@ public class ClientModelManager implements ClientModel
     client.deleteListing(id);
   }
 
+  @Override public void addDeletedItemId(int itemId)
+  {
+    client.addDeletedItemId(itemId);
+  }
+
+  @Override public List<Integer> getDeletedItemIds()
+  {
+    return client.getDeletedItemIds();
+  }
+
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
   {
     support.firePropertyChange(propertyChangeEvent);
@@ -115,7 +125,7 @@ public class ClientModelManager implements ClientModel
 
   @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
   {
-    System.out.println("Account created! (but not really)");
+    System.out.println("Account created!");
     return client.createAccount(name, email, password1, address, phoneNumber);
   }
 

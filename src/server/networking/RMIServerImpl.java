@@ -6,7 +6,6 @@ import shared.networking.RMIServer;
 import shared.transferobjects.Message;
 import stuffs.Account;
 import stuffs.Listing;
-
 import java.beans.PropertyChangeListener;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -49,7 +48,7 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber) throws RemoteException
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
   {
     try
     {
@@ -197,7 +196,7 @@ public class RMIServerImpl implements RMIServer
     }
   }
 
-  @Override public int getAccountId(String email) throws RemoteException
+  @Override public int getAccountId(String email)
   {
     try
     {
@@ -250,7 +249,7 @@ public class RMIServerImpl implements RMIServer
     return true;
   }
 
-  @Override public boolean updateListing(Listing listing) throws RemoteException
+  @Override public boolean updateListing(Listing listing)
   {
     try
     {
@@ -263,7 +262,7 @@ public class RMIServerImpl implements RMIServer
     return false;
   }
 
-  @Override public void deleteListing(int id) throws RemoteException
+  @Override public void deleteListing(int id)
   {
     try
     {
@@ -273,5 +272,30 @@ public class RMIServerImpl implements RMIServer
     {
       e.printStackTrace();
     }
+  }
+
+  @Override public void addDeletedItemId(int itemId)
+  {
+    try
+    {
+      serverModel.addDeletedItemId(itemId);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public List<Integer> getDeletedItemIds()
+  {
+    try
+    {
+      return serverModel.getDeletedItemIds();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
   }
 }
