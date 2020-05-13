@@ -41,4 +41,7 @@ public interface ClientModel extends Subject
 
   void addDeletedItemId(int itemId);
   List<Integer> getDeletedItemIds();
+
+  void setFromListingViewOpen(boolean whereFrom);
+  boolean getFromListingViewOpen();
 }

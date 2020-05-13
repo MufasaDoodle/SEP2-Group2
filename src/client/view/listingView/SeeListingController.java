@@ -519,6 +519,13 @@ public class SeeListingController implements ViewController
       alert.setContentText("Item is not available!");
       alert.showAndWait();
     }
-
   }
+
+  public void onMyAccount(){
+    vm.setWhereFromOpen(true);
+    vh.openAccountScene();
+  }
+
+
+
 }

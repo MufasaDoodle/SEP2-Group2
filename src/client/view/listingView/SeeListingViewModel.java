@@ -55,4 +55,8 @@ public class SeeListingViewModel
   {
     return clientModel.getDeletedItemIds();
   }
+
+  public void setWhereFromOpen(boolean whereFromOpen){
+    clientModel.setFromListingViewOpen(whereFromOpen);
+  }
 }
