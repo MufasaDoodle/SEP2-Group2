@@ -98,15 +98,23 @@ public class AccountViewModel
 
   public void setOwner()
   {
-    //Todo
-    //Need the account id from an item
-    int itemId = clientModel.getCurrentItemID();
-    int accountId = clientModel.getListingByID(itemId).getAccountId();
-    Account temp = clientModel.getAccountById(accountId);
-    name.set(temp.getName());
-    address.set(temp.getAddress());
-    phone.set(temp.getPhoneNumber());
-    bio.set(temp.getBio());
+    if (clientModel.getFromListingViewOpen()){
+      Account temp = clientModel.getAccountById(clientModel.getCurrentAccountID());
+      name.set(temp.getName());
+      address.set(temp.getAddress());
+      phone.set(temp.getPhoneNumber());
+      bio.set(temp.getBio());
+    }else if (!clientModel.getFromListingViewOpen()){
+      int itemId = clientModel.getCurrentItemID();
+      int accountId = clientModel.getListingByID(itemId).getAccountId();
+      Account temp = clientModel.getAccountById(accountId);
+      name.set(temp.getName());
+      address.set(temp.getAddress());
+      phone.set(temp.getPhoneNumber());
+      bio.set(temp.getBio());
+    }
+
+
     //Need an avg rate for account
     //avgRate.set(String.valueOf(temp.));
   }
@@ -118,10 +126,15 @@ public class AccountViewModel
 
   public void listOfOwnerListings()
   {
-    Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
-    List<Listing> list = clientModel.getListingsByAccount(
-        clientModel.getAccountById(temp.getAccountId()).getId());
-    listings = FXCollections.observableArrayList(list);
+    if (clientModel.getFromListingViewOpen()){
+      List<Listing> list = clientModel.getListingsByAccount(clientModel.getCurrentAccountID());
+      listings = FXCollections.observableArrayList(list);
+    }else if (!clientModel.getFromListingViewOpen()){
+      Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
+      List<Listing> list = clientModel.getListingsByAccount(
+          clientModel.getAccountById(temp.getAccountId()).getId());
+      listings = FXCollections.observableArrayList(list);
+    }
   }
 
   public void setItem(int itemID)

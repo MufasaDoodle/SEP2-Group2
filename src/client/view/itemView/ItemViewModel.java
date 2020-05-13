@@ -86,14 +86,16 @@ public class ItemViewModel
 
   public void setItem()
   {
-    Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
-    owner.set(clientModel.getAccountById(temp.getAccountId()).getName());
-    itemName.set(temp.getTitle());
-    price.set(String.valueOf(temp.getPrice()));
-    location.set(temp.getLocation());
-    //set rating properly
-    rating.set("0");
-    description.set(temp.getDescription());
+    if (getCurrentItemId()!= 0) {
+      Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
+      owner.set(clientModel.getAccountById(temp.getAccountId()).getName());
+      itemName.set(temp.getTitle());
+      price.set(String.valueOf(temp.getPrice()));
+      location.set(temp.getLocation());
+      //set rating properly
+      rating.set("0");
+      description.set(temp.getDescription());
+    }
   }
 
   public int getCurrentItemId(){
@@ -103,6 +105,10 @@ public class ItemViewModel
   public List<Integer> getDeletedItemIds()
   {
     return clientModel.getDeletedItemIds();
+  }
+
+  public void setWhereFromOpen(boolean whereFromOpen){
+    clientModel.setFromListingViewOpen(whereFromOpen);
   }
 
 

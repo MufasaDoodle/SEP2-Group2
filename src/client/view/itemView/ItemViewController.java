@@ -82,6 +82,7 @@ public class ItemViewController implements ViewController
   {
     if (!(viewModel.getDeletedItemIds().contains(viewModel.getCurrentItemId())))
     {
+      viewModel.setWhereFromOpen(false);
       vh.openAccountScene();
     }
     else

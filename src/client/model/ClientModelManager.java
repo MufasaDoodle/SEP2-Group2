@@ -19,9 +19,11 @@ public class ClientModelManager implements ClientModel
   private PropertyChangeSupport support = new PropertyChangeSupport(this);
   private String username;
   private String itemName;
-  private int currentItemID;
+  private int currentItemID = 0;
 
   private int currentAccountID;
+
+  private boolean fromListingViewOpen;
 
   public ClientModelManager(Client client)
   {
@@ -30,6 +32,18 @@ public class ClientModelManager implements ClientModel
     client.addListener("NewMessage", this::onNewMessage);
     //client.addListener("NewListing", this::onNewListing);
   }
+
+  @Override public void setFromListingViewOpen(boolean whereFrom)
+  {
+    fromListingViewOpen = whereFrom;
+  }
+
+  @Override public boolean getFromListingViewOpen()
+  {
+    return fromListingViewOpen;
+  }
+
+
 
   @Override public void setCurrentAccountID(String email)
   {
