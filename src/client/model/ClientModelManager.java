@@ -23,6 +23,8 @@ public class ClientModelManager implements ClientModel
 
   private int currentAccountID;
 
+  private int currentChatterID;
+
   private boolean fromListingViewOpen;
 
   public ClientModelManager(Client client)
@@ -169,12 +171,12 @@ public class ClientModelManager implements ClientModel
 
   @Override public String broadCastMessage(String msg)
   {
-    return client.broadCastMessage(msg);
+    return client.broadCastMessage(msg, currentAccountID, currentChatterID);
   }
 
   @Override public List<Message> getMessage()
   {
-    return client.getMessage();
+    return client.getMessage(currentAccountID, currentChatterID);
   }
 
   @Override public int getCurrentItemID()
@@ -208,10 +210,19 @@ public class ClientModelManager implements ClientModel
     return this.itemName;
   }
 
+  @Override public int getCurrentChatterID()
+  {
+    return currentChatterID;
+  }
+
+  @Override public void setCurrentChatterID(int currentChatterID)
+  {
+    this.currentChatterID = currentChatterID;
+  }
+
   @Override public void addListener(String eventName, PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(eventName, listener);
-
   }
 
   @Override public void removeListener(String eventName, PropertyChangeListener listener)

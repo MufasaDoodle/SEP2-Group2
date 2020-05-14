@@ -44,4 +44,7 @@ public interface ClientModel extends Subject
 
   void setFromListingViewOpen(boolean whereFrom);
   boolean getFromListingViewOpen();
+
+  int getCurrentChatterID();
+  void setCurrentChatterID(int currentChatterID);
 }

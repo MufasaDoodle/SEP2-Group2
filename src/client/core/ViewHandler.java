@@ -207,6 +207,7 @@ public class ViewHandler
     }
     seeListingScene = null;
     accountScene = null;
+    chatScene = null;
     stage.setScene(itemScene);
     stage.show();
   }

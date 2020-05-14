@@ -13,7 +13,6 @@ public class ItemViewModel
   private ClientModel clientModel;
   private StringProperty request, reply, owner, itemName, price, location, rating, description;
 
-
   public ItemViewModel(ClientModel clientModel)
   {
     this.clientModel = clientModel;
@@ -86,7 +85,8 @@ public class ItemViewModel
 
   public void setItem()
   {
-    if (getCurrentItemId()!= 0) {
+    if (getCurrentItemId() != 0)
+    {
       Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
       owner.set(clientModel.getAccountById(temp.getAccountId()).getName());
       itemName.set(temp.getTitle());
@@ -98,7 +98,8 @@ public class ItemViewModel
     }
   }
 
-  public int getCurrentItemId(){
+  public int getCurrentItemId()
+  {
     return clientModel.getCurrentItemID();
   }
 
@@ -107,9 +108,17 @@ public class ItemViewModel
     return clientModel.getDeletedItemIds();
   }
 
-  public void setWhereFromOpen(boolean whereFromOpen){
+  public void setWhereFromOpen(boolean whereFromOpen)
+  {
     clientModel.setFromListingViewOpen(whereFromOpen);
   }
 
-
+  public void saveChatterID()
+  {
+    int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
+    if (!(clientModel.getCurrentAccountID() == accID))
+    {
+      clientModel.setCurrentChatterID(accID);
+    }
+  }
 }

@@ -260,11 +260,11 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public String broadCastMessage(String msg)
+  @Override public String broadCastMessage(String msg, int fromAccount, int toAccount)
   {
     try
     {
-      return server.broadCastMessage(msg);
+      return server.broadCastMessage(msg, fromAccount, toAccount);
     }
     catch (RemoteException e)
     {
@@ -272,11 +272,11 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public List<Message> getMessage()
+  @Override public List<Message> getMessage(int account1, int account2)
   {
     try
     {
-      return server.getMessages();
+      return server.getMessages(account1, account2);
     }
     catch (RemoteException e)
     {

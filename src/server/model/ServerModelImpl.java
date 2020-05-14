@@ -8,9 +8,12 @@ import database.feedback.toaccount.FeedbackToAccountDAO;
 import database.feedback.toaccount.FeedbackToAccountDAOImpl;
 import database.feedback.toitem.FeedbackToItemDAO;
 import database.feedback.toitem.FeedbackToItemDAOImpl;
+import database.messages.MessagesDAO;
+import database.messages.MessagesDAOImpl;
 import shared.transferobjects.Message;
 import stuffs.Account;
 import stuffs.Listing;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
@@ -26,6 +29,7 @@ public class ServerModelImpl implements ServerModel
   private ListingDAO listingDAO;
   private FeedbackToAccountDAO feedbackToAccountDAO;
   private FeedbackToItemDAO feedbackToItemDAO;
+  private MessagesDAO messageDAO;
   private List<Message> messages;
   private List<Listing> listings;
 
@@ -39,6 +43,7 @@ public class ServerModelImpl implements ServerModel
       listingDAO = ListingDAOImpl.getInstance();
       feedbackToAccountDAO = FeedbackToAccountDAOImpl.getInstance();
       feedbackToItemDAO = FeedbackToItemDAOImpl.getInstance();
+      messageDAO = MessagesDAOImpl.getInstance();
       messages = new ArrayList<>();
       deletedItemIds = new ArrayList<>();
     }
@@ -292,17 +297,73 @@ public class ServerModelImpl implements ServerModel
     return false;
   }
 
-  @Override public List<Message> getMessage()
+  @Override public List<Message> getMessage(int account1, int account2)
   {
-    return new ArrayList<>(messages);
+    try
+    {
+      return messageDAO.getAllMessagesBetween(account1, account2);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Error contacting database");
+    }
   }
 
-  @Override public String broadCastMessage(String msg)
+  @Override public String broadCastMessage(String msg, int fromAccount, int toAccount)
   {
-    Message message = new Message(msg);
+    Message message = new Message(msg, fromAccount, toAccount);
     messages.add(message);
-    support.firePropertyChange("NewMessage", null, message);
-    return message.getMessage();
+    try
+    {
+      messageDAO.saveMessage(message);
+      support.firePropertyChange("NewMessage", null, message);
+      return message.getMessage();
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Error contacting database");
+    }
+  }
+
+  @Override public List<Message> getAllMessagesFromAccount(int fromAccount)
+  {
+    try
+    {
+      return messageDAO.getAllMessagesFromAccount(fromAccount);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Error contacting database");
+    }
+  }
+
+  @Override public List<Message> getAllMessagesToAccount(int toAccount)
+  {
+    try
+    {
+      return messageDAO.getAllMessagesToAccount(toAccount);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Error contacting database");
+    }
+  }
+
+  @Override public List<Message> getAllMessagesInvolvingAccount(int account)
+  {
+    try
+    {
+      return messageDAO.getAllMessagesInvolvingAccount(account);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Error contacting database");
+    }
   }
 
   @Override public Account getAccountById(int id)

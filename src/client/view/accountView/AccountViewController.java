@@ -80,7 +80,7 @@ public class AccountViewController implements ViewController
     viewModel.setOwner();
   }
 
-  public void onBackButton()
+  @FXML public void onBackButton()
   {
     if (!(viewModel.getDeletedItemIds().contains(viewModel.getCurrentItemId())))
     {
@@ -99,7 +99,7 @@ public class AccountViewController implements ViewController
 
   }
 
-  public void onSeeItem()
+  @FXML public void onSeeItem()
   {
     int selectIndex = listingTable.getSelectionModel().getFocusedIndex();
     int itemID = listingTable.getItems().get(selectIndex).getId();
@@ -119,8 +119,12 @@ public class AccountViewController implements ViewController
       vh.openSeeListingScene();
     }
   }
+  @FXML public void onMessage()
+  {
+    vh.openChatScene();
+  }
 
-  public void onEditItem()
+  @FXML public void onEditItem()
   {
     int selectIndex = listingTable.getSelectionModel().getFocusedIndex();
     int itemID = listingTable.getItems().get(selectIndex).getId();
@@ -138,7 +142,7 @@ public class AccountViewController implements ViewController
     }
   }
 
-  public void tabEvent()
+  @FXML public void tabEvent()
   {
     if (editTab.isSelected())
     {
@@ -146,7 +150,7 @@ public class AccountViewController implements ViewController
     }
   }
 
-  public void onUpdate()
+  @FXML public void onUpdate()
   {
     viewModel.updateAccountInfo(emailField.getText(), passField.getText(), passField2.getText(), addressField.getText(), numberField.getText(), bioField.getText());
   }

@@ -16,8 +16,13 @@ public interface ServerModel extends Subject
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber) throws RemoteException;
   boolean checkLogIn(String email, String password) throws RemoteException;
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio) throws RemoteException;
-  List<Message> getMessage() throws RemoteException;
-  String broadCastMessage(String msg) throws RemoteException;
+
+  List<Message> getMessage(int account1, int account2) throws RemoteException;
+  String broadCastMessage(String msg, int fromAccount, int toAccount) throws RemoteException;
+  List<Message> getAllMessagesFromAccount(int fromAccount) throws RemoteException;
+  List<Message> getAllMessagesToAccount(int toAccount) throws RemoteException;
+  List<Message> getAllMessagesInvolvingAccount(int account) throws RemoteException;
+
   Account getAccountById(int id) throws RemoteException;
 
   int getAccountId(String email) throws RemoteException;

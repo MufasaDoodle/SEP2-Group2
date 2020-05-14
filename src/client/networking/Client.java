@@ -16,8 +16,8 @@ public interface Client extends Subject
   void startClient();
   boolean checkLogIn(String email, String password);
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio);
-  String broadCastMessage(String msg);
-  List<Message> getMessage();
+  String broadCastMessage(String msg, int fromAccount, int toAccount);
+  List<Message> getMessage(int account1, int account2);
   void unRegisterClient();
   Account getAccountById(int id);
   int getAccountId(String email);
