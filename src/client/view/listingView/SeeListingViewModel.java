@@ -59,4 +59,9 @@ public class SeeListingViewModel
   public void setWhereFromOpen(boolean whereFromOpen){
     clientModel.setFromListingViewOpen(whereFromOpen);
   }
+
+  public void setAccountIDToLocalID()
+  {
+    clientModel.setLocalAccountID();
+  }
 }

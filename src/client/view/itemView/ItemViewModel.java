@@ -126,4 +126,13 @@ public class ItemViewModel
   {
     clientModel.saveChatterName();
   }
+
+  public void saveViewingAccountID()
+  {
+    int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
+    if (!(clientModel.getCurrentAccountID() == accID))
+    {
+      clientModel.setViewingAccountID(accID);
+    }
+  }
 }

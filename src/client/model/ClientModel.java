@@ -3,6 +3,7 @@ package client.model;
 import shared.transferobjects.Message;
 import shared.util.Subject;
 import stuffs.Account;
+import stuffs.ChatItem;
 import stuffs.Listing;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ public interface ClientModel extends Subject
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio);
   String broadCastMessage(String msg);
   List<Message> getMessage();
+  List<ChatItem> getMessagesInvolving();
   int getCurrentItemID();
   void setCurrentItemID(int itemID);
   //Todo
@@ -45,7 +47,11 @@ public interface ClientModel extends Subject
 
   int getCurrentChatterID();
   void setCurrentChatterID(int currentChatterID);
+  int getViewingAccountID();
+  void setViewingAccountID(int viewingAccountID);
   String getChatterName();
   void setChatterName(String chatterName);
   void saveChatterName();
+  boolean checkOwner();
+  void setLocalAccountID();
 }

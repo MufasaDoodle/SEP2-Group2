@@ -20,7 +20,7 @@ public class ViewHandler
   private Scene itemScene;
   private Scene accountScene;
   private Scene editItemScene;
-
+  private Scene messagesScene;
 
   public ViewHandler(ViewModelFactory vmf)
   {
@@ -93,6 +93,7 @@ public class ViewHandler
     }
     itemScene = null;
     editItemScene = null;
+    messagesScene = null;
     stage.setScene(accountScene);
     stage.show();
   }
@@ -117,6 +118,7 @@ public class ViewHandler
     stage.setScene(listingScene);
     stage.show();
   }
+
   public void openSeeListingScene()
   {
     if (seeListingScene == null)
@@ -137,6 +139,7 @@ public class ViewHandler
     stage.setScene(seeListingScene);
     stage.show();
   }
+
   //change
   public void openAccountCreateScene()
   {
@@ -170,8 +173,10 @@ public class ViewHandler
     return root;
   }
 
-  public void openChatScene(){
-    if (chatScene == null){
+  public void openChatScene()
+  {
+    if (chatScene == null)
+    {
       try
       {
         Parent root = loadFXML("../view/chatView/chatView.fxml");
@@ -186,12 +191,15 @@ public class ViewHandler
 
     }
     itemScene = null; //must be set to null in order to initialize properly with new items
+    messagesScene = null;
     stage.setScene(chatScene);
     stage.show();
   }
 
-  public void openItemScene(){
-    if (itemScene == null){
+  public void openItemScene()
+  {
+    if (itemScene == null)
+    {
       try
       {
         Parent root = loadFXML("../view/itemView/itemView.fxml");
@@ -209,6 +217,27 @@ public class ViewHandler
     accountScene = null;
     chatScene = null;
     stage.setScene(itemScene);
+    stage.show();
+  }
+
+  public void openMessagesScene()
+  {
+    if (messagesScene == null)
+    {
+      try
+      {
+        Parent root = loadFXML("../view/messages/Messages.fxml");
+
+        messagesScene = new Scene(root);
+        stage.setTitle("Messages");
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+
+    }
+    stage.setScene(messagesScene);
     stage.show();
   }
 }

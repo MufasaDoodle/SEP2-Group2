@@ -284,6 +284,19 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
+  @Override public List<Message> getAllMessagesInvolvingAccount(int account)
+  {
+    try
+    {
+      return server.getAllMessagesInvolvingAccount(account);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not contact server (getAllMessagesInvolving");
+    }
+  }
+
   @Override public void update(Message msg)
   {
     support.firePropertyChange("NewMessage", null, msg);

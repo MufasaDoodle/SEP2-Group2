@@ -47,7 +47,11 @@ public class ChatViewModel
 
   private void onNewMessage(PropertyChangeEvent evt)
   {
-    addNewMessage((Message) evt.getNewValue());
+    Message message = (Message) evt.getNewValue();
+    if (message.getToAccount() == clientModel.getCurrentAccountID() || message.getFromAccount() == clientModel.getCurrentAccountID())
+    {
+      addNewMessage((Message) evt.getNewValue());
+    }
     //messages.add(((Message) evt.getNewValue()).getMessage());
   }
 

@@ -108,7 +108,8 @@
                                         </HBox>
                                     </children>
                                 </Pane>
-                                <Button layoutX="415.0" layoutY="303.0" mnemonicParsing="false" onAction="#onMessage" prefHeight="35.0" prefWidth="70.0" text="Message" />
+                                <Button fx:id="messageBtn" layoutX="415.0" layoutY="303.0" mnemonicParsing="false" onAction="#onMessage" prefHeight="35.0" prefWidth="70.0" text="Message" />
+                        <Button fx:id="seeMessagesBtn" layoutX="398.0" layoutY="303.0" mnemonicParsing="false" onAction="#onSeeMessages" prefHeight="35.0" prefWidth="105.0" text="See Messages" />
                             </children>
                         </AnchorPane>
                     </content>

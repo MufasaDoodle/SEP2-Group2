@@ -29,7 +29,7 @@ public class ChatViewController implements ViewController
   {
     this.vh = vh;
     this.viewModel = vmf.getChatViewModel();
-    ownerName.textProperty().setValue("Owner: " + viewModel.getUsername());
+    ownerName.textProperty().setValue("User: " + viewModel.getUsername());
     //Todo itemName ownerName
     itemName.textProperty().setValue("Item: " + viewModel.getItemName());
     System.out.println("OwnerName: " + viewModel.getUsername());

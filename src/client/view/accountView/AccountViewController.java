@@ -26,6 +26,8 @@ public class AccountViewController implements ViewController
   private @FXML Label bioLabel;
   private @FXML Label avgRateLabel;
   private @FXML Button editItemButton;
+  private @FXML Button messagesBtn;
+  private @FXML Button seeMessagesBtn;
 
   @FXML private TableView<Listing> listingTable;
   @FXML private TableColumn<String, String> titleColumn;
@@ -62,6 +64,8 @@ public class AccountViewController implements ViewController
     if (!viewModel.checkOwner(nameLabel.getText()))
     {
       editTab.setDisable(true);
+      seeMessagesBtn.setDisable(true);
+      seeMessagesBtn.setVisible(false);
     }
 
     viewModel.listOfOwnerListings();
@@ -122,6 +126,11 @@ public class AccountViewController implements ViewController
   @FXML public void onMessage()
   {
     vh.openChatScene();
+  }
+
+  @FXML public void onSeeMessages()
+  {
+    vh.openMessagesScene();
   }
 
   @FXML public void onEditItem()

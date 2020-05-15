@@ -84,6 +84,7 @@ public class ItemViewController implements ViewController
     {
       viewModel.setWhereFromOpen(false);
       viewModel.saveChatterID();
+      viewModel.saveViewingAccountID();
       viewModel.saveChatterName();
       vh.openAccountScene();
     }
