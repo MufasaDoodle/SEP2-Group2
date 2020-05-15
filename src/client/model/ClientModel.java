@@ -23,8 +23,6 @@ public interface ClientModel extends Subject
   int getCurrentItemID();
   void setCurrentItemID(int itemID);
   //Todo
-  void setUsername(String username);
-  String getUsername();
   String getItemName();
   Account getAccountById(int id);
 
@@ -47,4 +45,7 @@ public interface ClientModel extends Subject
 
   int getCurrentChatterID();
   void setCurrentChatterID(int currentChatterID);
+  String getChatterName();
+  void setChatterName(String chatterName);
+  void saveChatterName();
 }

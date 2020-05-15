@@ -51,11 +51,11 @@ public class ChatViewModel
     //messages.add(((Message) evt.getNewValue()).getMessage());
   }
 
-  void addNewMessage(Message message)
+  private void addNewMessage(Message message)
   {
     //String yourName = clientModel.getAccountById(clientModel.getCurrentAccountID()).getName();
     //Use above if you want to have it use the user's name instead of writing "you:" in front of messages
-    String theirName = clientModel.getAccountById(clientModel.getCurrentChatterID()).getName();
+    String theirName = clientModel.getChatterName();
 
     if (message.getFromAccount() == clientModel.getCurrentAccountID())
     {
@@ -82,7 +82,7 @@ public class ChatViewModel
 
   public String getUsername()
   {
-    return clientModel.getUsername();
+    return clientModel.getChatterName();
   }
 
   public String getItemName()

@@ -17,13 +17,13 @@ public class ClientModelManager implements ClientModel
 {
   private Client client;
   private PropertyChangeSupport support = new PropertyChangeSupport(this);
-  private String username;
-  private String itemName;
   private int currentItemID = 0;
 
   private int currentAccountID;
 
   private int currentChatterID;
+  private String chatterName;
+  private String itemName;
 
   private boolean fromListingViewOpen;
 
@@ -187,22 +187,12 @@ public class ClientModelManager implements ClientModel
   @Override public void setCurrentItemID(int itemID)
   {
     currentItemID = itemID;
+    itemName = client.getListingByID(currentItemID).getTitle();
   }
 
   @Override public Account getAccountById(int id)
   {
     return client.getAccountById(id);
-  }
-
-  @Override public void setUsername(String username)
-  {
-    this.username = username;
-
-  }
-
-  @Override public String getUsername()
-  {
-    return this.username;
   }
 
   @Override public String getItemName()
@@ -218,6 +208,21 @@ public class ClientModelManager implements ClientModel
   @Override public void setCurrentChatterID(int currentChatterID)
   {
     this.currentChatterID = currentChatterID;
+  }
+
+  @Override public String getChatterName()
+  {
+    return chatterName;
+  }
+
+  @Override public void setChatterName(String chatterName)
+  {
+    this.chatterName = chatterName;
+  }
+
+  @Override public void saveChatterName()
+  {
+    setChatterName(client.getAccountById(currentChatterID).getName());
   }
 
   @Override public void addListener(String eventName, PropertyChangeListener listener)

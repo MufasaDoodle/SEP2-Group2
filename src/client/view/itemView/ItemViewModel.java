@@ -121,4 +121,9 @@ public class ItemViewModel
       clientModel.setCurrentChatterID(accID);
     }
   }
+
+  public void saveChatterName()
+  {
+    clientModel.saveChatterName();
+  }
 }
