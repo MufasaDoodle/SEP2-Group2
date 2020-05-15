@@ -8,8 +8,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import shared.util.EmailCheck;
-import stuffs.Account;
-import stuffs.Listing;
+import stuffs.*;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,9 @@ public class AccountViewModel
   private ClientModel clientModel;
   private StringProperty name, address, phone, bio, avgRate, emailEdit, addressEdit, numberEdit, bioEdit, error, pass1, pass2;
   private ObservableList<Listing> listings;
+  private ObservableList<RequestListing> requests;
+  private ObservableList<TransactionListing> transactions;
+  private boolean isDeclined;
 
   public AccountViewModel(ClientModel clientModel)
   {
@@ -96,24 +103,48 @@ public class AccountViewModel
     return pass2;
   }
 
+  public boolean getIsDeclined()
+  {
+    return isDeclined;
+  }
+
+  public void setIsDeclined(boolean declined)
+  {
+    isDeclined = declined;
+  }
+
   public void setOwner()
   {
-    if (clientModel.getFromListingViewOpen()){
-      Account temp = clientModel.getAccountById(clientModel.getCurrentAccountID());
-      name.set(temp.getName());
-      address.set(temp.getAddress());
-      phone.set(temp.getPhoneNumber());
-      bio.set(temp.getBio());
-    }else if (!clientModel.getFromListingViewOpen()){
-      int itemId = clientModel.getCurrentItemID();
-      int accountId = clientModel.getListingByID(itemId).getAccountId();
-      Account temp = clientModel.getAccountById(accountId);
+    if (clientModel.getFromListingViewOpen())
+    {
+      Account temp = clientModel
+          .getAccountById(clientModel.getCurrentAccountID());
       name.set(temp.getName());
       address.set(temp.getAddress());
       phone.set(temp.getPhoneNumber());
       bio.set(temp.getBio());
     }
+    else if (!clientModel.getFromListingViewOpen())
+    {
+      int itemId = clientModel.getCurrentItemID();
+      if (clientModel.getListingByID(itemId) == null)
+      {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText("Item was not chosen!");
+        alert.showAndWait();
+      }
+      else
+      {
+        int accountId = clientModel.getListingByID(itemId).getAccountId();
+        Account temp = clientModel.getAccountById(accountId);
+        name.set(temp.getName());
+        address.set(temp.getAddress());
+        phone.set(temp.getPhoneNumber());
+        bio.set(temp.getBio());
+      }
 
+    }
 
     //Need an avg rate for account
     //avgRate.set(String.valueOf(temp.));
@@ -126,15 +157,55 @@ public class AccountViewModel
 
   public void listOfOwnerListings()
   {
-    if (clientModel.getFromListingViewOpen()){
-      List<Listing> list = clientModel.getListingsByAccount(clientModel.getCurrentAccountID());
-      listings = FXCollections.observableArrayList(list);
-    }else if (!clientModel.getFromListingViewOpen()){
-      Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
-      List<Listing> list = clientModel.getListingsByAccount(
-          clientModel.getAccountById(temp.getAccountId()).getId());
+    if (clientModel.getFromListingViewOpen())
+    {
+      List<Listing> list = clientModel
+          .getListingsByAccount(clientModel.getCurrentAccountID());
       listings = FXCollections.observableArrayList(list);
     }
+    else if (!clientModel.getFromListingViewOpen())
+    {
+
+      if (clientModel.getListingByID(clientModel.getCurrentItemID()) != null)
+      {
+        Listing temp = clientModel
+            .getListingByID(clientModel.getCurrentItemID());
+        List<Listing> list = clientModel.getListingsByAccount(
+            clientModel.getAccountById(temp.getAccountId()).getId());
+        listings = FXCollections.observableArrayList(list);
+      }
+    }
+  }
+
+  public void listOfOwnerRentals()
+  {
+    List<TransactionListing> rentedTo = clientModel
+        .getTransactionByRentedTo(clientModel.getCurrentAccountID());
+    List<TransactionListing> rentedFrom = clientModel
+        .getTransactionByRentedFrom(clientModel.getCurrentAccountID());
+
+    List<TransactionListing> result = new ArrayList<>();
+
+    result.addAll(rentedTo);
+    result.addAll(rentedFrom);
+    transactions = FXCollections.observableArrayList(result);
+  }
+
+  ObservableList<TransactionListing> getTransactions()
+  {
+    return transactions;
+  }
+
+  public void listOfOwnerRequests()
+  {
+    List<RequestListing> requestList = clientModel
+        .getRequestByAccountId(clientModel.getCurrentAccountID());
+    requests = FXCollections.observableArrayList(requestList);
+  }
+
+  ObservableList<RequestListing> getRequests()
+  {
+    return requests;
   }
 
   public void setItem(int itemID)
@@ -242,5 +313,40 @@ public class AccountViewModel
   public List<Integer> getDeletedItemIds()
   {
     return clientModel.getDeletedItemIds();
+  }
+
+  public void acceptRent(int itemId, int rentedTo)
+  {
+    /*if (!isDeclined)
+    {*/
+      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      Date date = new Date();
+      int rentedFrom = clientModel.getCurrentAccountID();
+      clientModel.createTransaction(itemId, dateFormat.format(date), rentedTo,
+          rentedFrom);
+      clientModel.deleteRequest(itemId);
+      clientModel.addRentedItemId(itemId);
+    /*}*/
+    /*else
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Already declined!");
+      alert.showAndWait();
+    }*/
+  }
+
+  public Transaction getTransaction(int itemId)
+  {
+    return clientModel.getTransactionByItemId(itemId);
+  }
+
+  public void declineRent(int itemId, int rentedTo)
+  {
+    clientModel.deleteDecline(itemId, rentedTo);
+  }
+
+  public Request getRequest(int itemId, int requestFrom){
+    return clientModel.getRequest(itemId, requestFrom);
   }
 }
