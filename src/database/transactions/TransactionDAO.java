@@ -1,0 +1,21 @@
+package database.transactions;
+
+import stuffs.Transaction;
+import stuffs.TransactionListing;
+
+import java.sql.SQLException;
+import java.sql.Date;
+import java.util.List;
+
+public interface TransactionDAO
+{
+  Transaction create(int itemId,Date date, int rentedToId, int rentedFromId)
+      throws SQLException;
+  Transaction getTransactionByItemId(int itemId) throws SQLException;
+  void delete(int id) throws SQLException;
+
+  List<TransactionListing> getTransactionByRentedTo(int rentedTo) throws SQLException;
+  List<TransactionListing> getTransactionByRentedFrom(int rentedFrom) throws SQLException;
+
+
+}

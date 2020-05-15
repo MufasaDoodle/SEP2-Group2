@@ -4,10 +4,10 @@ import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import stuffs.Transaction;
+
+import java.util.Optional;
 
 public class ItemViewController implements ViewController
 {
@@ -98,6 +98,34 @@ public class ItemViewController implements ViewController
   public void onBackToListing()
   {
     vh.openSeeListingScene();
+  }
+
+  public void onRentItem()
+  {
+    Transaction transaction = viewModel
+        .getTransaction(viewModel.getCurrentItemId());
+
+    if (transaction == null)
+    {
+      Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+      alert.setTitle("Rent the item");
+      alert.setHeaderText("Do you want to rent this item?");
+
+      Optional<ButtonType> result = alert.showAndWait();
+
+      if (result.get() == ButtonType.OK)
+      {
+        viewModel.rentItem();
+      }
+    }else
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item rented");
+      alert.setContentText("Item is already rented, contact the owner for more information!");
+      alert.showAndWait();
+    }
+
   }
 }
 

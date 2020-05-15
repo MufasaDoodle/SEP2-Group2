@@ -8,9 +8,13 @@ import database.feedback.toaccount.FeedbackToAccountDAO;
 import database.feedback.toaccount.FeedbackToAccountDAOImpl;
 import database.feedback.toitem.FeedbackToItemDAO;
 import database.feedback.toitem.FeedbackToItemDAOImpl;
+import database.requests.RequestDAO;
+import database.requests.RequestDAOImpl;
+import database.transactions.TransactionDAO;
+import database.transactions.TransactionDAOImpl;
 import shared.transferobjects.Message;
-import stuffs.Account;
-import stuffs.Listing;
+import stuffs.*;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
@@ -28,8 +32,11 @@ public class ServerModelImpl implements ServerModel
   private FeedbackToItemDAO feedbackToItemDAO;
   private List<Message> messages;
   private List<Listing> listings;
+  private RequestDAO requestDAO;
+  private TransactionDAO transactionDAO;
 
   private List<Integer> deletedItemIds;
+  private List<Integer> rentedItemIds;
 
   public ServerModelImpl()
   {
@@ -39,8 +46,12 @@ public class ServerModelImpl implements ServerModel
       listingDAO = ListingDAOImpl.getInstance();
       feedbackToAccountDAO = FeedbackToAccountDAOImpl.getInstance();
       feedbackToItemDAO = FeedbackToItemDAOImpl.getInstance();
+      requestDAO = RequestDAOImpl.getInstance();
       messages = new ArrayList<>();
       deletedItemIds = new ArrayList<>();
+      rentedItemIds = new ArrayList<>();
+      listings = new ArrayList<>();
+      transactionDAO = TransactionDAOImpl.getInstance();
     }
     catch (SQLException e)
     {
@@ -48,7 +59,8 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
-  @Override public List<Listing> getSorting(String request, String title, String category, String location) throws RemoteException
+  @Override public List<Listing> getSorting(String request, String title,
+      String category, String location) throws RemoteException
   {
     try
     {
@@ -151,17 +163,23 @@ public class ServerModelImpl implements ServerModel
       else if (request.equals("categoryLocationPriceHighLow"))
         return listingDAO.categoryLocationPriceHighToLow(category, location);
       else if (request.equals("titleCategoryLocationOldNew"))
-        return listingDAO.titleCategoryLocationOldNew(title, category, location);
+        return listingDAO
+            .titleCategoryLocationOldNew(title, category, location);
       else if (request.equals("titleCategoryLocationNewOld"))
-        return listingDAO.titleCategoryLocationNewOld(title, category, location);
+        return listingDAO
+            .titleCategoryLocationNewOld(title, category, location);
       else if (request.equals("titleCategoryLocationRatingLowHigh"))
-        return listingDAO.titleCategoryLocationRatingLowToHigh(title, category, location);
+        return listingDAO
+            .titleCategoryLocationRatingLowToHigh(title, category, location);
       else if (request.equals("titleCategoryLocationRatingHighLow"))
-        return listingDAO.titleCategoryLocationRatingHighToLow(title, category, location);
+        return listingDAO
+            .titleCategoryLocationRatingHighToLow(title, category, location);
       else if (request.equals("titleCategoryLocationPriceLowHigh"))
-        return listingDAO.titleCategoryLocationPriceLowToHigh(title, category, location);
+        return listingDAO
+            .titleCategoryLocationPriceLowToHigh(title, category, location);
       else if (request.equals("titleCategoryLocationPriceHighLow"))
-        return listingDAO.titleCategoryLocationPriceHighToLow(title, category, location);
+        return listingDAO
+            .titleCategoryLocationPriceHighToLow(title, category, location);
     }
     catch (SQLException e)
     {
@@ -197,11 +215,14 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
-  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId)
+  @Override public boolean createListing(String title, String descText,
+      String price, String category, String location, String duration,
+      String date, int accountId)
   {
     try
     {
-      Listing temp = listingDAO.create(title, descText, category, location, Double.parseDouble(price), duration, Date.valueOf(date), accountId);
+      Listing temp = listingDAO.create(title, descText, category, location,
+          Double.parseDouble(price), duration, Date.valueOf(date), accountId);
       // support.firePropertyChange("NewListing", null, temp);
       if (temp != null)
       {
@@ -219,13 +240,15 @@ public class ServerModelImpl implements ServerModel
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
+  @Override public boolean createAccount(String name, String email,
+      String password1, String address, String phoneNumber)
   {
     try
     {
       if (accountDAO.readByEmail(email) == null)
       {
-        Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber);
+        Account temp = accountDAO
+            .createAccount(name, email, password1, address, phoneNumber);
         if (temp != null)
         {
           return true;
@@ -250,7 +273,8 @@ public class ServerModelImpl implements ServerModel
       Account temp = accountDAO.readByEmail(email);
       if (temp != null)
       {
-        if (temp.getEmail().equals(email) && temp.getPassword().equals(password))
+        if (temp.getEmail().equals(email) && temp.getPassword()
+            .equals(password))
         {
           return true;
         }
@@ -268,13 +292,15 @@ public class ServerModelImpl implements ServerModel
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
+  @Override public boolean createAccount(String name, String email,
+      String password1, String address, String phoneNumber, String bio)
   {
     try
     {
       if (accountDAO.readByEmail(email) == null)
       {
-        Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber, bio);
+        Account temp = accountDAO
+            .createAccount(name, email, password1, address, phoneNumber, bio);
         if (temp != null)
         {
           return true;
@@ -427,12 +453,158 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override public void addListener(String eventName, PropertyChangeListener listener)
+  @Override public void createRequest(int itemId, int requestFrom,
+      int requestTo)
+  {
+    try
+    {
+      requestDAO.create(itemId, requestFrom, requestTo);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteRequest(int id)
+  {
+    try
+    {
+      requestDAO.delete(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteDecline(int itemId, int requestFromId)
+  {
+    try
+    {
+      requestDAO.deleteDecline(itemId, requestFromId);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public List<RequestListing> getRequestByAccountId(int requestTo)
+
+  {
+    try
+    {
+      return requestDAO.getRequestByAccountId(requestTo);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public Request getRequest(int itemId, int requestFrom)
+  {
+    try
+    {
+      return requestDAO.getRequest(itemId, requestFrom);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void createTransaction(int itemId, String date,
+      int rentedToId, int rentedFromId)
+  {
+    try
+    {
+      transactionDAO
+          .create(itemId, Date.valueOf(date), rentedToId, rentedFromId);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public Transaction getTransactionByItemId(int itemId)
+  {
+    try
+    {
+      return transactionDAO.getTransactionByItemId(itemId);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public List<TransactionListing> getTransactionByRentedTo(
+      int rentedTo)
+  {
+    try
+    {
+      return transactionDAO.getTransactionByRentedTo(rentedTo);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public List<TransactionListing> getTransactionByRentedFrom(
+      int rentedFrom)
+  {
+    try
+    {
+      return transactionDAO.getTransactionByRentedFrom(rentedFrom);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void addRentedItemId(int itemId)
+  {
+    try
+    {
+      rentedItemIds.add(itemId);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public List<Integer> getRentedItemIds()
+  {
+    try
+    {
+      return rentedItemIds;
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void addListener(String eventName,
+      PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(eventName, listener);
   }
 
-  @Override public void removeListener(String eventName, PropertyChangeListener listener)
+  @Override public void removeListener(String eventName,
+      PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(eventName, listener);
   }

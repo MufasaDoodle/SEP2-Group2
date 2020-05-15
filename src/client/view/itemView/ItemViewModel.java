@@ -3,8 +3,10 @@ package client.view.itemView;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 import stuffs.Listing;
-
+import stuffs.Request;
+import stuffs.Transaction;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
@@ -12,7 +14,6 @@ public class ItemViewModel
 {
   private ClientModel clientModel;
   private StringProperty request, reply, owner, itemName, price, location, rating, description;
-
 
   public ItemViewModel(ClientModel clientModel)
   {
@@ -86,7 +87,8 @@ public class ItemViewModel
 
   public void setItem()
   {
-    if (getCurrentItemId()!= 0) {
+    if (getCurrentItemId() != 0)
+    {
       Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
       owner.set(clientModel.getAccountById(temp.getAccountId()).getName());
       itemName.set(temp.getTitle());
@@ -98,7 +100,8 @@ public class ItemViewModel
     }
   }
 
-  public int getCurrentItemId(){
+  public int getCurrentItemId()
+  {
     return clientModel.getCurrentItemID();
   }
 
@@ -107,9 +110,47 @@ public class ItemViewModel
     return clientModel.getDeletedItemIds();
   }
 
-  public void setWhereFromOpen(boolean whereFromOpen){
+  public void setWhereFromOpen(boolean whereFromOpen)
+  {
     clientModel.setFromListingViewOpen(whereFromOpen);
   }
 
+  public void rentItem()
+  {
+
+    int itemId = clientModel.getCurrentItemID();
+    int requestFrom = clientModel.getCurrentAccountID();
+    int requestTo = clientModel.getListingByID(clientModel.getCurrentItemID())
+        .getAccountId();
+
+    Request request = clientModel.getRequest(itemId, requestFrom);
+
+    if (request == null && requestFrom != requestTo)
+    {
+      clientModel.createRequest(itemId, requestFrom, requestTo);
+      Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+      alert1.setTitle("Rent the item");
+      alert1.setHeaderText("Rent request is sent to the owner!");
+      alert1.showAndWait();
+    }
+    else if (requestFrom == requestTo)
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Cannot rent your own item");
+      alert.showAndWait();
+    }
+    else
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Request already sent!");
+      alert.showAndWait();
+    }
+  }
+
+  public Transaction getTransaction(int itemID){
+    return clientModel.getTransactionByItemId(itemID);
+  }
 
 }

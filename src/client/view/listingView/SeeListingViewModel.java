@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import stuffs.Listing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeeListingViewModel
@@ -19,7 +20,6 @@ public class SeeListingViewModel
   {
     this.clientModel = clientModel;
     error = new SimpleStringProperty();
-
   }
 
   public StringProperty getError()
@@ -30,7 +30,17 @@ public class SeeListingViewModel
   public void listOfListings()
   {
     List<Listing> listListing = clientModel.getListings();
-    listings = FXCollections.observableArrayList(listListing);
+    List<Listing> result = new ArrayList<>();
+    for (int i = 0; i < listListing.size(); i++)
+    {
+      if ((!clientModel.getDeletedItemIds()
+          .contains(listListing.get(i).getId())) || (!clientModel
+          .getRentedItemIds().contains(listListing.get(i).getId())))
+      {
+          result.add(listListing.get(i));
+      }
+    }
+    listings = FXCollections.observableArrayList(result);
   }
 
   ObservableList<Listing> getListings()
@@ -43,7 +53,17 @@ public class SeeListingViewModel
   {
     List<Listing> list = clientModel
         .getSorting(request, title, category, location);
-    listings = FXCollections.observableArrayList(list);
+    List<Listing> result = new ArrayList<>();
+    for (int i = 0; i < list.size(); i++)
+    {
+      if ((!clientModel.getDeletedItemIds()
+          .contains(list.get(i).getId())) || (!clientModel
+          .getRentedItemIds().contains(list.get(i).getId())))
+      {
+        result.add(list.get(i));
+      }
+    }
+    listings = FXCollections.observableArrayList(result);
   }
 
   public void setItem(int itemID)
@@ -56,7 +76,8 @@ public class SeeListingViewModel
     return clientModel.getDeletedItemIds();
   }
 
-  public void setWhereFromOpen(boolean whereFromOpen){
+  public void setWhereFromOpen(boolean whereFromOpen)
+  {
     clientModel.setFromListingViewOpen(whereFromOpen);
   }
 }
