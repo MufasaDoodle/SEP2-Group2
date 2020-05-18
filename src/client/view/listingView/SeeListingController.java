@@ -16,6 +16,7 @@ public class SeeListingController implements ViewController
   @FXML private ComboBox<String> categoryBox;
   @FXML private ComboBox<String> sortingBox;
   @FXML private TableView<Listing> listingTable;
+  @FXML private TableColumn<String, String> promoteColumn;
   @FXML private TableColumn<String, String> titleColumn;
   @FXML private TableColumn<String, String> categoryColumn;
   @FXML private TableColumn<String, String> descriptionColumn;
@@ -23,6 +24,7 @@ public class SeeListingController implements ViewController
   @FXML private TableColumn<String, String> durationColumn;
   @FXML private TableColumn<String, String> priceColumn;
   @FXML private TableColumn<String, String> dateColumn;
+  @FXML private TableColumn<String, String> statusColumn;
   private ViewHandler vh;
   private SeeListingViewModel vm;
   private String request = "";
@@ -36,6 +38,7 @@ public class SeeListingController implements ViewController
     locationField.setText("");
     vm.listOfListings();
     listingTable.setItems(vm.getListings());
+    promoteColumn.setCellValueFactory(new PropertyValueFactory<>("promoted"));
     titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
     descriptionColumn
@@ -44,6 +47,7 @@ public class SeeListingController implements ViewController
     durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
     priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+    statusColumn.setCellValueFactory(new PropertyValueFactory<>("rented"));
 
     categoryBox.getItems().add("All");
     categoryBox.getItems().add("Gardening");

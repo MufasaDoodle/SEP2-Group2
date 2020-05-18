@@ -105,7 +105,7 @@ public class ItemViewController implements ViewController
     Transaction transaction = viewModel
         .getTransaction(viewModel.getCurrentItemId());
 
-    if (transaction == null)
+    if (viewModel.getListing().getRented().equals("Available"))
     {
       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
       alert.setTitle("Rent the item");
@@ -117,7 +117,7 @@ public class ItemViewController implements ViewController
       {
         viewModel.rentItem();
       }
-    }else
+    }else if(viewModel.getListing().getRented().equals("Rented"))
     {
       Alert alert = new Alert(Alert.AlertType.WARNING);
       alert.setTitle("Warning");

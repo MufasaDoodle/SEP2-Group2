@@ -34,10 +34,9 @@ public class SeeListingViewModel
     for (int i = 0; i < listListing.size(); i++)
     {
       if ((!clientModel.getDeletedItemIds()
-          .contains(listListing.get(i).getId())) || (!clientModel
-          .getRentedItemIds().contains(listListing.get(i).getId())))
+          .contains(listListing.get(i).getId())))
       {
-          result.add(listListing.get(i));
+        result.add(listListing.get(i));
       }
     }
     listings = FXCollections.observableArrayList(result);
@@ -56,9 +55,7 @@ public class SeeListingViewModel
     List<Listing> result = new ArrayList<>();
     for (int i = 0; i < list.size(); i++)
     {
-      if ((!clientModel.getDeletedItemIds()
-          .contains(list.get(i).getId())) || (!clientModel
-          .getRentedItemIds().contains(list.get(i).getId())))
+      if ((!clientModel.getDeletedItemIds().contains(list.get(i).getId())))
       {
         result.add(list.get(i));
       }

@@ -55,11 +55,13 @@ public class RMIClient implements Client, ClientCallback
     return temp;
   }
 
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
+  @Override public boolean createAccount(String name, String email,
+      String password1, String address, String phoneNumber, String bio)
   {
     try
     {
-      return server.createAccount(name, email, password1, address, phoneNumber, bio);
+      return server
+          .createAccount(name, email, password1, address, phoneNumber, bio);
     }
     catch (RemoteException e)
     {
@@ -82,7 +84,8 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public List<Listing> getSorting(String request, String title, String category, String location)
+  @Override public List<Listing> getSorting(String request, String title,
+      String category, String location)
   {
     try
     {
@@ -108,11 +111,15 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId)
+  @Override public boolean createListing(String title, String descText,
+      String price, String category, String location, String duration,
+      String date, int accountId,String promoted)
   {
     try
     {
-      return server.createListing(title, descText, price, category, location, duration, date, accountId);
+      return server
+          .createListing(title, descText, price, category, location, duration,
+              date, accountId, promoted);
     }
     catch (RemoteException e)
     {
@@ -121,7 +128,8 @@ public class RMIClient implements Client, ClientCallback
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
+  @Override public boolean createAccount(String name, String email,
+      String password1, String address, String phoneNumber)
   {
     try
     {
@@ -228,7 +236,7 @@ public class RMIClient implements Client, ClientCallback
   {
     try
     {
-       server.deleteListing(id);
+      server.deleteListing(id);
     }
     catch (RemoteException e)
     {
@@ -244,7 +252,8 @@ public class RMIClient implements Client, ClientCallback
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (add deleted item id)...");
+      throw new RuntimeException(
+          "Could not contact server (add deleted item id)...");
     }
   }
 
@@ -256,31 +265,8 @@ public class RMIClient implements Client, ClientCallback
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (get deleted item ids)...");
-    }
-  }
-
-  @Override public void addRentedItemId(int itemId)
-  {
-    try
-    {
-      server.addRentedItemId(itemId);
-    }
-    catch (RemoteException e)
-    {
-      throw new RuntimeException("Could not contact server (add rented item id)...");
-    }
-  }
-
-  @Override public List<Integer> getRentedItemIds()
-  {
-    try
-    {
-      return server.getRentedItemIds();
-    }
-    catch (RemoteException e)
-    {
-      throw new RuntimeException("Could not contact server (get rented item ids)...");
+      throw new RuntimeException(
+          "Could not contact server (get deleted item ids)...");
     }
   }
 
@@ -293,7 +279,8 @@ public class RMIClient implements Client, ClientCallback
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (create request)...");
+      throw new RuntimeException(
+          "Could not contact server (create request)...");
     }
   }
 
@@ -305,7 +292,8 @@ public class RMIClient implements Client, ClientCallback
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (deleted request)...");
+      throw new RuntimeException(
+          "Could not contact server (deleted request)...");
     }
   }
 
@@ -313,11 +301,12 @@ public class RMIClient implements Client, ClientCallback
   {
     try
     {
-      server.deleteDecline(itemId,requestFromId);
+      server.deleteDecline(itemId, requestFromId);
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (deleted request)...");
+      throw new RuntimeException(
+          "Could not contact server (deleted request)...");
     }
   }
 
@@ -337,7 +326,7 @@ public class RMIClient implements Client, ClientCallback
   {
     try
     {
-      return server.getRequest(itemId,requestFrom);
+      return server.getRequest(itemId, requestFrom);
     }
     catch (RemoteException e)
     {
@@ -350,11 +339,12 @@ public class RMIClient implements Client, ClientCallback
   {
     try
     {
-      server.createTransaction(itemId, date, rentedToId,rentedFromId);
+      server.createTransaction(itemId, date, rentedToId, rentedFromId);
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (create request)...");
+      throw new RuntimeException(
+          "Could not contact server (create request)...");
     }
   }
 
@@ -366,7 +356,8 @@ public class RMIClient implements Client, ClientCallback
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (get transaction)...");
+      throw new RuntimeException(
+          "Could not contact server (get transaction)...");
     }
   }
 
@@ -379,7 +370,8 @@ public class RMIClient implements Client, ClientCallback
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (get transactions)...");
+      throw new RuntimeException(
+          "Could not contact server (get transactions)...");
     }
   }
 
@@ -392,7 +384,8 @@ public class RMIClient implements Client, ClientCallback
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (get transactions)...");
+      throw new RuntimeException(
+          "Could not contact server (get transactions)...");
     }
   }
 
@@ -404,7 +397,8 @@ public class RMIClient implements Client, ClientCallback
     }
     catch (RemoteException e)
     {
-      throw new RuntimeException("Could not contact server (broadCastMessage)...");
+      throw new RuntimeException(
+          "Could not contact server (broadCastMessage)...");
     }
   }
 
@@ -425,12 +419,14 @@ public class RMIClient implements Client, ClientCallback
     support.firePropertyChange("NewMessage", null, msg);
   }
 
-  @Override public void addListener(String eventName, PropertyChangeListener listener)
+  @Override public void addListener(String eventName,
+      PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(eventName, listener);
   }
 
-  @Override public void removeListener(String eventName, PropertyChangeListener listener)
+  @Override public void removeListener(String eventName,
+      PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(eventName, listener);
   }

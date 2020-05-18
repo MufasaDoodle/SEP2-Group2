@@ -131,7 +131,7 @@ public class ClientModelManager implements ClientModel
   }
 
   @Override public boolean updateListing(String title, String description,
-      String category, String location, double price, String duration)
+      String category, String location, double price, String duration, String rented, String promoted)
   {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
@@ -139,7 +139,24 @@ public class ClientModelManager implements ClientModel
     Listing currentListing = client.getListingByID(currentItemID);
     Listing updatedListing = new Listing(title, description, category, location,
         price, duration, dateFormat.format(date), currentListing.getId(),
-        currentListing.getAccountId());
+        currentListing.getAccountId(),rented,promoted);
+    if (client.updateListing(updatedListing))
+    {
+      System.out.println("Listing updated");
+      return true;
+    }
+    return false;
+  }
+
+  @Override public boolean updateListingRented(String title, String description,
+      String category, String location, double price, String duration, String rented, int itemId, int accountId, String promoted)
+  {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = new Date();
+
+    Listing updatedListing = new Listing(title, description, category, location,
+        price, duration, dateFormat.format(date), itemId,
+        accountId,rented, promoted);
     if (client.updateListing(updatedListing))
     {
       System.out.println("Listing updated");
@@ -162,16 +179,6 @@ public class ClientModelManager implements ClientModel
   @Override public List<Integer> getDeletedItemIds()
   {
     return client.getDeletedItemIds();
-  }
-
-  @Override public void addRentedItemId(int itemId)
-  {
-    client.addRentedItemId(itemId);
-  }
-
-  @Override public List<Integer> getRentedItemIds()
-  {
-    return client.getRentedItemIds();
   }
 
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
@@ -217,13 +224,13 @@ public class ClientModelManager implements ClientModel
 
   @Override public boolean createListing(String title, String descText,
       String price, String category, String location, String duration,
-      String date, int accountId)
+      String date, int accountId, String promoted)
   {
     System.out.println("Listing created!");
     accountId = getCurrentAccountID();
     return client
         .createListing(title, descText, price, category, location, duration,
-            date, accountId);
+            date, accountId,promoted);
   }
 
   @Override public boolean checkLogIn(String email, String password)

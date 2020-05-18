@@ -207,10 +207,10 @@ public class AccountViewController implements ViewController
     int rentedToId = requestTable.getItems().get(selectIndex)
         .getRequestFromId();
 
-    Transaction transaction = viewModel.getTransaction(itemID);
+    Listing listing = viewModel.getListing(itemID);
     Request request = viewModel.getRequest(itemID,rentedToId);
 
-    if (transaction == null && request!=null)
+    if (listing.getRented().equals("Available") && request!=null)
     {
       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
       alert.setTitle("Rent the item");
@@ -219,6 +219,7 @@ public class AccountViewController implements ViewController
       if (result.get() == ButtonType.OK)
       {
         viewModel.acceptRent(itemID, rentedToId);
+        viewModel.updateListing(listing.getTitle(),listing.getDescription(),listing.getCategory(),listing.getLocation(),listing.getDuration(),listing.getPrice(), "Rented", listing.getId(),listing.getAccountId(),listing.getPromoted());
       }
     }
     else
@@ -238,10 +239,10 @@ public class AccountViewController implements ViewController
     int rentedToId = requestTable.getItems().get(selectIndex)
         .getRequestFromId();
 
-    Transaction transaction = viewModel.getTransaction(itemID);
+    Listing listing = viewModel.getListing(itemID);
     Request request = viewModel.getRequest(itemID,rentedToId);
 
-    if (transaction == null && request!=null)
+    if (listing.getRented().equals("Available") && request!=null)
     {
       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
       alert.setTitle("Rent the item");
@@ -259,5 +260,9 @@ public class AccountViewController implements ViewController
       alert.showAndWait();
     }
   }
+
+
+
+
 
 }

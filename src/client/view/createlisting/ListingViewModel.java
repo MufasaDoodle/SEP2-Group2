@@ -26,7 +26,7 @@ public class ListingViewModel
   }
 
 
-  public boolean createListing(String title, String descText, String price, String category, String location, String duration)
+  public boolean createListing(String title, String descText, String price, String category, String location, String duration, String promoted)
   {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
@@ -37,7 +37,7 @@ public class ListingViewModel
     {
       if (NumericCheck.isNumeric(price))
       {
-        if (clientModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date), accountId))
+        if (clientModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date), accountId, promoted))
         {
           error.set("Listing created");
           return true;

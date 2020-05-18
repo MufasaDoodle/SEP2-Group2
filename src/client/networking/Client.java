@@ -16,7 +16,7 @@ public interface Client extends Subject
   Listing getListingByID(int id);
   boolean createListing(String title, String descText, String price,
       String category, String location, String duration, String date,
-      int accountId);
+      int accountId,String promoted);
   boolean createAccount(String name, String email, String password1,
       String address, String phoneNumber);
   void startClient();
@@ -38,8 +38,6 @@ public interface Client extends Subject
 
   void addDeletedItemId(int itemId);
   List<Integer> getDeletedItemIds();
-  void addRentedItemId(int itemId) ;
-  List<Integer> getRentedItemIds() ;
 
   void createRequest(int itemId, int requestFrom, int requestTo);
   void deleteRequest(int id);
