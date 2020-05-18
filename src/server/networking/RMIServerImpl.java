@@ -360,31 +360,6 @@ public class RMIServerImpl implements RMIServer
     return null;
   }
 
-  @Override public void addRentedItemId(int itemId)
-  {
-    try
-    {
-      serverModel.addRentedItemId(itemId);
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  @Override public List<Integer> getRentedItemIds()
-  {
-    try
-    {
-      return serverModel.getDeletedItemIds();
-    }
-    catch (RemoteException e)
-    {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
   @Override
   public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) {
     try

@@ -133,8 +133,7 @@ public class AccountViewModel
       int accountId = clientModel.getListingByID(itemId).getAccountId();
       Account temp = clientModel.getAccountById(accountId);
 
-      Account temp = clientModel
-          .getAccountById(clientModel.getCurrentAccountID());
+      //Account temp = clientModel.getAccountById(clientModel.getCurrentAccountID());
       name.set(temp.getName());
       address.set(temp.getAddress());
       phone.set(temp.getPhoneNumber());
@@ -181,8 +180,6 @@ public class AccountViewModel
       Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
       List<Listing> list = clientModel.getListingsByAccount(clientModel.getAccountById(temp.getAccountId()).getId());
 
-      List<Listing> list = clientModel
-          .getListingsByAccount(clientModel.getCurrentAccountID());
       listings = FXCollections.observableArrayList(list);
     }
     else if (!clientModel.getFromListingViewOpen())
@@ -190,10 +187,8 @@ public class AccountViewModel
 
       if (clientModel.getListingByID(clientModel.getCurrentItemID()) != null)
       {
-        Listing temp = clientModel
-            .getListingByID(clientModel.getCurrentItemID());
-        List<Listing> list = clientModel.getListingsByAccount(
-            clientModel.getAccountById(temp.getAccountId()).getId());
+        Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
+        List<Listing> list = clientModel.getListingsByAccount(clientModel.getAccountById(temp.getAccountId()).getId());
         listings = FXCollections.observableArrayList(list);
       }
     }
@@ -201,10 +196,8 @@ public class AccountViewModel
 
   public void listOfOwnerRentals()
   {
-    List<TransactionListing> rentedTo = clientModel
-        .getTransactionByRentedTo(clientModel.getCurrentAccountID());
-    List<TransactionListing> rentedFrom = clientModel
-        .getTransactionByRentedFrom(clientModel.getCurrentAccountID());
+    List<TransactionListing> rentedTo = clientModel.getTransactionByRentedTo(clientModel.getCurrentAccountID());
+    List<TransactionListing> rentedFrom = clientModel.getTransactionByRentedFrom(clientModel.getCurrentAccountID());
 
     List<TransactionListing> result = new ArrayList<>();
 
@@ -220,8 +213,7 @@ public class AccountViewModel
 
   public void listOfOwnerRequests()
   {
-    List<RequestListing> requestList = clientModel
-        .getRequestByAccountId(clientModel.getCurrentAccountID());
+    List<RequestListing> requestList = clientModel.getRequestByAccountId(clientModel.getCurrentAccountID());
     requests = FXCollections.observableArrayList(requestList);
   }
 
@@ -347,13 +339,14 @@ public class AccountViewModel
   public void setAccountID(int accountID)
   {
     this.accountID = accountID;
+  }
+
   public void acceptRent(int itemId, int rentedTo)
   {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
     int rentedFrom = clientModel.getCurrentAccountID();
-    clientModel.createTransaction(itemId, dateFormat.format(date), rentedTo,
-        rentedFrom);
+    clientModel.createTransaction(itemId, dateFormat.format(date), rentedTo, rentedFrom);
     clientModel.deleteRequest(itemId);
   }
 
@@ -377,11 +370,8 @@ public class AccountViewModel
     return clientModel.getListingByID(itemId);
   }
 
-  public void updateListing(String title, String description, String category,
-      String location, String duration, double price, String rented, int itemId, int accountId,String promoted)
+  public void updateListing(String title, String description, String category, String location, String duration, double price, String rented, int itemId, int accountId, String promoted)
   {
-    clientModel
-        .updateListingRented(title, description, category, location, price, duration,
-            rented,itemId, accountId, promoted);
+    clientModel.updateListingRented(title, description, category, location, price, duration, rented, itemId, accountId, promoted);
   }
 }

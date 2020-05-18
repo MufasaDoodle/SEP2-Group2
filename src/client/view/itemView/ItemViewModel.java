@@ -10,6 +10,7 @@ import stuffs.FeedbackToItem;
 import stuffs.Listing;
 import stuffs.Request;
 import stuffs.Transaction;
+
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,25 +44,38 @@ public class ItemViewModel
     avgStarRating = new SimpleStringProperty();
   }
 
-  public boolean leaveFeedback( String starRating, String feedback, int itemId, int accountId, String accountName) {
-    for (int i = 0; i < clientModel.getRentedTo(itemId).size(); i++) {
-      if (accountId == clientModel.getRentedTo(itemId).get(i)) {
-        if ((!(starRating.equals("")) && feedback.equals(""))) {
-          if (clientModel.createFeedbackItems(itemId, starRating, "No feedback", accountId, accountName)) {
+  public boolean leaveFeedback(String starRating, String feedback, int itemId, int accountId, String accountName)
+  {
+    for (int i = 0; i < clientModel.getRentedTo(itemId).size(); i++)
+    {
+      if (accountId == clientModel.getRentedTo(itemId).get(i))
+      {
+        if ((!(starRating.equals("")) && feedback.equals("")))
+        {
+          if (clientModel.createFeedbackItems(itemId, starRating, "No feedback", accountId, accountName))
+          {
             error.setValue("Feedback created");
             return true;
           }
-        } else if (!(feedback.equals("")) && starRating.equals("")) {
-          if (clientModel.createFeedbackItems(itemId, "No star rating", feedback, accountId, accountName)) {
+        }
+        else if (!(feedback.equals("")) && starRating.equals(""))
+        {
+          if (clientModel.createFeedbackItems(itemId, "No star rating", feedback, accountId, accountName))
+          {
             error.setValue("Feedback created");
             return true;
           }
-        } else if (!(feedback.equals("") && starRating.equals(""))) {
-          if (clientModel.createFeedbackItems(itemId, starRating, feedback, accountId, accountName)) {
+        }
+        else if (!(feedback.equals("") && starRating.equals("")))
+        {
+          if (clientModel.createFeedbackItems(itemId, starRating, feedback, accountId, accountName))
+          {
             error.setValue("Feedback created");
             return true;
           }
-        } else {
+        }
+        else
+        {
           error.setValue("All fields must be filled");
           return false;
         }
@@ -70,6 +84,7 @@ public class ItemViewModel
     }
     return false;
   }
+
   public void listOfFeedback(int itemId)
   {
 
@@ -79,14 +94,17 @@ public class ItemViewModel
       System.out.println("List is nullito");
     }
     feedback = FXCollections.observableArrayList(list);
-    if (feedback == null) {
+    if (feedback == null)
+    {
       System.out.println("Feedback is null");
     }
   }
+
   ObservableList<FeedbackToItem> getFeedbackItems()
   {
     return feedback;
   }
+
   StringProperty requestProperty()
   {
     return request;
@@ -96,7 +114,6 @@ public class ItemViewModel
   {
     return reply;
   }
-
 
   public StringProperty ownerProperty()
   {
@@ -122,26 +139,32 @@ public class ItemViewModel
   {
     return description;
   }
+
   StringProperty idProperty()
   {
     return id;
   }
+
   public StringProperty errorProperty()
   {
     return error;
   }
+
   public StringProperty accountIdProperty()
   {
     return accountId;
   }
+
   public StringProperty accountNameProperty()
   {
     return accountName;
   }
+
   public StringProperty avgStarRatingProperty()
   {
     return avgStarRating;
   }
+
   public void setItem()
   {
     if (getCurrentItemId() != 0)
@@ -186,14 +209,14 @@ public class ItemViewModel
   public void saveChatterName()
   {
     clientModel.saveChatterName();
-    
+  }
+
   public void rentItem()
   {
 
     int itemId = clientModel.getCurrentItemID();
     int requestFrom = clientModel.getCurrentAccountID();
-    int requestTo = clientModel.getListingByID(clientModel.getCurrentItemID())
-        .getAccountId();
+    int requestTo = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
 
     Request request = clientModel.getRequest(itemId, requestFrom);
 
@@ -221,13 +244,15 @@ public class ItemViewModel
     }
   }
 
-  public Transaction getTransaction(int itemID){
+  public Transaction getTransaction(int itemID)
+  {
     return clientModel.getTransactionByItemId(itemID);
   }
 
-  public Listing getListing(){
+  public Listing getListing()
+  {
     int itemId = clientModel.getCurrentItemID();
-    return  clientModel.getListingByID(itemId);
+    return clientModel.getListingByID(itemId);
   }
 
   public void saveViewingAccountID()

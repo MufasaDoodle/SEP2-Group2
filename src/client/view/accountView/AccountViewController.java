@@ -6,12 +6,14 @@ import client.view.ViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import stuffs.*;
 
 import java.util.Optional;
 
 public class AccountViewController implements ViewController
 {
+  @FXML private Pane feedbackPane;
   private @FXML Label editErrorLabel;
   private @FXML Tab editTab;
   private @FXML Tab requestTab;
@@ -70,10 +72,8 @@ public class AccountViewController implements ViewController
     bioLabel.textProperty().bind(viewModel.bioProperty());
     avgRateLabel.textProperty().bind(viewModel.avgRateProperty());
     emailField.textProperty().bindBidirectional(viewModel.emailEditProperty());
-    addressField.textProperty()
-        .bindBidirectional(viewModel.addressEditProperty());
-    numberField.textProperty()
-        .bindBidirectional(viewModel.numberEditProperty());
+    addressField.textProperty().bindBidirectional(viewModel.addressEditProperty());
+    numberField.textProperty().bindBidirectional(viewModel.numberEditProperty());
     bioField.textProperty().bindBidirectional(viewModel.bioEditProperty());
     passField.textProperty().bindBidirectional(viewModel.pass1Property());
     passField2.textProperty().bindBidirectional(viewModel.pass2Property());
@@ -90,14 +90,17 @@ public class AccountViewController implements ViewController
 
       requestTab.setDisable(true);
       rentalsTab.setDisable(true);
+
+      //doesn't work
+      feedbackPane.setDisable(true);
+      feedbackPane.setVisible(false);
     }
 
     viewModel.listOfOwnerListings();
     listingTable.setItems(viewModel.getListings());
     titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
     categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-    descriptionColumn
-        .setCellValueFactory(new PropertyValueFactory<>("description"));
+    descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
     locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
     durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
     priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -109,9 +112,7 @@ public class AccountViewController implements ViewController
     categoryRequest.setCellValueFactory(new PropertyValueFactory<>("category"));
     priceRequest.setCellValueFactory(new PropertyValueFactory<>("price"));
     durationRequest.setCellValueFactory(new PropertyValueFactory<>("duration"));
-    requestFromRequest
-        .setCellValueFactory(new PropertyValueFactory<>("requestFrom"));
-
+    requestFromRequest.setCellValueFactory(new PropertyValueFactory<>("requestFrom"));
 
     viewModel.listOfOwnerRentals();
     transactionTable.setItems(viewModel.getTransactions());
@@ -119,12 +120,9 @@ public class AccountViewController implements ViewController
     categoryTransaction.setCellValueFactory(new PropertyValueFactory<>("category"));
     priceTransaction.setCellValueFactory(new PropertyValueFactory<>("price"));
     dateTransaction.setCellValueFactory(new PropertyValueFactory<>("dateFrom"));
-    durationTransaction
-        .setCellValueFactory(new PropertyValueFactory<>("duration"));
-    nameTransaction
-        .setCellValueFactory(new PropertyValueFactory<>("accountName"));
-    statusTransaction
-        .setCellValueFactory(new PropertyValueFactory<>("status"));
+    durationTransaction.setCellValueFactory(new PropertyValueFactory<>("duration"));
+    nameTransaction.setCellValueFactory(new PropertyValueFactory<>("accountName"));
+    statusTransaction.setCellValueFactory(new PropertyValueFactory<>("status"));
   }
 
   private void setOwner()
@@ -170,6 +168,7 @@ public class AccountViewController implements ViewController
       vh.openSeeListingScene();
     }
   }
+
   @FXML public void onMessage()
   {
     vh.openChatScene();
@@ -210,22 +209,19 @@ public class AccountViewController implements ViewController
 
   @FXML public void onUpdate()
   {
-    viewModel.updateAccountInfo(emailField.getText(), passField.getText(),
-        passField2.getText(), addressField.getText(), numberField.getText(),
-        bioField.getText());
+    viewModel.updateAccountInfo(emailField.getText(), passField.getText(), passField2.getText(), addressField.getText(), numberField.getText(), bioField.getText());
   }
 
   public void onAccept()
   {
     int selectIndex = requestTable.getSelectionModel().getFocusedIndex();
     int itemID = requestTable.getItems().get(selectIndex).getItemId();
-    int rentedToId = requestTable.getItems().get(selectIndex)
-        .getRequestFromId();
+    int rentedToId = requestTable.getItems().get(selectIndex).getRequestFromId();
 
     Listing listing = viewModel.getListing(itemID);
-    Request request = viewModel.getRequest(itemID,rentedToId);
+    Request request = viewModel.getRequest(itemID, rentedToId);
 
-    if (listing.getRented().equals("Available") && request!=null)
+    if (listing.getRented().equals("Available") && request != null)
     {
       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
       alert.setTitle("Rent the item");
@@ -234,7 +230,7 @@ public class AccountViewController implements ViewController
       if (result.get() == ButtonType.OK)
       {
         viewModel.acceptRent(itemID, rentedToId);
-        viewModel.updateListing(listing.getTitle(),listing.getDescription(),listing.getCategory(),listing.getLocation(),listing.getDuration(),listing.getPrice(), "Rented", listing.getId(),listing.getAccountId(),listing.getPromoted());
+        viewModel.updateListing(listing.getTitle(), listing.getDescription(), listing.getCategory(), listing.getLocation(), listing.getDuration(), listing.getPrice(), "Rented", listing.getId(), listing.getAccountId(), listing.getPromoted());
       }
     }
     else
@@ -251,13 +247,12 @@ public class AccountViewController implements ViewController
   {
     int selectIndex = requestTable.getSelectionModel().getFocusedIndex();
     int itemID = requestTable.getItems().get(selectIndex).getItemId();
-    int rentedToId = requestTable.getItems().get(selectIndex)
-        .getRequestFromId();
+    int rentedToId = requestTable.getItems().get(selectIndex).getRequestFromId();
 
     Listing listing = viewModel.getListing(itemID);
-    Request request = viewModel.getRequest(itemID,rentedToId);
+    Request request = viewModel.getRequest(itemID, rentedToId);
 
-    if (listing.getRented().equals("Available") && request!=null)
+    if (listing.getRented().equals("Available") && request != null)
     {
       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
       alert.setTitle("Rent the item");
@@ -267,7 +262,8 @@ public class AccountViewController implements ViewController
       {
         viewModel.declineRent(itemID, rentedToId);
       }
-    }else
+    }
+    else
     {
       Alert alert = new Alert(Alert.AlertType.WARNING);
       alert.setTitle("Warning");
@@ -275,9 +271,5 @@ public class AccountViewController implements ViewController
       alert.showAndWait();
     }
   }
-
-
-
-
 
 }

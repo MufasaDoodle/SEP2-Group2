@@ -292,30 +292,6 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public void addRentedItemId(int itemId)
-  {
-    try
-    {
-      server.addRentedItemId(itemId);
-    }
-    catch (RemoteException e)
-    {
-      throw new RuntimeException("Could not contact server (add rented item id)...");
-    }
-  }
-
-  @Override public List<Integer> getRentedItemIds()
-  {
-    try
-    {
-      return server.getRentedItemIds();
-    }
-    catch (RemoteException e)
-    {
-      throw new RuntimeException("Could not contact server (get rented item ids)...");
-    }
-  }
-
   @Override public void createRequest(int itemId, int requestFrom,
       int requestTo)
   {
@@ -480,18 +456,6 @@ public class RMIClient implements Client, ClientCallback
     {
       throw new RuntimeException(
           "Could not contact server (get transactions)...");
-    }
-  }
-
-  {
-    try
-    {
-      return server.broadCastMessage(msg, fromAccount, toAccount);
-    }
-    catch (RemoteException e)
-    {
-      throw new RuntimeException(
-          "Could not contact server (broadCastMessage)...");
     }
   }
 

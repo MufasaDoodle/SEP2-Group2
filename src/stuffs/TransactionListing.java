@@ -15,8 +15,7 @@ public class TransactionListing implements Serializable
   private int rentedToId;
   private String status;
 
-  public TransactionListing(String title, String category, double price,
-      String dateFrom, String duration, String accountName, String status)
+  public TransactionListing(String title, String category, double price, String dateFrom, String duration, String accountName, String status)
   {
     this.title = title;
     this.category = category;
