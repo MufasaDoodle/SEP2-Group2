@@ -1,8 +1,10 @@
 package database.feedback.toitem;
 
 import stuffs.FeedbackToItem;
+import stuffs.Listing;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
@@ -31,46 +33,24 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
         "group2", "password");
   }
 
-  @Override public FeedbackToItem createFeedback(int starRating, int itemId)
-      throws SQLException
+  @Override public FeedbackToItem createFeedback(String starRating, String writtenFeedback, int itemId, int accountId, String accountName) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "INSERT INTO \"SEP2\".FeedbackToItem (starRating,itemId) " + "VALUES (?,?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
-      statement.setInt(1, starRating);
-      statement.setInt(2, itemId);
-      statement.executeUpdate();
-      ResultSet keys = statement.getGeneratedKeys();
-      if (keys.next())
-      {
-        return new FeedbackToItem(keys.getInt(1), starRating, itemId);
-      }
-      else
-      {
-        throw new SQLException("No keys generated");
-      }
-    }
-  }
-
-  @Override public FeedbackToItem createFeedback(int starRating,
-      String writtenFeedback, int itemId) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "INSERT INTO \"SEP2\".FeedbackToItem (starRating,writtenFeedback, itemId) "
-              + "VALUES (?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-      statement.setInt(1, starRating);
+          "INSERT INTO \"SEP2\".FeedbackToItem (starRating,writtenFeedback, itemId, accountId, accountName) "
+              + "VALUES (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+      statement.setString(1, starRating);
       statement.setString(2, writtenFeedback);
       statement.setInt(3, itemId);
+      statement.setInt(4, accountId);
+      statement.setString(5, accountName);
       statement.executeUpdate();
       ResultSet keys = statement.getGeneratedKeys();
       if (keys.next())
       {
         return new FeedbackToItem(keys.getInt(1), starRating, writtenFeedback,
-            itemId);
+            itemId, accountId, accountName);
       }
       else
       {
@@ -79,38 +59,58 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
     }
   }
 
-  @Override public FeedbackToItem createFeedback(String writtenFeedback,
-      int itemId) throws SQLException
-  {
+  @Override
+  public List<FeedbackToItem> getFeedback(int itemId) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "INSERT INTO \"SEP2\".FeedbackToItem (writtenFeedback,itemId) "
-              + "VALUES (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-      statement.setString(1, writtenFeedback);
-      statement.setInt(2, itemId);
-      statement.executeUpdate();
-      ResultSet keys = statement.getGeneratedKeys();
-      if (keys.next())
+              "SELECT * from \"SEP2\".Feedbacktoitem where itemid = ? ");
+      statement.setInt(1, itemId);
+      ResultSet resultSet = statement.executeQuery();
+      ArrayList<FeedbackToItem> result = new ArrayList<>();
+      while (resultSet.next())
       {
-        return new FeedbackToItem(keys.getInt(1), writtenFeedback, itemId);
+        int id = resultSet.getInt("id");
+        String starRating = resultSet.getString("starrating");
+        String writtenFeedback = resultSet.getString("writtenfeedback");
+        int accountId = resultSet.getInt("accountId");
+        String accountName = resultSet.getString("accountName");
+        FeedbackToItem temp = new FeedbackToItem(id, starRating, writtenFeedback, itemId, accountId, accountName);
+        result.add(temp);
+      }
+        return result;
+      }
+  }
+
+  @Override
+  public String getAvgStarRating(int itemId) throws SQLException {
+
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+              "SELECT\n" +
+                      "    round(AVG(CAST(\n" +
+                      "        COALESCE(\n" +
+                      "            NULLIF(\n" +
+                      "                regexp_replace(starrating, '[^-0-9.]+', ''), \n" +
+                      "                ''),\n" +
+                      "            '0') \n" +
+                      "       AS numeric)), 2) as avgstarrating\n" +
+                      "FROM\n" +
+                      "    \"SEP2\".feedbacktoitem \n" +
+                      "where itemid = ?; ");
+      statement.setInt(1, itemId);
+      ResultSet resultSet = statement.executeQuery();
+      if (resultSet.next())
+      {
+        return String.valueOf(resultSet.getDouble("avgstarrating"));
       }
       else
       {
-        throw new SQLException("No keys generated");
+        return "";
       }
     }
   }
-
-  /*@Override public List<FeedbackToItem> readByLowToHigh() throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT l.title, l.description, l.category, l.location, l.price, l.duration, l.date, l.avgStarRating  FROM Listings l JOIN FeedbackToItem f ON l.id = f.itemId GROUP BY l.avgStartRating ORDER BY ASC");
-
-    }
-  }*/
 
   @Override public void update(FeedbackToItem feedbackToItem)
       throws SQLException
@@ -118,7 +118,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
     try(Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement("UPDATE \"SEP2\".FeedbackToItem SET  starRating = ?, writtenFeedback = ? WHERE itemId = ? AND id =?");
-      statement.setInt(1, feedbackToItem.getStartRating());
+      statement.setString(1, feedbackToItem.getStartRating());
       statement.setString(2, feedbackToItem.getWrittenFeedback());
       statement.setInt(3, feedbackToItem.getItemId());
       statement.setInt(4, feedbackToItem.getId());

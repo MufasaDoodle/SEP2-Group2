@@ -209,6 +209,19 @@ public class RMIServerImpl implements RMIServer
     }
   }
 
+  @Override
+  public String getAccountName(String email) {
+    try
+    {
+      return serverModel.getAccountName(email);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve account name");
+    }
+  }
+
   @Override public List<Listing> getListingsByAccount(int accountId)
 
   {
@@ -322,6 +335,55 @@ public class RMIServerImpl implements RMIServer
       e.printStackTrace();
     }
     return null;
+  }
+
+  @Override
+  public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) {
+    try
+    {
+      return serverModel.createFeedbackItems(itemId, starRating, feedback, accountId, accountName);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override
+  public List<FeedbackToItem> getFeedbackItems(int itemId){
+    try
+    {
+      return serverModel.getFeedbackItems(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not retrieve feedback for listings");
+    }
+  }
+
+  @Override
+  public String getAvgStarRating(int itemId) {
+    try
+    {
+      return serverModel.getAvgStarRating(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not retrieve average star rating");
+    }
+  }
+
+  @Override
+  public List<Integer> getRentedTo(int itemId) {
+    try
+    {
+      return serverModel.getRentedTo(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not leave feedback because of rent");
+    }
   }
 
   @Override public void createRequest(int itemId, int requestFrom,

@@ -172,6 +172,16 @@ public class RMIClient implements Client, ClientCallback
     return 0;
   }
 
+  @Override
+  public String getAccountName(String email) {
+    try {
+      return server.getAccountName(email);
+    } catch (RemoteException e) {
+      e.printStackTrace();
+    }
+    return "";
+  }
+
   @Override public List<Listing> getListingsByAccount(int accountId)
   {
     try
@@ -342,6 +352,54 @@ public class RMIClient implements Client, ClientCallback
     catch (RemoteException e)
     {
       throw new RuntimeException("Could not contact server (get request)...");
+    }
+  }
+
+  @Override
+  public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName)  {
+    try
+    {
+      return server.createFeedbackItems( itemId, starRating, feedback, accountId, accountName);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not retrieve feedback for listings");
+    }
+  }
+
+  @Override
+  public List<FeedbackToItem> getFeedbackItems(int itemId) {
+    try
+    {
+      return server.getFeedbackItems(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not retrieve list of feedback for listings");
+    }
+  }
+
+  @Override
+  public String getAvgStarRating(int itemId) {
+    try
+    {
+      return server.getAvgStarRating(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not retrieve average star rating");
+    }
+  }
+
+  @Override
+  public List<Integer> getRentedTo(int itemId) {
+    try
+    {
+      return server.getRentedTo(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not leave feedback because of rent");
     }
   }
 

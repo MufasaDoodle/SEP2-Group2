@@ -12,17 +12,10 @@ import java.util.Date;
 public class ListingViewModel
 {
   private ClientModel clientModel;
-  private StringProperty error;
 
   public ListingViewModel(ClientModel clientModel)
   {
     this.clientModel = clientModel;
-    error = new SimpleStringProperty();
-  }
-
-  public StringProperty errorProperty()
-  {
-    return error;
   }
 
 
@@ -39,12 +32,11 @@ public class ListingViewModel
       {
         if (clientModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date), accountId))
         {
-          error.set("Listing created");
           return true;
         }
         else
         {
-          error.set("Could not contact server");
+          return false;
         }
       }
       else

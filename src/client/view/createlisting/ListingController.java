@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public class ListingController implements ViewController
 {
-  @FXML private Label listingErrorLabel;
   @FXML private TextField titleField;
   @FXML private TextArea descriptionArea;
   @FXML private TextField priceField;
@@ -24,7 +23,6 @@ public class ListingController implements ViewController
   {
     this.vh = vh;
     this.viewModel = vmf.getListingViewModel();
-    listingErrorLabel.textProperty().bind(viewModel.errorProperty());
     categoryBox.getItems().add("Gardening");
     categoryBox.getItems().add("Gaming");
     categoryBox.getItems().add("Cooking");
@@ -56,7 +54,6 @@ public class ListingController implements ViewController
 
   public void backBtn()
   {
-    viewModel.errorProperty().set("");
     vh.openLogInScene();
   }
 

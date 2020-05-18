@@ -27,6 +27,7 @@ public interface ServerModel extends Subject
   Account getAccountById(int id) throws RemoteException;
 
   int getAccountId(String email) throws RemoteException;
+  String getAccountName(String email) throws RemoteException;
   List<Listing> getListingsByAccountId(int accountId) throws RemoteException;
   boolean updateAccount(Account account) throws RemoteException;
   boolean isEmailTaken(String email) throws RemoteException;
@@ -46,6 +47,13 @@ public interface ServerModel extends Subject
   List<RequestListing> getRequestByAccountId(int requestTo)
       throws RemoteException;
   Request getRequest(int itemId, int requestFrom) throws RemoteException;
+
+//Feedback for items
+  boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) throws RemoteException;
+  List<FeedbackToItem> getFeedbackItems(int itemId) throws RemoteException;
+  String getAvgStarRating(int itemId) throws RemoteException;
+  List<Integer> getRentedTo(int itemId) throws RemoteException;
+
 
   void createTransaction(int itemId, String date, int rentedToId,
       int rentedFromId) throws RemoteException;

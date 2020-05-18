@@ -1,6 +1,9 @@
 package stuffs;
 
-public class FeedbackToAccount
+import java.awt.*;
+import java.io.Serializable;
+
+public class FeedbackToAccount implements Serializable
 {
   private int startRating;
   private String writtenFeedback;

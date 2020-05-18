@@ -19,6 +19,10 @@ public class LoginViewModel
   public void setAccountId(String email){
     clientModel.setCurrentAccountID(email);
   }
+  public void setAccountName(String email)
+  {
+    clientModel.setCurrentAccountName(email);
+  }
 
   public boolean checkLogIn(String email, String password)
   {

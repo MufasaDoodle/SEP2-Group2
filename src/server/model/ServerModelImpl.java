@@ -357,6 +357,16 @@ public class ServerModelImpl implements ServerModel
     return 0;
   }
 
+  @Override
+  public String getAccountName(String email) throws RemoteException {
+    try {
+      return accountDAO.getAccountName(email);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return "";
+  }
+
   @Override public List<Listing> getListingsByAccountId(int accountId)
   {
     try
@@ -509,6 +519,62 @@ public class ServerModelImpl implements ServerModel
     try
     {
       return requestDAO.getRequest(itemId, requestFrom);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override
+  public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) throws RemoteException {
+    try {
+        FeedbackToItem temp = feedbackToItemDAO.createFeedback(starRating, feedback, itemId, accountId, accountName);
+        if (temp != null) {
+          return true;
+        } else {
+          return false;
+        }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override
+  public List<FeedbackToItem> getFeedbackItems(int itemId) throws RemoteException {
+    try
+    {
+      return feedbackToItemDAO.getFeedback(itemId);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override
+  public String getAvgStarRating(int itemId) {
+    try
+    {
+      return feedbackToItemDAO.getAvgStarRating(itemId);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return "";
+  }
+
+  @Override
+  public List<Integer> getRentedTo(int itemId){
+    try
+    {
+      return transactionDAO.getRentedToId(itemId);
     }
     catch (SQLException e)
     {
