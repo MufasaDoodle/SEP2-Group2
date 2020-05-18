@@ -31,6 +31,8 @@ public interface ClientModel extends Subject
 
   void setCurrentAccountID(String email);
   int getCurrentAccountID();
+  void setCurrentAccountName(String email);
+  String getCurrentAccountName();
   List<Listing> getListingsByAccount(int accountId);
 
   boolean updateAccount(String email, String pass, String address, String number, String bio);
@@ -43,6 +45,12 @@ public interface ClientModel extends Subject
   List<Integer> getDeletedItemIds();
   void addRentedItemId(int itemId);
   List<Integer> getRentedItemIds();
+
+  //create feedback for items
+  boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName);
+  List<FeedbackToItem> getFeedbackItems(int itemId);
+  String getAvgStarRating(int itemId);
+  List<Integer> getRentedTo(int itemId);
 
   void setFromListingViewOpen(boolean whereFrom);
   boolean getFromListingViewOpen();

@@ -29,6 +29,7 @@ public class LoginController implements ViewController
     if (viewModel.checkLogIn(emailField.getText(), passwordField.getText()))
     {
       viewModel.setAccountId(emailField.getText());
+      viewModel.setAccountName(emailField.getText());
       vh.openSeeListingScene();
       emailField.setText("");
       passwordField.setText("");

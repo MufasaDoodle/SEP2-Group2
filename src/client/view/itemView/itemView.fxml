@@ -69,17 +69,17 @@
                                 <Label layoutX="426.0" layoutY="34.0" text="Image" />
                                 <Pane layoutX="299.0" layoutY="131.0" prefHeight="149.0" prefWidth="286.0">
                                     <children>
-                                        <TextArea layoutX="7.0" layoutY="52.0" prefHeight="38.0" prefWidth="272.0" promptText="Aa" wrapText="true" />
+                                        <TextArea fx:id="feedbackTextArea" layoutX="7.0" layoutY="52.0" prefHeight="38.0" prefWidth="272.0" promptText="Aa" wrapText="true" />
                                         <Button layoutX="173.0" layoutY="99.0" mnemonicParsing="false" onAction="#onLeaveFeedback" style="-fx-background-color: #5499C7;" text="Leave feedback" textFill="WHITE" />
                                         <Label layoutX="7.0" layoutY="20.0" text="Rate:" />
                                         <Label fx:id="errorLabel" layoutX="14.0" layoutY="103.0" text="Error" />
                                         <HBox layoutX="164.0" layoutY="16.0" prefHeight="26.0" prefWidth="107.0">
                                             <children>
-                                                <Button mnemonicParsing="false" style="-fx-background-color: #D5F5E3;" text="1" />
-                                                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #ABEBC6;" text="2" />
-                                                <Button layoutX="62.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #82E0AA;" text="3" />
-                                                <Button layoutX="114.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #2ECC71;" text="4" />
-                                                <Button layoutX="160.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #28B463;" text="5" />
+                                                <Button fx:id="rate1" mnemonicParsing="false" onAction="#onRateButtons" style="-fx-background-color: #D5F5E3;" text="1" />
+                                                <Button fx:id="rate2" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onRateButtons" style="-fx-background-color: #ABEBC6;" text="2" />
+                                                <Button fx:id="rate3" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#onRateButtons" style="-fx-background-color: #82E0AA;" text="3" />
+                                                <Button fx:id="rate4" layoutX="114.0" layoutY="10.0" mnemonicParsing="false" onAction="#onRateButtons" style="-fx-background-color: #2ECC71;" text="4" />
+                                                <Button fx:id="rate5" layoutX="160.0" layoutY="10.0" mnemonicParsing="false" onAction="#onRateButtons" style="-fx-background-color: #28B463;" text="5" />
                                             </children>
                                         </HBox>
                                     </children>
@@ -99,17 +99,22 @@
                            </children>
                         </HBox>
                                 <Button layoutX="394.0" layoutY="308.0" mnemonicParsing="false" onAction="#onBackToListing" prefHeight="30.0" prefWidth="95.0" style="-fx-background-color: #5499C7;" text="Back to listing" textFill="WHITE" />
+                        <Label fx:id="idLabel" layoutX="240.0" layoutY="26.0" />
+                        <Label fx:id="accountIdLabel" layoutX="256.0" layoutY="65.0" />
+                        <Label fx:id="accountNameLabel" layoutX="268.0" layoutY="88.0" />
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab style="-fx-background-color: #5499C7; -fx-text-base-color: white;" text="Feedback">
+                <Tab onSelectionChanged="#onFeedbackTab" style="-fx-background-color: #5499C7; -fx-text-base-color: white;" text="Feedback">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="589.0">
                             <children>
-                                <TableView fx:id="tableView" editable="true" layoutX="25.0" layoutY="22.0" prefHeight="325.0" prefWidth="550.0">
+                                <TableView fx:id="feedbackTable" editable="true" layoutX="25.0" layoutY="22.0" prefHeight="325.0" prefWidth="550.0">
                                     <columns>
-                                        <TableColumn fx:id="inputColumn" editable="false" prefWidth="549.6000122070312" sortable="false" text="Feedback" />
+                              <TableColumn fx:id="accountNameColumn" prefWidth="120.0" text="Name" />
+                              <TableColumn fx:id="starRatingColumn" prefWidth="110.39996337890625" text="Star rating" />
+                              <TableColumn fx:id="feedbackColumn" prefWidth="320.0" text="Feedback" />
                                     </columns>
                                 </TableView>
                             </children></AnchorPane>

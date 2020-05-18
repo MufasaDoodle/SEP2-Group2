@@ -63,31 +63,6 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
-  @Override public Listing createWithoutDescription(String title,
-      String category, String location, double price, String duration,
-      Date date, int accountId) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "INSERT INTO \"SEP2\".Listings(title, category, location, price, duration, date) VALUES(?, ?, ?, ?, ?, ?)",
-          PreparedStatement.RETURN_GENERATED_KEYS);
-      statement.setString(1, title);
-      statement.setString(3, category);
-      statement.setString(4, location);
-      statement.setDouble(5, price);
-      statement.setString(6, duration);
-      statement.setDate(7, date);
-      statement.executeUpdate();
-
-      ResultSet keys = statement.getGeneratedKeys();
-      if (keys.next())
-        return new Listing(title, category, location, price, duration,
-            date.toString(), keys.getInt(1), accountId);
-      else
-        throw new SQLException("No keys generated");
-    }
-  }
 
   @Override public Listing readById(int id) throws SQLException
   {

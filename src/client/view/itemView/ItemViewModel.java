@@ -3,17 +3,27 @@ package client.view.itemView;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import stuffs.FeedbackToItem;
 import stuffs.Listing;
 import stuffs.Request;
 import stuffs.Transaction;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemViewModel
 {
   private ClientModel clientModel;
-  private StringProperty request, reply, owner, itemName, price, location, rating, description;
+  private StringProperty request, reply, owner, itemName, price, location, description;
+  private StringProperty id;
+  private StringProperty error;
+  private StringProperty accountId;
+  private StringProperty accountName;
+  private StringProperty avgStarRating;
+  ObservableList<FeedbackToItem> feedback;
 
   public ItemViewModel(ClientModel clientModel)
   {
@@ -25,16 +35,58 @@ public class ItemViewModel
     itemName = new SimpleStringProperty();
     price = new SimpleStringProperty();
     location = new SimpleStringProperty();
-    rating = new SimpleStringProperty();
     description = new SimpleStringProperty();
+    id = new SimpleStringProperty();
+    error = new SimpleStringProperty();
+    accountId = new SimpleStringProperty();
+    accountName = new SimpleStringProperty();
+    avgStarRating = new SimpleStringProperty();
   }
 
-  void leaveFeedback()
+  public boolean leaveFeedback( String starRating, String feedback, int itemId, int accountId, String accountName) {
+    for (int i = 0; i < clientModel.getRentedTo(itemId).size(); i++) {
+      if (accountId == clientModel.getRentedTo(itemId).get(i)) {
+        if ((!(starRating.equals("")) && feedback.equals(""))) {
+          if (clientModel.createFeedbackItems(itemId, starRating, "No feedback", accountId, accountName)) {
+            error.setValue("Feedback created");
+            return true;
+          }
+        } else if (!(feedback.equals("")) && starRating.equals("")) {
+          if (clientModel.createFeedbackItems(itemId, "No star rating", feedback, accountId, accountName)) {
+            error.setValue("Feedback created");
+            return true;
+          }
+        } else if (!(feedback.equals("") && starRating.equals(""))) {
+          if (clientModel.createFeedbackItems(itemId, starRating, feedback, accountId, accountName)) {
+            error.setValue("Feedback created");
+            return true;
+          }
+        } else {
+          error.setValue("All fields must be filled");
+          return false;
+        }
+        break;
+      }
+    }
+    return false;
+  }
+  public void listOfFeedback(int itemId)
   {
-    //Todo
 
+    List<FeedbackToItem> list = clientModel.getFeedbackItems(itemId);
+    if (list == null)
+    {
+      System.out.println("List is nullito");
+    }
+    feedback = FXCollections.observableArrayList(list);
+    if (feedback == null) {
+      System.out.println("Feedback is null");
+    }
   }
-
+  ObservableList<FeedbackToItem> getFeedbackItems()
+  {
+    return feedback;
+  }
   StringProperty requestProperty()
   {
     return request;
@@ -45,15 +97,6 @@ public class ItemViewModel
     return reply;
   }
 
-  private void onNewFeedback(PropertyChangeEvent evt)
-  {
-    //Todo
-  }
-
-  void loadFeedback()
-  {
-    //Todo
-  }
 
   public StringProperty ownerProperty()
   {
@@ -75,16 +118,30 @@ public class ItemViewModel
     return itemName;
   }
 
-  public StringProperty ratingProperty()
-  {
-    return rating;
-  }
-
   public StringProperty descriptionProperty()
   {
     return description;
   }
-
+  StringProperty idProperty()
+  {
+    return id;
+  }
+  public StringProperty errorProperty()
+  {
+    return error;
+  }
+  public StringProperty accountIdProperty()
+  {
+    return accountId;
+  }
+  public StringProperty accountNameProperty()
+  {
+    return accountName;
+  }
+  public StringProperty avgStarRatingProperty()
+  {
+    return avgStarRating;
+  }
   public void setItem()
   {
     if (getCurrentItemId() != 0)
@@ -94,9 +151,11 @@ public class ItemViewModel
       itemName.set(temp.getTitle());
       price.set(String.valueOf(temp.getPrice()));
       location.set(temp.getLocation());
-      //set rating properly
-      rating.set("0");
       description.set(temp.getDescription());
+      id.set(String.valueOf(temp.getId()));
+      accountId.setValue(String.valueOf(clientModel.getCurrentAccountID()));
+      accountName.setValue(clientModel.getCurrentAccountName());
+      avgStarRating.set(clientModel.getAvgStarRating(temp.getId()));
     }
   }
 

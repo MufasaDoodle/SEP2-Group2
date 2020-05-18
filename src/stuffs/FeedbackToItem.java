@@ -1,29 +1,23 @@
 package stuffs;
 
-public class FeedbackToItem
+import java.io.Serializable;
+
+public class FeedbackToItem implements Serializable
 {
-  private int startRating;
+  private String startRating;
   private String writtenFeedback;
   private int id;
   private int itemId;
+  private int accountId;
+  private String accountName;
 
-  public FeedbackToItem(int id, int startRating, int itemId){
-    this.startRating = startRating;
-    this.itemId = itemId;
-    this.id = id;
-  }
-
-  public FeedbackToItem(int id,String writtenFeedback, int itemId){
-    this.writtenFeedback = writtenFeedback;
-    this.itemId = itemId;
-    this.id = id;
-  }
-
-  public FeedbackToItem(int id, int startRating, String writtenFeedback,  int itemId){
+  public FeedbackToItem(int id, String startRating, String writtenFeedback,  int itemId, int accountId, String accountName){
     this.startRating = startRating;
     this.writtenFeedback = writtenFeedback;
     this.itemId = itemId;
     this.id = id;
+    this.accountId=accountId;
+    this.accountName=accountName;
   }
 
   public int getId()
@@ -36,7 +30,7 @@ public class FeedbackToItem
     return itemId;
   }
 
-  public int getStartRating()
+  public String getStartRating()
   {
     return startRating;
   }
@@ -45,4 +39,11 @@ public class FeedbackToItem
   {
     return writtenFeedback;
   }
+  public int getAccountId()
+  {
+    return accountId;
+  }
+  public String getAccountName()
+  {return accountName;}
+
 }

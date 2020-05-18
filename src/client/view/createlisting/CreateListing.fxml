@@ -46,7 +46,6 @@
             <HBox />
          </children>
       </VBox>
-      <Label fx:id="listingErrorLabel" layoutX="369.0" layoutY="297.0" />
       <Button layoutX="371.0" layoutY="325.0" mnemonicParsing="false" onAction="#createListingBtn" text="Create Listing" />
       <Button layoutX="494.0" layoutY="325.0" mnemonicParsing="false" onAction="#backBtn" text="Back" />
       <Label layoutX="319.0" layoutY="192.0" text="Picture &lt;Upload?&gt;" />

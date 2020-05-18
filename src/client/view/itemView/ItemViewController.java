@@ -3,8 +3,11 @@ package client.view.itemView;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import stuffs.FeedbackToItem;
 import stuffs.Transaction;
 
 import java.util.Optional;
@@ -15,12 +18,17 @@ public class ItemViewController implements ViewController
   private @FXML Label itemName;
   private @FXML Label priceLabel;
   private @FXML Label locationLabel;
-  private @FXML Label itemRateLabel;
   private @FXML Label itemRatingLabel;
   private @FXML Label errorLabel;
+  private @FXML Label idLabel;
+  private @FXML Label accountIdLabel;
+  private @FXML Label accountNameLabel;
 
-  //private @FXML  TableView<> tableView;
-  //private @FXML  TableColumn<String, > inputColumn;
+  private @FXML  TableView<FeedbackToItem> feedbackTable;
+  private @FXML  TableColumn<String,String> accountNameColumn;
+  private @FXML  TableColumn<String,String> starRatingColumn;
+  private @FXML  TableColumn<String,String> feedbackColumn;
+
 
   private @FXML TextArea descriptionTextArea;
   private @FXML TextArea feedbackTextArea;
@@ -30,6 +38,9 @@ public class ItemViewController implements ViewController
   private @FXML Button rate3;
   private @FXML Button rate4;
   private @FXML Button rate5;
+  private String buttonRate = "";
+
+
 
   private ItemViewModel viewModel;
   private ViewHandler vh;
@@ -42,40 +53,56 @@ public class ItemViewController implements ViewController
     itemName.textProperty().bind(viewModel.itemNameProperty());
     priceLabel.textProperty().bind(viewModel.priceProperty());
     locationLabel.textProperty().bind(viewModel.locationProperty());
-    itemRatingLabel.textProperty().bind(viewModel.ratingProperty());
+    itemRatingLabel.textProperty().bind(viewModel.avgStarRatingProperty());
     descriptionTextArea.textProperty().bind(viewModel.descriptionProperty());
+    idLabel.textProperty().bind(viewModel.idProperty());
+    errorLabel.textProperty().bind(viewModel.errorProperty());
+    accountIdLabel.textProperty().bindBidirectional(viewModel.accountIdProperty());
+    accountNameLabel.textProperty().bindBidirectional(viewModel.accountNameProperty());
     viewModel.setItem();
-    /*ownerName.textProperty().setValue("Owner: " + viewModel.getOwnerName());
-    //Todo itemName ownerName
-    itemName.textProperty().setValue("Item: " + viewModel.getItemName());
-    viewModel.loadFeedback();
-    price.textProperty().setValue("Price: " + viewModel.getPrice);
-    location.textProperty().setValue("Location: " + viewModel.getLocation);
-    itemRate.textProperty().setValue("Rate for item: " + viewModel.getRate);
-    //inputColumn.setCellValueFactory(new PropertyValueFactory<>("feedback"));
-    //tableView.setItems((ObservableList<Feedback>) viewModel.getFeedback());
-    feedbackTextArea.textProperty().set("");
-    viewModel.loadFeedback();*/
+    idLabel.setVisible(false);
+    accountNameLabel.setVisible(false);
+    accountIdLabel.setVisible(false);
   }
 
   public void onLeaveFeedback()
   {
-    if (!(feedbackTextArea.textProperty().get().equals("")))
-    {
-      viewModel.leaveFeedback();
-      feedbackTextArea.clear();
+    if(viewModel.leaveFeedback(buttonRate, feedbackTextArea.getText(), Integer.parseInt( idLabel.getText()), Integer.parseInt(accountIdLabel.getText()), accountNameLabel.getText()))
+      {
+        feedbackTextArea.setText("");
+        buttonRate = "";
+      }
+    else {
+      feedbackTextArea.setText("");
+      buttonRate = "";
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("No renting for this listing");
+      alert.setHeaderText("Leaving feedback not allowed");
+      alert.setContentText("You must rent an item before leaving feedback for it!");
+      alert.showAndWait();
     }
-    else
-    {
-      errorLabel.textProperty().set("Please write something...");
-    }
+    feedbackTextArea.setText("");
   }
-
-  public void onRateButtons()
+  public void onRateButtons(ActionEvent actionEvent)
   {
-
-    //Todo
-
+    if(actionEvent.getSource() == rate1)
+    {
+      buttonRate = "1";
+    }
+    else if(actionEvent.getSource() == rate2)
+    {
+      buttonRate = "2";
+    }
+    else if(actionEvent.getSource() == rate3)
+    {
+      buttonRate = "3";
+    }      else if(actionEvent.getSource() == rate4)
+    {
+      buttonRate = "4";
+    }      else if(actionEvent.getSource() == rate5)
+    {
+      buttonRate = "5";
+    }
   }
 
   public void onContactOwner()
@@ -98,6 +125,15 @@ public class ItemViewController implements ViewController
     }
   }
 
+  public void onFeedbackTab()
+  {
+    viewModel.listOfFeedback(Integer.parseInt(idLabel.getText()));
+    feedbackTable.setItems(viewModel.getFeedbackItems());
+    accountNameColumn.setCellValueFactory(new PropertyValueFactory<>("accountName"));
+    starRatingColumn.setCellValueFactory(new PropertyValueFactory<>("startRating"));
+    feedbackColumn.setCellValueFactory(new PropertyValueFactory<>("writtenFeedback"));
+
+     }
   public void onBackToListing()
   {
     vh.openSeeListingScene();

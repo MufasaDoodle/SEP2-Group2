@@ -8,6 +8,7 @@ import stuffs.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class ClientModelManager implements ClientModel
   private Client client;
   private PropertyChangeSupport support = new PropertyChangeSupport(this);
   private int currentItemID = 0;
+  private String currentAccountName;
 
   private int currentAccountID;
   private int viewingAccountID;
@@ -110,6 +112,16 @@ public class ClientModelManager implements ClientModel
     return currentAccountID;
   }
 
+  @Override
+  public void setCurrentAccountName(String email) {
+    currentAccountName = client.getAccountName(email);
+  }
+
+  @Override
+  public String getCurrentAccountName() {
+    return currentAccountName;
+  }
+
   @Override public List<Listing> getListingsByAccount(int accountId)
   {
     System.out.println("Owners's listings have been retrieved");
@@ -177,6 +189,29 @@ public class ClientModelManager implements ClientModel
   @Override public List<Integer> getRentedItemIds()
   {
     return client.getRentedItemIds();
+  }
+
+  @Override
+  public boolean createFeedbackItems( int itemId, String starRating, String feedback, int accountId, String accountName) {
+    System.out.println("Feedback was created");
+    return client.createFeedbackItems(itemId, starRating, feedback, accountId, accountName);
+  }
+
+  @Override
+  public List<FeedbackToItem> getFeedbackItems(int itemId){
+    System.out.println("List of items feedback retrieved");
+    return client.getFeedbackItems(itemId);
+  }
+
+  @Override
+  public String getAvgStarRating(int itemId) {
+    System.out.println("Average star retrieved");
+    return client.getAvgStarRating(itemId);
+  }
+
+  @Override
+  public List<Integer> getRentedTo(int itemId) {
+    return client.getRentedTo(itemId);
   }
 
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)

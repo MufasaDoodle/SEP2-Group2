@@ -28,6 +28,7 @@ public interface RMIServer extends Remote
   void unRegisterClient(ClientCallback client) throws RemoteException;
   Account getAccountById(int id) throws RemoteException;
   int getAccountId(String email) throws RemoteException;
+  String getAccountName(String email) throws RemoteException;
   List<Listing> getListingsByAccount(int accountId) throws RemoteException;
 
   boolean updateAccount(Account account) throws RemoteException;
@@ -40,6 +41,12 @@ public interface RMIServer extends Remote
   List<Integer> getDeletedItemIds() throws RemoteException;
   void addRentedItemId(int itemId) throws RemoteException;
   List<Integer> getRentedItemIds() throws RemoteException;
+
+  //create feedback for items
+  boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) throws RemoteException;
+  List<FeedbackToItem> getFeedbackItems(int itemId) throws RemoteException;
+  String getAvgStarRating(int itemId) throws RemoteException;
+  List<Integer> getRentedTo(int itemId) throws RemoteException;
 
   void createRequest(int itemId, int requestFrom, int requestTo)
       throws RemoteException;

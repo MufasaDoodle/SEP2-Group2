@@ -29,6 +29,7 @@ public interface Client extends Subject
   void unRegisterClient();
   Account getAccountById(int id);
   int getAccountId(String email);
+  String getAccountName(String email);
   List<Listing> getListingsByAccount(int accountId);
 
   boolean updateAccount(Account account);
@@ -47,6 +48,12 @@ public interface Client extends Subject
   void deleteDecline(int itemId, int requestFromId);
   List<RequestListing> getRequestByAccountId(int requestTo);
   Request getRequest(int itemId, int requestFrom);
+
+  //create feedback for items
+  boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName);
+  List<FeedbackToItem> getFeedbackItems(int itemId);
+  String getAvgStarRating(int itemId);
+  List<Integer> getRentedTo(int itemId);
 
   void createTransaction(int itemId, String date, int rentedToId,
       int rentedFromId);
