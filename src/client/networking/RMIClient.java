@@ -3,8 +3,8 @@ package client.networking;
 import shared.networking.ClientCallback;
 import shared.networking.RMIServer;
 import shared.transferobjects.Message;
-import stuffs.Account;
-import stuffs.Listing;
+import stuffs.*;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.rmi.NotBoundException;
@@ -261,6 +261,153 @@ public class RMIClient implements Client, ClientCallback
   }
 
   @Override public String broadCastMessage(String msg, int fromAccount, int toAccount)
+  {
+    try
+    {
+      return server.broadCastMessage(msg, fromAccount, toAccount);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (broadCastMessage)...");
+    }
+  }
+
+  @Override public void addRentedItemId(int itemId)
+  {
+    try
+    {
+      server.addRentedItemId(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (add rented item id)...");
+    }
+  }
+
+  @Override public List<Integer> getRentedItemIds()
+  {
+    try
+    {
+      return server.getRentedItemIds();
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (get rented item ids)...");
+    }
+  }
+
+  @Override public void createRequest(int itemId, int requestFrom,
+      int requestTo)
+  {
+    try
+    {
+      server.createRequest(itemId, requestFrom, requestTo);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (create request)...");
+    }
+  }
+
+  @Override public void deleteRequest(int id)
+  {
+    try
+    {
+      server.deleteRequest(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (deleted request)...");
+    }
+  }
+
+  @Override public void deleteDecline(int itemId, int requestFromId)
+  {
+    try
+    {
+      server.deleteDecline(itemId,requestFromId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (deleted request)...");
+    }
+  }
+
+  @Override public List<RequestListing> getRequestByAccountId(int requestTo)
+  {
+    try
+    {
+      return server.getRequestByAccountId(requestTo);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (get requests)...");
+    }
+  }
+
+  @Override public Request getRequest(int itemId, int requestFrom)
+  {
+    try
+    {
+      return server.getRequest(itemId,requestFrom);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (get request)...");
+    }
+  }
+
+  @Override public void createTransaction(int itemId, String date,
+      int rentedToId, int rentedFromId)
+  {
+    try
+    {
+      server.createTransaction(itemId, date, rentedToId,rentedFromId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (create request)...");
+    }
+  }
+
+  @Override public Transaction getTransactionByItemId(int itemId)
+  {
+    try
+    {
+      return server.getTransactionByItemId(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (get transaction)...");
+    }
+  }
+
+  @Override public List<TransactionListing> getTransactionByRentedTo(
+      int rentedTo)
+  {
+    try
+    {
+      return server.getTransactionByRentedTo(rentedTo);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (get transactions)...");
+    }
+  }
+
+  @Override public List<TransactionListing> getTransactionByRentedFrom(
+      int rentedFrom)
+  {
+    try
+    {
+      return server.getTransactionByRentedFrom(rentedFrom);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (get transactions)...");
+    }
+  }
+
   {
     try
     {

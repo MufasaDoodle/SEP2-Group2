@@ -91,6 +91,7 @@ public class ViewHandler
         e.printStackTrace();
       }
     }
+    listingScene = null;
     itemScene = null;
     editItemScene = null;
     messagesScene = null;

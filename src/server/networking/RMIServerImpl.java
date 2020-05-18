@@ -4,8 +4,8 @@ import server.model.ServerModel;
 import shared.networking.ClientCallback;
 import shared.networking.RMIServer;
 import shared.transferobjects.Message;
-import stuffs.Account;
-import stuffs.Listing;
+import stuffs.*;
+
 import java.beans.PropertyChangeListener;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
@@ -330,6 +330,149 @@ public class RMIServerImpl implements RMIServer
     try
     {
       return serverModel.getDeletedItemIds();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void addRentedItemId(int itemId)
+  {
+    try
+    {
+      serverModel.addRentedItemId(itemId);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public List<Integer> getRentedItemIds()
+  {
+    try
+    {
+      return serverModel.getDeletedItemIds();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void createRequest(int itemId, int requestFrom,
+      int requestTo)
+  {
+    try
+    {
+      serverModel.createRequest(itemId,requestFrom,requestTo);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteRequest(int id)
+  {
+    try
+    {
+      serverModel.deleteRequest(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteDecline(int itemId, int requestFromId)throws RemoteException
+  {
+    try
+    {
+      serverModel.deleteDecline(itemId, requestFromId);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public List<RequestListing> getRequestByAccountId(int requestTo)
+  {
+    try
+    {
+      return serverModel.getRequestByAccountId(requestTo);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public Request getRequest(int itemId, int requestFrom)
+  {
+    try
+    {
+      return serverModel.getRequest(itemId, requestFrom);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void createTransaction(int itemId, String date,
+      int rentedToId, int rentedFromId)
+  {
+    try
+    {
+      serverModel.createTransaction(itemId,date,rentedToId,rentedFromId);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public Transaction getTransactionByItemId(int itemId)
+
+  {
+    try
+    {
+      return serverModel.getTransactionByItemId(itemId);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public List<TransactionListing> getTransactionByRentedTo(
+      int rentedTo)
+  {
+    try
+    {
+      return serverModel.getTransactionByRentedTo(rentedTo);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public List<TransactionListing> getTransactionByRentedFrom(
+      int rentedFrom)
+  {
+    try
+    {
+      return serverModel.getTransactionByRentedFrom(rentedFrom);
     }
     catch (RemoteException e)
     {

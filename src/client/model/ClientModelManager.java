@@ -3,9 +3,7 @@ package client.model;
 import client.networking.Client;
 import javafx.collections.FXCollections;
 import shared.transferobjects.Message;
-import stuffs.Account;
-import stuffs.ChatItem;
-import stuffs.Listing;
+import stuffs.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -49,6 +47,59 @@ public class ClientModelManager implements ClientModel
     return fromListingViewOpen;
   }
 
+  @Override public void createRequest(int itemId, int requestFrom,
+      int requestTo)
+  {
+    System.out.println("Request sent");
+    client.createRequest(itemId, requestFrom, requestTo);
+  }
+
+  @Override public void deleteRequest(int id)
+  {
+    System.out.println("Request deleted");
+    client.deleteRequest(id);
+  }
+
+  @Override public void deleteDecline(int itemId, int requestFromId)
+  {
+    System.out.println("Request deleted");
+    client.deleteDecline(itemId, requestFromId);
+  }
+
+  @Override public List<RequestListing> getRequestByAccountId(int requestTo)
+  {
+    return client.getRequestByAccountId(requestTo);
+  }
+
+  @Override public Request getRequest(int itemId, int requestFrom)
+  {
+    return client.getRequest(itemId, requestFrom);
+  }
+
+  @Override public void createTransaction(int itemId, String date,
+      int rentedToId, int rentedFromId)
+  {
+    System.out.println("Transaction created");
+    client.createTransaction(itemId, date, rentedToId, rentedFromId);
+  }
+
+  @Override public Transaction getTransactionByItemId(int itemId)
+  {
+    return client.getTransactionByItemId(itemId);
+  }
+
+  @Override public List<TransactionListing> getTransactionByRentedTo(
+      int rentedTo)
+  {
+    return client.getTransactionByRentedTo(rentedTo);
+  }
+
+  @Override public List<TransactionListing> getTransactionByRentedFrom(
+      int rentedFrom)
+  {
+    return client.getTransactionByRentedFrom(rentedFrom);
+  }
+  
   @Override public void setCurrentAccountID(String email)
   {
     currentAccountID = client.getAccountId(email);
@@ -65,10 +116,12 @@ public class ClientModelManager implements ClientModel
     return client.getListingsByAccount(accountId);
   }
 
-  @Override public boolean updateAccount(String email, String pass, String address, String number, String bio)
+  @Override public boolean updateAccount(String email, String pass,
+      String address, String number, String bio)
   {
     Account currentAccount = client.getAccountById(currentAccountID);
-    Account updatedAccount = new Account(currentAccount.getId(), currentAccount.getName(), email, pass, address, number, bio);
+    Account updatedAccount = new Account(currentAccount.getId(),
+        currentAccount.getName(), email, pass, address, number, bio);
     if (client.updateAccount(updatedAccount))
     {
       System.out.println("Account updated");
@@ -89,6 +142,9 @@ public class ClientModelManager implements ClientModel
 
     Listing currentListing = client.getListingByID(currentItemID);
     Listing updatedListing = new Listing(title, description, category, location, price, duration, dateFormat.format(date), currentListing.getId(), currentListing.getAccountId());
+    Listing updatedListing = new Listing(title, description, category, location,
+        price, duration, dateFormat.format(date), currentListing.getId(),
+        currentListing.getAccountId());
     if (client.updateListing(updatedListing))
     {
       System.out.println("Listing updated");
@@ -113,6 +169,16 @@ public class ClientModelManager implements ClientModel
     return client.getDeletedItemIds();
   }
 
+  @Override public void addRentedItemId(int itemId)
+  {
+    client.addRentedItemId(itemId);
+  }
+
+  @Override public List<Integer> getRentedItemIds()
+  {
+    return client.getRentedItemIds();
+  }
+
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
   {
     support.firePropertyChange(propertyChangeEvent);
@@ -129,7 +195,8 @@ public class ClientModelManager implements ClientModel
     return client.getListings();
   }
 
-  @Override public List<Listing> getSorting(String request, String title, String category, String location)
+  @Override public List<Listing> getSorting(String request, String title,
+      String category, String location)
   {
     System.out.println("Listings have been retrieved");
     return client.getSorting(request, title, category, location);
@@ -140,7 +207,8 @@ public class ClientModelManager implements ClientModel
     return client.getListingByID(id);
   }
 
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
+  @Override public boolean createAccount(String name, String email,
+      String password1, String address, String phoneNumber)
   {
     System.out.println("Account created!");
     return client.createAccount(name, email, password1, address, phoneNumber);
@@ -152,11 +220,15 @@ public class ClientModelManager implements ClientModel
     return null;
   }
 
-  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId)
+  @Override public boolean createListing(String title, String descText,
+      String price, String category, String location, String duration,
+      String date, int accountId)
   {
     System.out.println("Listing created!");
     accountId = getCurrentAccountID();
-    return client.createListing(title, descText, price, category, location, duration, date, accountId);
+    return client
+        .createListing(title, descText, price, category, location, duration,
+            date, accountId);
   }
 
   @Override public boolean checkLogIn(String email, String password)
@@ -164,10 +236,12 @@ public class ClientModelManager implements ClientModel
     return client.checkLogIn(email, password);
   }
 
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
+  @Override public boolean createAccount(String name, String email,
+      String password1, String address, String phoneNumber, String bio)
   {
     System.out.println("Account created! (but not really)");
-    return client.createAccount(name, email, password1, address, phoneNumber, bio);
+    return client
+        .createAccount(name, email, password1, address, phoneNumber, bio);
   }
 
   @Override public String broadCastMessage(String msg)
@@ -285,12 +359,14 @@ public class ClientModelManager implements ClientModel
     viewingAccountID = currentAccountID;
   }
 
-  @Override public void addListener(String eventName, PropertyChangeListener listener)
+  @Override public void addListener(String eventName,
+      PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(eventName, listener);
   }
 
-  @Override public void removeListener(String eventName, PropertyChangeListener listener)
+  @Override public void removeListener(String eventName,
+      PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(eventName, listener);
   }

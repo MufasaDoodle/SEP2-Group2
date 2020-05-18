@@ -1,12 +1,12 @@
 package shared.networking;
 
 import shared.transferobjects.Message;
-import stuffs.Account;
-import stuffs.Listing;
+import stuffs.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface RMIServer extends Remote
@@ -38,4 +38,19 @@ public interface RMIServer extends Remote
 
   void addDeletedItemId(int itemId) throws RemoteException;
   List<Integer> getDeletedItemIds() throws RemoteException;
+  void addRentedItemId(int itemId) throws RemoteException;
+  List<Integer> getRentedItemIds() throws RemoteException;
+
+  void createRequest(int itemId, int requestFrom, int requestTo)
+      throws RemoteException;
+  void deleteRequest(int id) throws RemoteException;
+  void deleteDecline(int itemId, int requestFromId) throws RemoteException;
+  List<RequestListing> getRequestByAccountId(int requestTo) throws RemoteException;
+  Request getRequest(int itemId, int requestFrom) throws RemoteException;
+
+  void createTransaction(int itemId, String date, int rentedToId,
+      int rentedFromId) throws RemoteException;
+  Transaction getTransactionByItemId(int itemId) throws RemoteException;
+  List<TransactionListing> getTransactionByRentedTo(int rentedTo) throws RemoteException;
+  List<TransactionListing> getTransactionByRentedFrom(int rentedFrom) throws RemoteException;
 }

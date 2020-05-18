@@ -2,11 +2,11 @@ package client.model;
 
 import shared.transferobjects.Message;
 import shared.util.Subject;
-import stuffs.Account;
-import stuffs.ChatItem;
-import stuffs.Listing;
+import stuffs.*;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ClientModel extends Subject
@@ -41,6 +41,8 @@ public interface ClientModel extends Subject
 
   void addDeletedItemId(int itemId);
   List<Integer> getDeletedItemIds();
+  void addRentedItemId(int itemId);
+  List<Integer> getRentedItemIds();
 
   void setFromListingViewOpen(boolean whereFrom);
   boolean getFromListingViewOpen();
@@ -54,4 +56,16 @@ public interface ClientModel extends Subject
   void saveChatterName();
   boolean checkOwner();
   void setLocalAccountID();
+
+  void createRequest(int itemId, int requestFrom, int requestTo);
+  void deleteRequest(int id);
+  void deleteDecline(int itemId, int requestFromId);
+  List<RequestListing> getRequestByAccountId(int requestTo);
+  Request getRequest(int itemId, int requestFrom);
+
+  void createTransaction(int itemId, String date, int rentedToId,
+      int rentedFromId);
+  Transaction getTransactionByItemId(int itemId);
+  List<TransactionListing> getTransactionByRentedTo(int rentedTo);
+  List<TransactionListing> getTransactionByRentedFrom(int rentedFrom);
 }
