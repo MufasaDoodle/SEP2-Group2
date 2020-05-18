@@ -16,8 +16,14 @@ public interface RMIServer extends Remote
   Listing getListingByID(int id) throws RemoteException;
   void registerClient(ClientCallback client) throws RemoteException;
   void startServer() throws RemoteException, AlreadyBoundException;
-  boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId) throws RemoteException;
-  boolean createAccount(String name, String email, String password1, String address, String phoneNumber) throws RemoteException;
+
+  boolean createListing(String title, String descText, String price,
+      String category, String location, String duration, String date,
+      int accountId,String promoted) throws RemoteException;
+  boolean createAccount(String name, String email, String password1,
+      String address, String phoneNumber) throws RemoteException;
+
+
   boolean checkLogIn(String email, String password) throws RemoteException;
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio) throws RemoteException;
   String broadCastMessage(String msg, int fromAccount, int toAccount) throws RemoteException;
@@ -39,8 +45,6 @@ public interface RMIServer extends Remote
 
   void addDeletedItemId(int itemId) throws RemoteException;
   List<Integer> getDeletedItemIds() throws RemoteException;
-  void addRentedItemId(int itemId) throws RemoteException;
-  List<Integer> getRentedItemIds() throws RemoteException;
 
   //create feedback for items
   boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) throws RemoteException;

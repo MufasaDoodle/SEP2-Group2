@@ -225,6 +225,11 @@ public class ItemViewModel
     return clientModel.getTransactionByItemId(itemID);
   }
 
+  public Listing getListing(){
+    int itemId = clientModel.getCurrentItemID();
+    return  clientModel.getListingByID(itemId);
+  }
+
   public void saveViewingAccountID()
   {
     int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();

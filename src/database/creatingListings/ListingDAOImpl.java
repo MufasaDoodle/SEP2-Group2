@@ -34,6 +34,39 @@ public class ListingDAOImpl implements ListingDAO
 
   @Override public Listing create(String title, String description,
       String category, String location, double price, String duration,
+      Date date, int accountId, String promoted) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+          "INSERT INTO \"SEP2\".listings(title, description, category, location, price, duration, date, accountId,rented,promoted) VALUES(?, ?, ?, ?, ?, ?, ?,?,?,?)",
+          PreparedStatement.RETURN_GENERATED_KEYS);
+      statement.setString(1, title);
+      statement.setString(2, description);
+      statement.setString(3, category);
+      statement.setString(4, location);
+      statement.setDouble(5, price);
+      statement.setString(6, duration);
+      statement.setDate(7, date);
+      statement.setInt(8, accountId);
+      statement.setString(9,"Available");
+      statement.setString(10,promoted);
+      statement.executeUpdate();
+
+      ResultSet keys = statement.getGeneratedKeys();
+      if (keys.next())
+      {
+        System.out.println("Listing created in database");
+        return new Listing(title, description, category, location, price,
+            duration, date.toString(), keys.getInt(8), accountId,"Available",promoted);
+      }
+      else
+        throw new SQLException("No keys generated");
+    }
+  }
+  
+  /*@Override public Listing createRentedListing(String title, String description,
+      String category, String location, double price, String duration,
       Date date, int accountId) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -49,6 +82,7 @@ public class ListingDAOImpl implements ListingDAO
       statement.setString(6, duration);
       statement.setDate(7, date);
       statement.setInt(8, accountId);
+      statement.setString(9,"Rented");
       statement.executeUpdate();
 
       ResultSet keys = statement.getGeneratedKeys();
@@ -56,13 +90,40 @@ public class ListingDAOImpl implements ListingDAO
       {
         System.out.println("Listing created in database");
         return new Listing(title, description, category, location, price,
-            duration, date.toString(), keys.getInt(8), accountId);
+            duration, date.toString(), keys.getInt(8), accountId,"Rented");
       }
       else
         throw new SQLException("No keys generated");
     }
-  }
+  }*/
 
+  /*@Override public Listing createWithoutDescription(String title,
+      String category, String location, double price, String duration,
+      Date date, int accountId,String promoted) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+          "INSERT INTO \"SEP2\".Listings(title, category, location, price, duration, date,rented) VALUES(?, ?, ?, ?, ?, ?,?)",
+          PreparedStatement.RETURN_GENERATED_KEYS);
+      statement.setString(1, title);
+      statement.setString(2, category);
+      statement.setString(3, location);
+      statement.setDouble(4, price);
+      statement.setString(5, duration);
+      statement.setDate(6, date);
+      statement.setString(7,"Available");
+
+      statement.executeUpdate();
+
+      ResultSet keys = statement.getGeneratedKeys();
+      if (keys.next())
+        return new Listing(title, category, location, price, duration,
+            date.toString(), keys.getInt(1), accountId,"Available");
+      else
+        throw new SQLException("No keys generated");
+    }
+  }*/
 
   @Override public Listing readById(int id) throws SQLException
   {
@@ -83,8 +144,10 @@ public class ListingDAOImpl implements ListingDAO
         String description = resultSet.getString("description");
         String date = resultSet.getString("date");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         return new Listing(title, description, category, location, price,
-            duration, date, id, accountId);
+            duration, date, id, accountId,rented,promoted);
       }
       else
       {
@@ -113,8 +176,10 @@ public class ListingDAOImpl implements ListingDAO
         String description = resultSet.getString("description");
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -141,8 +206,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, category, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);;
         result.add(listing);
       }
       return result;
@@ -170,8 +237,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, oldCategory, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -199,8 +268,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, oldLocation,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -230,8 +301,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -260,8 +333,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            location, price, duration, date, id, accountId);
+            location, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -290,8 +365,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, category,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -320,8 +397,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -347,8 +426,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -374,8 +455,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -401,8 +484,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -428,8 +513,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -455,8 +542,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -482,8 +571,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -510,8 +601,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -538,8 +631,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -567,8 +662,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -596,8 +693,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -625,8 +724,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -654,8 +755,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -683,8 +786,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -712,8 +817,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -741,8 +848,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -770,8 +879,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -799,8 +910,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -828,8 +941,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -857,8 +972,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -886,8 +1003,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -915,8 +1034,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -944,8 +1065,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -973,8 +1096,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1002,8 +1127,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1033,8 +1160,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1064,8 +1193,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1095,8 +1226,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1126,8 +1259,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1157,8 +1292,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1188,8 +1325,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1218,8 +1357,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1248,8 +1389,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1278,8 +1421,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1308,8 +1453,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1338,8 +1485,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1368,8 +1517,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1398,8 +1549,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1428,8 +1581,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1458,8 +1613,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1488,8 +1645,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1518,8 +1677,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1548,8 +1709,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1578,8 +1741,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1608,8 +1773,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1638,8 +1805,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1668,8 +1837,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1698,8 +1869,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1728,8 +1901,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1768,7 +1943,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings ");
+          "SELECT * FROM \"SEP2\".Listings order by promoted DESC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1782,8 +1957,10 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1797,7 +1974,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "UPDATE \"SEP2\".Listings SET title = ?, description = ?, category = ?, location = ?, price = ?, duration = ?, date = ?, avgstarrating = ?, accountid = ? WHERE id=?");
+          "UPDATE \"SEP2\".Listings SET title = ?, description = ?, category = ?, location = ?, price = ?, duration = ?, date = ?, avgstarrating = ?, accountid = ?, rented = ?, promoted = ? WHERE id=?");
       statement.setString(1, listing.getTitle());
       statement.setString(2, listing.getDescription());
       statement.setString(3, listing.getCategory());
@@ -1807,18 +1984,20 @@ public class ListingDAOImpl implements ListingDAO
       statement.setDate(7, Date.valueOf(listing.getDate()));
       statement.setDouble(8, listing.getAvgStarRating());
       statement.setInt(9, listing.getAccountId());
-      statement.setInt(10, listing.getId());
+      statement.setString(10, listing.getRented());
+      statement.setString(11,listing.getPromoted());
+      statement.setInt(12, listing.getId());
       statement.executeUpdate();
     }
   }
 
-  @Override public void delete(int id) throws SQLException
+  @Override public void delete(int itemId) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection
           .prepareStatement("DELETE FROM \"SEP2\".Listings WHERE id = ?");
-      statement.setInt(1, id);
+      statement.setInt(1, itemId);
       statement.executeUpdate();
     }
   }

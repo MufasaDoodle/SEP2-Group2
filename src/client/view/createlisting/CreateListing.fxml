@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -48,8 +49,10 @@
       </VBox>
       <Button layoutX="371.0" layoutY="325.0" mnemonicParsing="false" onAction="#createListingBtn" text="Create Listing" />
       <Button layoutX="494.0" layoutY="325.0" mnemonicParsing="false" onAction="#backBtn" text="Back" />
-      <Label layoutX="319.0" layoutY="192.0" text="Picture &lt;Upload?&gt;" />
+      <Label layoutX="319.0" layoutY="218.0" text="Picture &lt;Upload?&gt;" />
       <Button layoutX="364.0" layoutY="361.0" mnemonicParsing="false" onAction="#onChatView" text="Debug - to chat" />
       <Button layoutX="489.0" layoutY="361.0" mnemonicParsing="false" onAction="#onSeeListing" text="See listings" />
+      <Label layoutX="315.0" layoutY="183.0" text="Promote:" />
+      <CheckBox fx:id="promoteBox" layoutX="378.0" layoutY="183.0" mnemonicParsing="false" />
    </children>
 </AnchorPane>

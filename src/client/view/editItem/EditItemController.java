@@ -5,6 +5,7 @@ import client.core.ViewModelFactory;
 import client.view.ViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 import java.util.Optional;
 
 public class EditItemController implements ViewController
@@ -17,6 +18,8 @@ public class EditItemController implements ViewController
   private @FXML TextField durationField;
   private @FXML Label errorLabel;
   private @FXML Button deleteButton;
+  private @FXML CheckBox availableBox;
+  private @FXML CheckBox promoteBox;
 
   private EditItemViewModel viewModel;
   private ViewHandler vh;
@@ -44,6 +47,23 @@ public class EditItemController implements ViewController
     priceField.textProperty().bindBidirectional((viewModel.priceProperty()));
     durationField.textProperty()
         .bindBidirectional(viewModel.durationProperty());
+
+    if (viewModel.getItemAv())
+    {
+      availableBox.setSelected(true);
+    }
+    else
+    {
+      availableBox.setSelected(false);
+    }
+    if (viewModel.getPromoted())
+    {
+      promoteBox.setSelected(true);
+    }
+    else
+    {
+      promoteBox.setSelected(false);
+    }
   }
 
   public void onBackButton()
@@ -53,10 +73,57 @@ public class EditItemController implements ViewController
 
   public void onUpdate()
   {
-    viewModel.updateListing(titleField.getText(), descriptionField.getText(),
-        categoryCombo.getSelectionModel().getSelectedItem(),
-        locationField.getText(), durationField.getText(),
-        Double.parseDouble(priceField.getText()));
+    if (availableBox.isSelected() && promoteBox.isSelected())
+    {
+      Alert promote = new Alert(Alert.AlertType.CONFIRMATION);
+      promote.setTitle("Promoted item");
+      promote
+          .setHeaderText("You chose to promote your item, it costs 20Kr/days!");
+      promote.setContentText("Click OK if you accept it!");
+      Optional<ButtonType> result = promote.showAndWait();
+
+      if (result.get() == ButtonType.OK)
+      {
+        viewModel
+            .updateListing(titleField.getText(), descriptionField.getText(),
+                categoryCombo.getSelectionModel().getSelectedItem(),
+                locationField.getText(), durationField.getText(),
+                Double.parseDouble(priceField.getText()), "Available", "*");
+      }
+    }
+    else if (availableBox.isSelected() && !promoteBox.isSelected())
+    {
+      viewModel.updateListing(titleField.getText(), descriptionField.getText(),
+          categoryCombo.getSelectionModel().getSelectedItem(),
+          locationField.getText(), durationField.getText(),
+          Double.parseDouble(priceField.getText()), "Available", "");
+    }
+    else if (!availableBox.isSelected() && !promoteBox.isSelected())
+    {
+      viewModel.updateListing(titleField.getText(), descriptionField.getText(),
+          categoryCombo.getSelectionModel().getSelectedItem(),
+          locationField.getText(), durationField.getText(),
+          Double.parseDouble(priceField.getText()), "Rented", "");
+    }
+    else if (!availableBox.isSelected() && promoteBox.isSelected())
+    {
+      Alert promote = new Alert(Alert.AlertType.CONFIRMATION);
+      promote.setTitle("Promoted item");
+      promote
+          .setHeaderText("You chose to promote your item, it costs 20Kr/days!");
+      promote.setContentText("Click OK if you accept it!");
+      Optional<ButtonType> result = promote.showAndWait();
+
+      if (result.get() == ButtonType.OK)
+      {
+        viewModel
+            .updateListing(titleField.getText(), descriptionField.getText(),
+                categoryCombo.getSelectionModel().getSelectedItem(),
+                locationField.getText(), durationField.getText(),
+                Double.parseDouble(priceField.getText()), "Rented", "*");
+      }
+    }
+
   }
 
   public void DeleteButton()
@@ -67,7 +134,8 @@ public class EditItemController implements ViewController
 
     Optional<ButtonType> result = alert.showAndWait();
 
-    if (result.get() == ButtonType.OK){
+    if (result.get() == ButtonType.OK)
+    {
       viewModel.deleteItem();
       vh.openSeeListingScene();
     }

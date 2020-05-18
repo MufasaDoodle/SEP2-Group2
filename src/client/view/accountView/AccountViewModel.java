@@ -349,23 +349,12 @@ public class AccountViewModel
     this.accountID = accountID;
   public void acceptRent(int itemId, int rentedTo)
   {
-    /*if (!isDeclined)
-    {*/
-      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-      Date date = new Date();
-      int rentedFrom = clientModel.getCurrentAccountID();
-      clientModel.createTransaction(itemId, dateFormat.format(date), rentedTo,
-          rentedFrom);
-      clientModel.deleteRequest(itemId);
-      clientModel.addRentedItemId(itemId);
-    /*}*/
-    /*else
-    {
-      Alert alert = new Alert(Alert.AlertType.WARNING);
-      alert.setTitle("Warning");
-      alert.setHeaderText("Already declined!");
-      alert.showAndWait();
-    }*/
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = new Date();
+    int rentedFrom = clientModel.getCurrentAccountID();
+    clientModel.createTransaction(itemId, dateFormat.format(date), rentedTo,
+        rentedFrom);
+    clientModel.deleteRequest(itemId);
   }
 
   public Transaction getTransaction(int itemId)
@@ -378,7 +367,21 @@ public class AccountViewModel
     clientModel.deleteDecline(itemId, rentedTo);
   }
 
-  public Request getRequest(int itemId, int requestFrom){
+  public Request getRequest(int itemId, int requestFrom)
+  {
     return clientModel.getRequest(itemId, requestFrom);
+  }
+
+  public Listing getListing(int itemId)
+  {
+    return clientModel.getListingByID(itemId);
+  }
+
+  public void updateListing(String title, String description, String category,
+      String location, String duration, double price, String rented, int itemId, int accountId,String promoted)
+  {
+    clientModel
+        .updateListingRented(title, description, category, location, price, duration,
+            rented,itemId, accountId, promoted);
   }
 }

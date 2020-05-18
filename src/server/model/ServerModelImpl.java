@@ -226,12 +226,12 @@ public class ServerModelImpl implements ServerModel
 
   @Override public boolean createListing(String title, String descText,
       String price, String category, String location, String duration,
-      String date, int accountId)
+      String date, int accountId, String promoted)
   {
     try
     {
       Listing temp = listingDAO.create(title, descText, category, location,
-          Double.parseDouble(price), duration, Date.valueOf(date), accountId);
+          Double.parseDouble(price), duration, Date.valueOf(date), accountId,promoted);
       // support.firePropertyChange("NewListing", null, temp);
       if (temp != null)
       {
@@ -697,31 +697,6 @@ public class ServerModelImpl implements ServerModel
       return transactionDAO.getTransactionByRentedFrom(rentedFrom);
     }
     catch (SQLException e)
-    {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
-  @Override public void addRentedItemId(int itemId)
-  {
-    try
-    {
-      rentedItemIds.add(itemId);
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-  }
-
-  @Override public List<Integer> getRentedItemIds()
-  {
-    try
-    {
-      return rentedItemIds;
-    }
-    catch (Exception e)
     {
       e.printStackTrace();
     }

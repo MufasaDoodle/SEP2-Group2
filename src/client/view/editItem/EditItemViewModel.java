@@ -3,13 +3,16 @@ package client.view.editItem;
 import client.model.ClientModel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 import stuffs.Account;
 import stuffs.Listing;
 
 public class EditItemViewModel
 {
   private ClientModel clientModel;
-  private StringProperty title, description, category, location, duration, error, price;
+  private StringProperty title, description, category, location, duration, price;
+  private boolean itemAvailability;
+  private boolean promoted;
 
   public EditItemViewModel(ClientModel clientModel)
   {
@@ -20,8 +23,26 @@ public class EditItemViewModel
     location = new SimpleStringProperty();
     price = new SimpleStringProperty();
     duration = new SimpleStringProperty();
+  }
 
-    error = new SimpleStringProperty();
+  public boolean getItemAv()
+  {
+    return itemAvailability;
+  }
+
+  public void setItemAvailability(boolean itemAvailability)
+  {
+    this.itemAvailability = itemAvailability;
+  }
+
+  public boolean getPromoted()
+  {
+    return promoted;
+  }
+
+  public void setPromoted(boolean promoted)
+  {
+    this.promoted = promoted;
   }
 
   public StringProperty titleProperty()
@@ -54,10 +75,6 @@ public class EditItemViewModel
     return duration;
   }
 
-  public StringProperty errorLabelProperty()
-  {
-    return error;
-  }
 
   public void updateEditFields()
   {
@@ -68,23 +85,43 @@ public class EditItemViewModel
     location.set(item.getLocation());
     price.set(String.valueOf(item.getPrice()));
     duration.set(item.getDuration());
+    if (item.getRented().equals("Available"))
+    {
+      setItemAvailability(true);
+    }
+    else
+    {
+      setItemAvailability(false);
+    }
+    if (item.getPromoted().equals("*"))
+    {
+      setPromoted(true);
+    }
+    else
+    {
+      setPromoted(false);
+    }
   }
 
-  public void deleteItem(){
+  public void deleteItem()
+  {
     clientModel.addDeletedItemId(clientModel.getCurrentItemID());
     clientModel.deleteListing(clientModel.getCurrentItemID());
   }
 
-  public Account getAccount(int accountId){
+  public Account getAccount(int accountId)
+  {
     return clientModel.getAccountById(accountId);
   }
 
-  public Listing getItem(){
+  public Listing getItem()
+  {
     return clientModel.getListingByID(clientModel.getCurrentItemID());
   }
 
   public void updateListing(String title, String description, String category,
-      String location, String duration, double price)
+      String location, String duration, double price, String rented,
+      String promoted)
   {
     if (!title.equals("") && !description.equals("") && !category.equals("")
         && !String.valueOf(price).equals("") && !location.equals("")
@@ -92,20 +129,31 @@ public class EditItemViewModel
     {
       if (clientModel
           .updateListing(title, description, category, location, price,
-              duration))
+              duration, rented, promoted))
       {
-        error.set("Listing updated");
+        Alert promote = new Alert(Alert.AlertType.INFORMATION);
+        promote.setTitle("Item Update");
+        promote
+            .setHeaderText("Successfully updated item!");
+        promote.showAndWait();
       }
       else
       {
-        error.set("Listing could not be updated, try again later");
+        Alert promote = new Alert(Alert.AlertType.WARNING);
+        promote.setTitle("Item Update");
+        promote
+            .setHeaderText("Listing could not be updated, try again later!");
+        promote.showAndWait();
       }
     }
     else
     {
-      error.set("All fields must be filled");
+      Alert promote = new Alert(Alert.AlertType.WARNING);
+      promote.setTitle("Item Update");
+      promote
+          .setHeaderText("All fields must be filled!");
+      promote.showAndWait();
     }
   }
-
 
 }
