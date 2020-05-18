@@ -39,7 +39,6 @@ public class ChatViewController implements ViewController
     messageArea.textProperty().bindBidirectional(viewModel.requestProperty());
     tableView.setItems((ObservableList<String>) viewModel.getMessage());
     messageArea.textProperty().set("");
-
   }
 
   public void onSendButton()
