@@ -260,6 +260,18 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
+  @Override public String broadCastMessage(String msg, int fromAccount, int toAccount)
+  {
+    try
+    {
+      return server.broadCastMessage(msg, fromAccount, toAccount);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not contact server (broadCastMessage)...");
+    }
+  }
+
   @Override public void addRentedItemId(int itemId)
   {
     try
@@ -396,11 +408,10 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public String broadCastMessage(String msg)
   {
     try
     {
-      return server.broadCastMessage(msg);
+      return server.broadCastMessage(msg, fromAccount, toAccount);
     }
     catch (RemoteException e)
     {
@@ -408,15 +419,28 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
-  @Override public List<Message> getMessage()
+  @Override public List<Message> getMessage(int account1, int account2)
   {
     try
     {
-      return server.getMessages();
+      return server.getMessages(account1, account2);
     }
     catch (RemoteException e)
     {
       throw new RuntimeException("Could not contact server (getMessage)...");
+    }
+  }
+
+  @Override public List<Message> getAllMessagesInvolvingAccount(int account)
+  {
+    try
+    {
+      return server.getAllMessagesInvolvingAccount(account);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not contact server (getAllMessagesInvolving");
     }
   }
 

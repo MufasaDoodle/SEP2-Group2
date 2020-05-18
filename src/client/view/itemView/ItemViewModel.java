@@ -115,6 +115,19 @@ public class ItemViewModel
     clientModel.setFromListingViewOpen(whereFromOpen);
   }
 
+  public void saveChatterID()
+  {
+    int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
+    if (!(clientModel.getCurrentAccountID() == accID))
+    {
+      clientModel.setCurrentChatterID(accID);
+    }
+  }
+
+  public void saveChatterName()
+  {
+    clientModel.saveChatterName();
+    
   public void rentItem()
   {
 
@@ -153,4 +166,12 @@ public class ItemViewModel
     return clientModel.getTransactionByItemId(itemID);
   }
 
+  public void saveViewingAccountID()
+  {
+    int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
+    if (!(clientModel.getCurrentAccountID() == accID))
+    {
+      clientModel.setViewingAccountID(accID);
+    }
+  }
 }

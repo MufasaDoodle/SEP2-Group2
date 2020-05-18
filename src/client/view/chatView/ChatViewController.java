@@ -3,6 +3,7 @@ package client.view.chatView;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,8 +16,8 @@ public class ChatViewController implements ViewController
   private ChatViewModel viewModel;
   private ViewHandler vh;
 
-  @FXML private TableView<Message> tableView;
-  @FXML private TableColumn<String, Message> inputColumn;
+  @FXML private TableView<String> tableView;
+  @FXML private TableColumn<String, String> inputColumn;
 
   @FXML private TextArea messageArea;
 
@@ -28,17 +29,16 @@ public class ChatViewController implements ViewController
   {
     this.vh = vh;
     this.viewModel = vmf.getChatViewModel();
-    ownerName.textProperty().setValue("Owner: " + viewModel.getUsername());
+    ownerName.textProperty().setValue("User: " + viewModel.getUsername());
     //Todo itemName ownerName
     itemName.textProperty().setValue("Item: " + viewModel.getItemName());
     System.out.println("OwnerName: " + viewModel.getUsername());
     System.out.println("ItemName: " + viewModel.getItemName());
     viewModel.loadMessages();
-    inputColumn.setCellValueFactory(new PropertyValueFactory<>("message"));
+    inputColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue()));
     messageArea.textProperty().bindBidirectional(viewModel.requestProperty());
-    tableView.setItems((ObservableList<Message>) viewModel.getMessage());
+    tableView.setItems((ObservableList<String>) viewModel.getMessage());
     messageArea.textProperty().set("");
-
   }
 
   public void onSendButton()

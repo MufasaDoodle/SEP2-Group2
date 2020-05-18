@@ -21,11 +21,10 @@ public interface ClientModel extends Subject
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio);
   String broadCastMessage(String msg);
   List<Message> getMessage();
+  List<ChatItem> getMessagesInvolving();
   int getCurrentItemID();
   void setCurrentItemID(int itemID);
   //Todo
-  void setUsername(String username);
-  String getUsername();
   String getItemName();
   Account getAccountById(int id);
 
@@ -47,6 +46,16 @@ public interface ClientModel extends Subject
 
   void setFromListingViewOpen(boolean whereFrom);
   boolean getFromListingViewOpen();
+
+  int getCurrentChatterID();
+  void setCurrentChatterID(int currentChatterID);
+  int getViewingAccountID();
+  void setViewingAccountID(int viewingAccountID);
+  String getChatterName();
+  void setChatterName(String chatterName);
+  void saveChatterName();
+  boolean checkOwner();
+  void setLocalAccountID();
 
   void createRequest(int itemId, int requestFrom, int requestTo);
   void deleteRequest(int id);

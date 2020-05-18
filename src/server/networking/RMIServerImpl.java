@@ -147,11 +147,11 @@ public class RMIServerImpl implements RMIServer
     serverModel.addListener("NewMessage", listener);
   }
 
-  @Override public String broadCastMessage(String msg)
+  @Override public String broadCastMessage(String msg, int fromAccount, int toAccount)
   {
     try
     {
-      return serverModel.broadCastMessage(msg);
+      return serverModel.broadCastMessage(msg, fromAccount, toAccount);
     }
     catch (RemoteException e)
     {
@@ -160,17 +160,56 @@ public class RMIServerImpl implements RMIServer
     return "";
   }
 
-  @Override public List<Message> getMessages()
+  @Override public List<Message> getMessages(int account1, int account2)
   {
     try
     {
-      return serverModel.getMessage();
+      return serverModel.getMessage(account1, account2);
     }
     catch (RemoteException e)
     {
       e.printStackTrace();
     }
     return new ArrayList<Message>();
+  }
+
+  @Override public List<Message> getAllMessagesFromAccount(int fromAccount)
+  {
+    try
+    {
+      return serverModel.getAllMessagesFromAccount(fromAccount);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve messages");
+    }
+  }
+
+  @Override public List<Message> getAllMessagesToAccount(int toAccount)
+  {
+    try
+    {
+      return serverModel.getAllMessagesToAccount(toAccount);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve messages");
+    }
+  }
+
+  @Override public List<Message> getAllMessagesInvolvingAccount(int account)
+  {
+    try
+    {
+      return serverModel.getAllMessagesInvolvingAccount(account);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve messages");
+    }
   }
 
   @Override public void unRegisterClient(ClientCallback client)

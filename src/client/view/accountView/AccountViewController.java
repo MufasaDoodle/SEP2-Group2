@@ -28,6 +28,8 @@ public class AccountViewController implements ViewController
   private @FXML Label bioLabel;
   private @FXML Label avgRateLabel;
   private @FXML Button editItemButton;
+  private @FXML Button messagesBtn;
+  private @FXML Button seeMessagesBtn;
 
   @FXML private TableView<Listing> listingTable;
   @FXML private TableColumn<String, String> titleColumn;
@@ -82,6 +84,10 @@ public class AccountViewController implements ViewController
     if (!viewModel.checkOwner(nameLabel.getText()))
     {
       editTab.setDisable(true);
+
+      seeMessagesBtn.setDisable(true);
+      seeMessagesBtn.setVisible(false);
+
       requestTab.setDisable(true);
       rentalsTab.setDisable(true);
     }
@@ -126,7 +132,7 @@ public class AccountViewController implements ViewController
     viewModel.setOwner();
   }
 
-  public void onBackButton()
+  @FXML public void onBackButton()
   {
     if (!(viewModel.getDeletedItemIds().contains(viewModel.getCurrentItemId())))
     {
@@ -144,7 +150,7 @@ public class AccountViewController implements ViewController
 
   }
 
-  public void onSeeItem()
+  @FXML public void onSeeItem()
   {
     int selectIndex = listingTable.getSelectionModel().getFocusedIndex();
     int itemID = listingTable.getItems().get(selectIndex).getId();
@@ -164,8 +170,17 @@ public class AccountViewController implements ViewController
       vh.openSeeListingScene();
     }
   }
+  @FXML public void onMessage()
+  {
+    vh.openChatScene();
+  }
 
-  public void onEditItem()
+  @FXML public void onSeeMessages()
+  {
+    vh.openMessagesScene();
+  }
+
+  @FXML public void onEditItem()
   {
     int selectIndex = listingTable.getSelectionModel().getFocusedIndex();
     int itemID = listingTable.getItems().get(selectIndex).getId();
@@ -185,7 +200,7 @@ public class AccountViewController implements ViewController
     }
   }
 
-  public void tabEvent()
+  @FXML public void tabEvent()
   {
     if (editTab.isSelected())
     {
@@ -193,7 +208,7 @@ public class AccountViewController implements ViewController
     }
   }
 
-  public void onUpdate()
+  @FXML public void onUpdate()
   {
     viewModel.updateAccountInfo(emailField.getText(), passField.getText(),
         passField2.getText(), addressField.getText(), numberField.getText(),

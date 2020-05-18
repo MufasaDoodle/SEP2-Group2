@@ -21,10 +21,11 @@ public interface Client extends Subject
       String address, String phoneNumber);
   void startClient();
   boolean checkLogIn(String email, String password);
-  boolean createAccount(String name, String email, String password1,
-      String address, String phoneNumber, String bio);
-  String broadCastMessage(String msg);
-  List<Message> getMessage();
+  boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio);
+  String broadCastMessage(String msg, int fromAccount, int toAccount);
+  List<Message> getMessage(int account1, int account2);
+  List<Message> getAllMessagesInvolvingAccount(int account);
+
   void unRegisterClient();
   Account getAccountById(int id);
   int getAccountId(String email);
