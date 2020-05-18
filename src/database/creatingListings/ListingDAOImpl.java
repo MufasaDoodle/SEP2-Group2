@@ -64,7 +64,7 @@ public class ListingDAOImpl implements ListingDAO
         throw new SQLException("No keys generated");
     }
   }
-
+  
   /*@Override public Listing createRentedListing(String title, String description,
       String category, String location, double price, String duration,
       Date date, int accountId) throws SQLException

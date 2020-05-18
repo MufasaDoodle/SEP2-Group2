@@ -8,6 +8,7 @@ import client.view.editItem.EditItemViewModel;
 import client.view.listingView.SeeListingViewModel;
 import client.view.itemView.ItemViewModel;
 import client.view.login.LoginViewModel;
+import client.view.messages.MessagesViewModel;
 
 public class ViewModelFactory
 {
@@ -20,10 +21,23 @@ public class ViewModelFactory
   private ItemViewModel itemViewModel;
   private AccountViewModel accountViewModel;
   private EditItemViewModel editItemViewModel;
+  private MessagesViewModel messagesViewModel;
 
   public ViewModelFactory(ModelFactory mf)
   {
     this.mf = mf;
+  }
+
+  public MessagesViewModel getMessagesViewModel()
+  {
+    if (messagesViewModel == null)
+    {
+      return (messagesViewModel = new MessagesViewModel(mf.getClientModel()));
+    }
+    else
+    {
+      return messagesViewModel;
+    }
   }
 
   public ListingViewModel getListingViewModel()
@@ -52,7 +66,7 @@ public class ViewModelFactory
 
   public SeeListingViewModel getSeeListingViewModel()
   {
-    if(seeListingViewModel == null)
+    if (seeListingViewModel == null)
     {
       return (seeListingViewModel = new SeeListingViewModel(mf.getClientModel()));
     }
@@ -61,6 +75,7 @@ public class ViewModelFactory
       return seeListingViewModel;
     }
   }
+
   public CreateAccountViewModel getCreateAccountViewModel()
   {
     if (createAccountViewModel == null)

@@ -13,7 +13,7 @@ import java.util.List;
 public class ChatViewModel
 {
   private ClientModel clientModel;
-  private ObservableList<Message> messages;
+  private ObservableList<String> messages;
   private StringProperty request, reply;
 
   public ChatViewModel(ClientModel clientModel)
@@ -47,18 +47,46 @@ public class ChatViewModel
 
   private void onNewMessage(PropertyChangeEvent evt)
   {
-    messages.add((Message) evt.getNewValue());
+    Message message = (Message) evt.getNewValue();
+    if (message.getToAccount() == clientModel.getCurrentAccountID() || message.getFromAccount() == clientModel.getCurrentAccountID())
+    {
+      addNewMessage((Message) evt.getNewValue());
+    }
+    //messages.add(((Message) evt.getNewValue()).getMessage());
+  }
+
+  private void addNewMessage(Message message)
+  {
+    //String yourName = clientModel.getAccountById(clientModel.getCurrentAccountID()).getName();
+    //Use above if you want to have it use the user's name instead of writing "you:" in front of messages
+    String theirName = clientModel.getChatterName();
+
+    if (message.getFromAccount() == clientModel.getCurrentAccountID())
+    {
+      messages.add("You: " + message.getMessage());
+    }
+    else if (message.getFromAccount() == clientModel.getCurrentChatterID())
+    {
+      messages.add(theirName + ": " + message.getMessage());
+    }
   }
 
   void loadMessages()
   {
+    messages = FXCollections.observableArrayList();
     List<Message> messageList = clientModel.getMessage();
-    messages = FXCollections.observableArrayList(messageList);
+    for (Message message : messageList)
+    {
+      if (message != null)
+      {
+        addNewMessage(message);
+      }
+    }
   }
 
   public String getUsername()
   {
-    return clientModel.getUsername();
+    return clientModel.getChatterName();
   }
 
   public String getItemName()
@@ -66,7 +94,7 @@ public class ChatViewModel
     return clientModel.getItemName();
   }
 
-  public List<Message> getMessage()
+  public List<String> getMessage()
   {
     return messages;
   }

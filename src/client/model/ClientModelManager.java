@@ -1,14 +1,17 @@
 package client.model;
 
 import client.networking.Client;
+import javafx.collections.FXCollections;
 import shared.transferobjects.Message;
 import stuffs.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,11 +19,15 @@ public class ClientModelManager implements ClientModel
 {
   private Client client;
   private PropertyChangeSupport support = new PropertyChangeSupport(this);
-  private String username;
-  private String itemName;
   private int currentItemID = 0;
+  private String currentAccountName;
 
   private int currentAccountID;
+  private int viewingAccountID;
+
+  private int currentChatterID;
+  private String chatterName;
+  private String itemName;
 
   private boolean fromListingViewOpen;
 
@@ -94,7 +101,7 @@ public class ClientModelManager implements ClientModel
   {
     return client.getTransactionByRentedFrom(rentedFrom);
   }
-
+  
   @Override public void setCurrentAccountID(String email)
   {
     currentAccountID = client.getAccountId(email);
@@ -103,6 +110,16 @@ public class ClientModelManager implements ClientModel
   @Override public int getCurrentAccountID()
   {
     return currentAccountID;
+  }
+
+  @Override
+  public void setCurrentAccountName(String email) {
+    currentAccountName = client.getAccountName(email);
+  }
+
+  @Override
+  public String getCurrentAccountName() {
+    return currentAccountName;
   }
 
   @Override public List<Listing> getListingsByAccount(int accountId)
@@ -137,6 +154,7 @@ public class ClientModelManager implements ClientModel
     Date date = new Date();
 
     Listing currentListing = client.getListingByID(currentItemID);
+    Listing updatedListing = new Listing(title, description, category, location, price, duration, dateFormat.format(date), currentListing.getId(), currentListing.getAccountId());
     Listing updatedListing = new Listing(title, description, category, location,
         price, duration, dateFormat.format(date), currentListing.getId(),
         currentListing.getAccountId(),rented,promoted);
@@ -179,6 +197,39 @@ public class ClientModelManager implements ClientModel
   @Override public List<Integer> getDeletedItemIds()
   {
     return client.getDeletedItemIds();
+  }
+
+  @Override public void addRentedItemId(int itemId)
+  {
+    client.addRentedItemId(itemId);
+  }
+
+  @Override public List<Integer> getRentedItemIds()
+  {
+    return client.getRentedItemIds();
+  }
+
+  @Override
+  public boolean createFeedbackItems( int itemId, String starRating, String feedback, int accountId, String accountName) {
+    System.out.println("Feedback was created");
+    return client.createFeedbackItems(itemId, starRating, feedback, accountId, accountName);
+  }
+
+  @Override
+  public List<FeedbackToItem> getFeedbackItems(int itemId){
+    System.out.println("List of items feedback retrieved");
+    return client.getFeedbackItems(itemId);
+  }
+
+  @Override
+  public String getAvgStarRating(int itemId) {
+    System.out.println("Average star retrieved");
+    return client.getAvgStarRating(itemId);
+  }
+
+  @Override
+  public List<Integer> getRentedTo(int itemId) {
+    return client.getRentedTo(itemId);
   }
 
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
@@ -248,12 +299,46 @@ public class ClientModelManager implements ClientModel
 
   @Override public String broadCastMessage(String msg)
   {
-    return client.broadCastMessage(msg);
+    return client.broadCastMessage(msg, currentAccountID, currentChatterID);
   }
 
   @Override public List<Message> getMessage()
   {
-    return client.getMessage();
+    return client.getMessage(currentAccountID, currentChatterID);
+  }
+
+  @Override public List<ChatItem> getMessagesInvolving()
+  {
+    List<Message> messagesList = client.getAllMessagesInvolvingAccount(currentAccountID);
+    List<ChatItem> chatItemList = new ArrayList<>();
+    List<Integer> seenSenderIDs = new ArrayList<>();
+
+    for (Message message : messagesList)
+    {
+      //checks if sender is not the user's own account, and if it hasn't already been added in the list, it adds them
+      if (!(message.getFromAccount() == currentAccountID))
+      {
+        if (!seenSenderIDs.contains(message.getFromAccount()))
+        {
+          seenSenderIDs.add(message.getFromAccount());
+          String chatterName = client.getAccountById(message.getFromAccount()).getName();
+          chatItemList.add(new ChatItem(chatterName, message.getFromAccount()));
+        }
+      }
+
+      //checks if receiver is not the user's own account, and so on
+      else if (!(message.getToAccount() == currentAccountID))
+      {
+        if (!seenSenderIDs.contains(message.getToAccount()))
+        {
+          seenSenderIDs.add(message.getToAccount());
+          String chatterName = client.getAccountById(message.getToAccount()).getName();
+          chatItemList.add(new ChatItem(chatterName, message.getToAccount()));
+        }
+      }
+    }
+
+    return chatItemList;
   }
 
   @Override public int getCurrentItemID()
@@ -264,6 +349,7 @@ public class ClientModelManager implements ClientModel
   @Override public void setCurrentItemID(int itemID)
   {
     currentItemID = itemID;
+    itemName = client.getListingByID(currentItemID).getTitle();
   }
 
   @Override public Account getAccountById(int id)
@@ -271,27 +357,65 @@ public class ClientModelManager implements ClientModel
     return client.getAccountById(id);
   }
 
-  @Override public void setUsername(String username)
-  {
-    this.username = username;
-
-  }
-
-  @Override public String getUsername()
-  {
-    return this.username;
-  }
-
   @Override public String getItemName()
   {
     return this.itemName;
+  }
+
+  @Override public int getCurrentChatterID()
+  {
+    return currentChatterID;
+  }
+
+  @Override public void setCurrentChatterID(int currentChatterID)
+  {
+    this.currentChatterID = currentChatterID;
+    saveChatterName();
+  }
+
+  @Override public int getViewingAccountID()
+  {
+    return viewingAccountID;
+  }
+
+  @Override public void setViewingAccountID(int viewingAccountID)
+  {
+    this.viewingAccountID = viewingAccountID;
+  }
+
+  @Override public String getChatterName()
+  {
+    return chatterName;
+  }
+
+  @Override public void setChatterName(String chatterName)
+  {
+    this.chatterName = chatterName;
+  }
+
+  @Override public void saveChatterName()
+  {
+    setChatterName(client.getAccountById(currentChatterID).getName());
+  }
+
+  @Override public boolean checkOwner()
+  {
+    if (currentAccountID == viewingAccountID)
+    {
+      return true;
+    }
+    return false;
+  }
+
+  @Override public void setLocalAccountID()
+  {
+    viewingAccountID = currentAccountID;
   }
 
   @Override public void addListener(String eventName,
       PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(eventName, listener);
-
   }
 
   @Override public void removeListener(String eventName,

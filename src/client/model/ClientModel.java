@@ -24,16 +24,17 @@ public interface ClientModel extends Subject
       String address, String phoneNumber, String bio);
   String broadCastMessage(String msg);
   List<Message> getMessage();
+  List<ChatItem> getMessagesInvolving();
   int getCurrentItemID();
   void setCurrentItemID(int itemID);
   //Todo
-  void setUsername(String username);
-  String getUsername();
   String getItemName();
   Account getAccountById(int id);
 
   void setCurrentAccountID(String email);
   int getCurrentAccountID();
+  void setCurrentAccountName(String email);
+  String getCurrentAccountName();
   List<Listing> getListingsByAccount(int accountId);
 
   boolean updateAccount(String email, String pass, String address,
@@ -50,8 +51,24 @@ public interface ClientModel extends Subject
   void addDeletedItemId(int itemId);
   List<Integer> getDeletedItemIds();
 
+  //create feedback for items
+  boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName);
+  List<FeedbackToItem> getFeedbackItems(int itemId);
+  String getAvgStarRating(int itemId);
+  List<Integer> getRentedTo(int itemId);
+
   void setFromListingViewOpen(boolean whereFrom);
   boolean getFromListingViewOpen();
+
+  int getCurrentChatterID();
+  void setCurrentChatterID(int currentChatterID);
+  int getViewingAccountID();
+  void setViewingAccountID(int viewingAccountID);
+  String getChatterName();
+  void setChatterName(String chatterName);
+  void saveChatterName();
+  boolean checkOwner();
+  void setLocalAccountID();
 
   void createRequest(int itemId, int requestFrom, int requestTo);
   void deleteRequest(int id);

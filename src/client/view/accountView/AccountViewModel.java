@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import shared.util.EmailCheck;
+
 import stuffs.*;
 
 import java.text.DateFormat;
@@ -22,6 +23,9 @@ public class AccountViewModel
   private ClientModel clientModel;
   private StringProperty name, address, phone, bio, avgRate, emailEdit, addressEdit, numberEdit, bioEdit, error, pass1, pass2;
   private ObservableList<Listing> listings;
+
+  private int accountID;
+
   private ObservableList<RequestListing> requests;
   private ObservableList<TransactionListing> transactions;
   private boolean isDeclined;
@@ -117,6 +121,18 @@ public class AccountViewModel
   {
     if (clientModel.getFromListingViewOpen())
     {
+      Account temp = clientModel.getAccountById(clientModel.getCurrentAccountID());
+      name.set(temp.getName());
+      address.set(temp.getAddress());
+      phone.set(temp.getPhoneNumber());
+      bio.set(temp.getBio());
+    }
+    else if (!clientModel.getFromListingViewOpen())
+    {
+      int itemId = clientModel.getCurrentItemID();
+      int accountId = clientModel.getListingByID(itemId).getAccountId();
+      Account temp = clientModel.getAccountById(accountId);
+
       Account temp = clientModel
           .getAccountById(clientModel.getCurrentAccountID());
       name.set(temp.getName());
@@ -143,9 +159,7 @@ public class AccountViewModel
         phone.set(temp.getPhoneNumber());
         bio.set(temp.getBio());
       }
-
     }
-
     //Need an avg rate for account
     //avgRate.set(String.valueOf(temp.));
   }
@@ -159,6 +173,14 @@ public class AccountViewModel
   {
     if (clientModel.getFromListingViewOpen())
     {
+      List<Listing> list = clientModel.getListingsByAccount(clientModel.getCurrentAccountID());
+      listings = FXCollections.observableArrayList(list);
+    }
+    else if (!clientModel.getFromListingViewOpen())
+    {
+      Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
+      List<Listing> list = clientModel.getListingsByAccount(clientModel.getAccountById(temp.getAccountId()).getId());
+
       List<Listing> list = clientModel
           .getListingsByAccount(clientModel.getCurrentAccountID());
       listings = FXCollections.observableArrayList(list);
@@ -215,8 +237,7 @@ public class AccountViewModel
 
   public void updateEditFields()
   {
-    Account account = clientModel
-        .getAccountById(clientModel.getCurrentAccountID());
+    Account account = clientModel.getAccountById(clientModel.getCurrentAccountID());
     emailEdit.set(account.getEmail());
     addressEdit.set(account.getAddress());
     numberEdit.set(account.getPhoneNumber());
@@ -225,19 +246,15 @@ public class AccountViewModel
     pass2.set(account.getPassword());
   }
 
-  public void updateAccountInfo(String email, String pass1, String pass2,
-      String address, String number, String bio)
+  public void updateAccountInfo(String email, String pass1, String pass2, String address, String number, String bio)
   {
-    if (!email.equals("") && !pass1.equals("") && !pass2.equals("") && !address
-        .equals("") && !number.equals("") && !bio.equals(""))
+    if (!email.equals("") && !pass1.equals("") && !pass2.equals("") && !address.equals("") && !number.equals("") && !bio.equals(""))
     {
       if (EmailCheck.isValid(email))
       {
         if (pass1.equals(pass2))
         {
-          if (clientModel.isEmailTaken(email) && !clientModel
-              .getAccountById(clientModel.getCurrentAccountID()).getEmail()
-              .equals(email))
+          if (clientModel.isEmailTaken(email) && !clientModel.getAccountById(clientModel.getCurrentAccountID()).getEmail().equals(email))
           {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
@@ -297,12 +314,19 @@ public class AccountViewModel
 
   public boolean checkOwner(String name)
   {
-    if (clientModel.getAccountById(clientModel.getCurrentAccountID()).getName()
-        .equals(name))
+    if (clientModel.checkOwner())
     {
       return true;
     }
     return false;
+    /*
+    if (clientModel.getAccountById(clientModel.getCurrentAccountID()).getName().equals(name))
+    {
+      return true;
+    }
+    return false;
+
+     */
   }
 
   public int getCurrentItemId()
@@ -315,6 +339,14 @@ public class AccountViewModel
     return clientModel.getDeletedItemIds();
   }
 
+  public int getAccountID()
+  {
+    return accountID;
+  }
+
+  public void setAccountID(int accountID)
+  {
+    this.accountID = accountID;
   public void acceptRent(int itemId, int rentedTo)
   {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

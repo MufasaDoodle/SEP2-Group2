@@ -120,6 +120,24 @@ public class AccountDAOImpl implements AccountDAO
     }
   }
 
+  @Override
+  public String getAccountName(String email) throws SQLException {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"SEP2\".Account WHERE email = ? ");
+      statement.setString(1, email);
+      ResultSet resultSet = statement.executeQuery();
+      if (resultSet.next())
+      {
+        return  resultSet.getString("name");
+      }
+      else
+      {
+        return "";
+      }
+    }
+  }
+
   @Override public Account readByEmail(String email) throws SQLException
   {
     try (Connection connection = getConnection())

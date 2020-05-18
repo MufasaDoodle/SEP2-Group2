@@ -156,11 +156,11 @@ public class RMIServerImpl implements RMIServer
     serverModel.addListener("NewMessage", listener);
   }
 
-  @Override public String broadCastMessage(String msg)
+  @Override public String broadCastMessage(String msg, int fromAccount, int toAccount)
   {
     try
     {
-      return serverModel.broadCastMessage(msg);
+      return serverModel.broadCastMessage(msg, fromAccount, toAccount);
     }
     catch (RemoteException e)
     {
@@ -169,17 +169,56 @@ public class RMIServerImpl implements RMIServer
     return "";
   }
 
-  @Override public List<Message> getMessages()
+  @Override public List<Message> getMessages(int account1, int account2)
   {
     try
     {
-      return serverModel.getMessage();
+      return serverModel.getMessage(account1, account2);
     }
     catch (RemoteException e)
     {
       e.printStackTrace();
     }
     return new ArrayList<Message>();
+  }
+
+  @Override public List<Message> getAllMessagesFromAccount(int fromAccount)
+  {
+    try
+    {
+      return serverModel.getAllMessagesFromAccount(fromAccount);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve messages");
+    }
+  }
+
+  @Override public List<Message> getAllMessagesToAccount(int toAccount)
+  {
+    try
+    {
+      return serverModel.getAllMessagesToAccount(toAccount);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve messages");
+    }
+  }
+
+  @Override public List<Message> getAllMessagesInvolvingAccount(int account)
+  {
+    try
+    {
+      return serverModel.getAllMessagesInvolvingAccount(account);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve messages");
+    }
   }
 
   @Override public void unRegisterClient(ClientCallback client)
@@ -215,6 +254,19 @@ public class RMIServerImpl implements RMIServer
     {
       e.printStackTrace();
       throw new RuntimeException("Could not retrieve account id");
+    }
+  }
+
+  @Override
+  public String getAccountName(String email) {
+    try
+    {
+      return serverModel.getAccountName(email);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+      throw new RuntimeException("Could not retrieve account name");
     }
   }
 
@@ -306,6 +358,80 @@ public class RMIServerImpl implements RMIServer
       e.printStackTrace();
     }
     return null;
+  }
+
+  @Override public void addRentedItemId(int itemId)
+  {
+    try
+    {
+      serverModel.addRentedItemId(itemId);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public List<Integer> getRentedItemIds()
+  {
+    try
+    {
+      return serverModel.getDeletedItemIds();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override
+  public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) {
+    try
+    {
+      return serverModel.createFeedbackItems(itemId, starRating, feedback, accountId, accountName);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override
+  public List<FeedbackToItem> getFeedbackItems(int itemId){
+    try
+    {
+      return serverModel.getFeedbackItems(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not retrieve feedback for listings");
+    }
+  }
+
+  @Override
+  public String getAvgStarRating(int itemId) {
+    try
+    {
+      return serverModel.getAvgStarRating(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not retrieve average star rating");
+    }
+  }
+
+  @Override
+  public List<Integer> getRentedTo(int itemId) {
+    try
+    {
+      return serverModel.getRentedTo(itemId);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not leave feedback because of rent");
+    }
   }
 
   @Override public void createRequest(int itemId, int requestFrom,

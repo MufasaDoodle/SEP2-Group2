@@ -77,4 +77,9 @@ public class SeeListingViewModel
   {
     clientModel.setFromListingViewOpen(whereFromOpen);
   }
+
+  public void setAccountIDToLocalID()
+  {
+    clientModel.setLocalAccountID();
+  }
 }

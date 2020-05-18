@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface FeedbackToItemDAO
 {
-  FeedbackToItem createFeedback(int starRating, int itemId) throws SQLException;
-  FeedbackToItem createFeedback(int starRating, String writtenFeedback, int itemId) throws SQLException;
-  FeedbackToItem createFeedback(String writtenFeedback, int itemId) throws SQLException;
+  FeedbackToItem createFeedback(String starRating, String writtenFeedback, int itemId, int accountId, String accountName) throws SQLException;
+  List<FeedbackToItem> getFeedback(int itemId) throws SQLException;
+  String getAvgStarRating(int itemId) throws SQLException;
 
   /*List<FeedbackToItem> readByLowToHigh() throws SQLException;*/
 

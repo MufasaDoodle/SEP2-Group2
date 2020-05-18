@@ -21,13 +21,15 @@ public interface Client extends Subject
       String address, String phoneNumber);
   void startClient();
   boolean checkLogIn(String email, String password);
-  boolean createAccount(String name, String email, String password1,
-      String address, String phoneNumber, String bio);
-  String broadCastMessage(String msg);
-  List<Message> getMessage();
+  boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio);
+  String broadCastMessage(String msg, int fromAccount, int toAccount);
+  List<Message> getMessage(int account1, int account2);
+  List<Message> getAllMessagesInvolvingAccount(int account);
+
   void unRegisterClient();
   Account getAccountById(int id);
   int getAccountId(String email);
+  String getAccountName(String email);
   List<Listing> getListingsByAccount(int accountId);
 
   boolean updateAccount(Account account);
@@ -44,6 +46,12 @@ public interface Client extends Subject
   void deleteDecline(int itemId, int requestFromId);
   List<RequestListing> getRequestByAccountId(int requestTo);
   Request getRequest(int itemId, int requestFrom);
+
+  //create feedback for items
+  boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName);
+  List<FeedbackToItem> getFeedbackItems(int itemId);
+  String getAvgStarRating(int itemId);
+  List<Integer> getRentedTo(int itemId);
 
   void createTransaction(int itemId, String date, int rentedToId,
       int rentedFromId);
