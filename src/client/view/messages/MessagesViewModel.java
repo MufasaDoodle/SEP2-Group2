@@ -34,4 +34,17 @@ public class MessagesViewModel
   {
     clientModel.setCurrentChatterID(theirAccountID);
   }
+
+  public boolean accountCheck(){
+    return clientModel.accountCheck();
+  }
+
+  public boolean chatterCheck(){
+    return clientModel.getAccountById(clientModel.getCurrentChatterID())
+        != null;
+  }
+
+  public boolean isModeratorOpen(){
+    return clientModel.getCurrentAccountID() == 1;
+  }
 }

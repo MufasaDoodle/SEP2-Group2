@@ -205,12 +205,12 @@ public class AccountDAOImpl implements AccountDAO
     }
   }
 
-  @Override public void delete(Account account) throws SQLException
+  @Override public void delete(int  id) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement("DELETE FROM \"SEP2\".Account WHERE accountId = ?");
-      statement.setInt(1, account.getId());
+      statement.setInt(1, id);
       statement.executeUpdate();
     }
   }

@@ -399,6 +399,18 @@ public class RMIServerImpl implements RMIServer
     }
   }
 
+  @Override public FeedbackToItem getFeedbackById(int id) throws RemoteException
+  {
+    try
+    {
+      return serverModel.getFeedbackById(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not retrieve feedback");
+    }
+  }
+
   @Override
   public String getAvgStarRating(int itemId) {
     try
@@ -534,6 +546,229 @@ public class RMIServerImpl implements RMIServer
     try
     {
       return serverModel.getTransactionByRentedFrom(rentedFrom);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void createReport(int reportFrom, int reportedItemId,
+      int reportedAccountId, int reportedItemFeedbackId,
+       String date)
+  {
+    try
+    {
+      serverModel.createReport(reportFrom,reportedItemId,reportedAccountId,reportedItemFeedbackId,date);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public List<Report> getAllReports()
+  {
+    try
+    {
+      return serverModel.getAllReports();
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void deleteReport(int id)
+  {
+    try
+    {
+      serverModel.deleteReport(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteTransaction(int id)
+  {
+    try
+    {
+      serverModel.deleteTransaction(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteAccount(int id)
+  {
+    try
+    {
+      serverModel.deleteAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteItemFeedback(int id)
+  {
+    try
+    {
+      serverModel.deleteItemFeedback(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteTransactionByAccount(int id)
+  {
+    try
+    {
+      serverModel.deleteTransactionByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteTransactionByItem(int id)
+  {
+    try
+    {
+      serverModel.deleteTransactionByItem(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteFeedbackByItemId(int id)
+  {
+    try
+    {
+      serverModel.deleteFeedbackByItemId(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteRequestByAccount(int id)
+  {
+    try
+    {
+      serverModel.deleteRequestByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteItemByAccount(int id)
+  {
+    try
+    {
+      serverModel.deleteItemByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteReportByAccount(int id)
+  {
+    try
+    {
+      serverModel.deleteReportByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteReportByItem(int id)
+  {
+    try
+    {
+      serverModel.deleteReportByItem(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteReportByItemFeedback(int id)
+
+  {
+    try
+    {
+      serverModel.deleteReportByItemFeedback(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteMessageByAccount(int id)
+  {
+    try
+    {
+      serverModel.deleteMessageByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public Report getReportByItemId(int id) throws RemoteException
+  {
+    try
+    {
+      return serverModel.getReportByItemId(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public Report getReportByFeedbackId(int id) throws RemoteException
+  {
+    try
+    {
+      return serverModel.getReportByFeedbackId(id);
+    }
+    catch (RemoteException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public Report getReportByAccountId(int id) throws RemoteException
+  {
+    try
+    {
+      return serverModel.getReportByAccountId(id);
     }
     catch (RemoteException e)
     {

@@ -112,6 +112,32 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
     }
   }
 
+  @Override public FeedbackToItem getFeedbackById(int id) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+          "SELECT * from \"SEP2\".Feedbacktoitem where id = ? ");
+      statement.setInt(1, id);
+      ResultSet resultSet = statement.executeQuery();
+
+      if (resultSet.next())
+      {
+        int itemId = resultSet.getInt("itemid");
+        String starRating = resultSet.getString("starrating");
+        String writtenFeedback = resultSet.getString("writtenfeedback");
+        int accountId = resultSet.getInt("accountId");
+        String accountName = resultSet.getString("accountName");
+        FeedbackToItem temp = new FeedbackToItem(id, starRating, writtenFeedback, itemId, accountId, accountName);
+        return temp;
+      }
+      else
+      {
+        return null;
+      }
+    }
+  }
+
   @Override public void update(FeedbackToItem feedbackToItem)
       throws SQLException
   {
@@ -126,13 +152,23 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
     }
   }
 
-  @Override public void delete(FeedbackToItem feedbackToItem)
+  @Override public void delete(int id)
       throws SQLException
   {
     try(Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement("DELETE FROM \"SEP2\".FeedbackToItem WHERE id = ?");
-      statement.setInt(1, feedbackToItem.getId());
+      statement.setInt(1, id);
+      statement.executeUpdate();
+    }
+  }
+
+  @Override public void deleteByItemId(int id) throws SQLException
+  {
+    try(Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement("DELETE FROM \"SEP2\".FeedbackToItem WHERE itemid = ?");
+      statement.setInt(1, id);
       statement.executeUpdate();
     }
   }

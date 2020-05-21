@@ -15,6 +15,8 @@ public interface TransactionDAO
   Transaction getTransactionByItemId(int itemId) throws SQLException;
   List<Integer> getRentedToId(int itemId) throws SQLException;
   void delete(int id) throws SQLException;
+  void deleteByAccount(int id) throws SQLException;
+  void deleteByItem(int id) throws SQLException;
 
   List<TransactionListing> getTransactionByRentedTo(int rentedTo) throws SQLException;
   List<TransactionListing> getTransactionByRentedFrom(int rentedFrom) throws SQLException;

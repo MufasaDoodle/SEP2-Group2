@@ -16,7 +16,6 @@ public class EditItemController implements ViewController
   private @FXML TextField locationField;
   private @FXML TextField priceField;
   private @FXML TextField durationField;
-  private @FXML Label errorLabel;
   private @FXML Button deleteButton;
   private @FXML CheckBox availableBox;
   private @FXML CheckBox promoteBox;
@@ -68,76 +67,114 @@ public class EditItemController implements ViewController
 
   public void onBackButton()
   {
-    vh.openSeeListingScene();
+    if (viewModel.accountCheck())
+    {
+      vh.openSeeListingScene();
+    }
+    else
+    {
+      Alert promote = new Alert(Alert.AlertType.WARNING);
+      promote.setTitle("Warning");
+      promote.setHeaderText("Account is banned");
+      promote.showAndWait();
+    }
+
   }
 
   public void onUpdate()
   {
-    if (availableBox.isSelected() && promoteBox.isSelected())
+    if (viewModel.accountCheck())
     {
-      Alert promote = new Alert(Alert.AlertType.CONFIRMATION);
-      promote.setTitle("Promoted item");
-      promote
-          .setHeaderText("You chose to promote your item, it costs 20Kr/days!");
-      promote.setContentText("Click OK if you accept it!");
-      Optional<ButtonType> result = promote.showAndWait();
+      if (availableBox.isSelected() && promoteBox.isSelected())
+      {
+        Alert promote = new Alert(Alert.AlertType.CONFIRMATION);
+        promote.setTitle("Promoted item");
+        promote.setHeaderText(
+            "You chose to promote your item, it costs 20Kr/days!");
+        promote.setContentText("Click OK if you accept it!");
+        Optional<ButtonType> result = promote.showAndWait();
 
-      if (result.get() == ButtonType.OK)
+        if (result.get() == ButtonType.OK)
+        {
+          viewModel
+              .updateListing(titleField.getText(), descriptionField.getText(),
+                  categoryCombo.getSelectionModel().getSelectedItem(),
+                  locationField.getText(), durationField.getText(),
+                  Double.parseDouble(priceField.getText()), "Available", "*");
+        }
+      }
+      else if (availableBox.isSelected() && !promoteBox.isSelected())
       {
         viewModel
             .updateListing(titleField.getText(), descriptionField.getText(),
                 categoryCombo.getSelectionModel().getSelectedItem(),
                 locationField.getText(), durationField.getText(),
-                Double.parseDouble(priceField.getText()), "Available", "*");
+                Double.parseDouble(priceField.getText()), "Available", "");
       }
-    }
-    else if (availableBox.isSelected() && !promoteBox.isSelected())
-    {
-      viewModel.updateListing(titleField.getText(), descriptionField.getText(),
-          categoryCombo.getSelectionModel().getSelectedItem(),
-          locationField.getText(), durationField.getText(),
-          Double.parseDouble(priceField.getText()), "Available", "");
-    }
-    else if (!availableBox.isSelected() && !promoteBox.isSelected())
-    {
-      viewModel.updateListing(titleField.getText(), descriptionField.getText(),
-          categoryCombo.getSelectionModel().getSelectedItem(),
-          locationField.getText(), durationField.getText(),
-          Double.parseDouble(priceField.getText()), "Rented", "");
-    }
-    else if (!availableBox.isSelected() && promoteBox.isSelected())
-    {
-      Alert promote = new Alert(Alert.AlertType.CONFIRMATION);
-      promote.setTitle("Promoted item");
-      promote
-          .setHeaderText("You chose to promote your item, it costs 20Kr/days!");
-      promote.setContentText("Click OK if you accept it!");
-      Optional<ButtonType> result = promote.showAndWait();
-
-      if (result.get() == ButtonType.OK)
+      else if (!availableBox.isSelected() && !promoteBox.isSelected())
       {
         viewModel
             .updateListing(titleField.getText(), descriptionField.getText(),
                 categoryCombo.getSelectionModel().getSelectedItem(),
                 locationField.getText(), durationField.getText(),
-                Double.parseDouble(priceField.getText()), "Rented", "*");
+                Double.parseDouble(priceField.getText()), "Rented", "");
       }
+      else if (!availableBox.isSelected() && promoteBox.isSelected())
+      {
+        Alert promote = new Alert(Alert.AlertType.CONFIRMATION);
+        promote.setTitle("Promoted item");
+        promote.setHeaderText(
+            "You chose to promote your item, it costs 20Kr/days!");
+        promote.setContentText("Click OK if you accept it!");
+        Optional<ButtonType> result = promote.showAndWait();
+
+        if (result.get() == ButtonType.OK)
+        {
+          viewModel
+              .updateListing(titleField.getText(), descriptionField.getText(),
+                  categoryCombo.getSelectionModel().getSelectedItem(),
+                  locationField.getText(), durationField.getText(),
+                  Double.parseDouble(priceField.getText()), "Rented", "*");
+        }
+      }
+    }
+    else
+    {
+      Alert promote = new Alert(Alert.AlertType.WARNING);
+      promote.setTitle("Warning");
+      promote.setHeaderText("Account is banned");
+      promote.showAndWait();
     }
 
   }
 
   public void DeleteButton()
   {
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setTitle("Delete Item");
-    alert.setHeaderText("Do you want to delete?");
-
-    Optional<ButtonType> result = alert.showAndWait();
-
-    if (result.get() == ButtonType.OK)
+    if (viewModel.accountCheck())
     {
-      viewModel.deleteItem();
-      vh.openSeeListingScene();
+      Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+      alert.setTitle("Delete Item");
+      alert.setHeaderText("Do you want to delete?");
+
+      Optional<ButtonType> result = alert.showAndWait();
+
+      if (result.get() == ButtonType.OK)
+      {
+        viewModel.addDeletedItemId();
+        viewModel.deleteItemFeedback();
+        viewModel.deleteItemTransaction();
+        viewModel.deleteItemRequest();
+        viewModel.deleteItemReport();
+        viewModel.deleteItem();
+        vh.openSeeListingScene();
+      }
+    }
+    else
+    {
+      Alert promote = new Alert(Alert.AlertType.WARNING);
+      promote.setTitle("Warning");
+      promote.setHeaderText("Account is banned");
+      promote.showAndWait();
     }
   }
 

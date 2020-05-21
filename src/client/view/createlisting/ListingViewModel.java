@@ -57,4 +57,8 @@ public class ListingViewModel
     }
     return false;
   }
+
+  public boolean accountCheck(){
+   return clientModel.accountCheck();
+  }
 }

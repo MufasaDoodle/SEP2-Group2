@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import stuffs.Account;
 import stuffs.Listing;
 
 import java.util.ArrayList;
@@ -82,4 +84,28 @@ public class SeeListingViewModel
   {
     clientModel.setLocalAccountID();
   }
+
+  public boolean accountCheck()
+  {
+    return clientModel.accountCheck();
+  }
+
+  public Account checkBannedAccount(int itemId)
+  {
+    if (clientModel.getListingByID(itemId) == null)
+    {
+      clientModel.setCurrentItemID(1);
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item is deleted");
+      alert.showAndWait();
+    }
+    else
+    {
+      int accountId = clientModel.getListingByID(itemId).getAccountId();
+      return clientModel.getAccountById(accountId);
+    }
+    return null;
+  }
+
 }

@@ -13,7 +13,7 @@ public interface AccountDAO
   Account readByEmail(String email) throws SQLException;
   List<Account> readByName(String searchString) throws SQLException;
   void update(Account account) throws SQLException;
-  void delete(Account account) throws SQLException;
+  void delete(int id) throws SQLException;
   int getAccountId(String email) throws SQLException;
   String getAccountName(String email) throws SQLException;
 

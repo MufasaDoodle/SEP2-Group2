@@ -7,9 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import shared.transferobjects.Message;
 
 public class ChatViewController implements ViewController
 {
@@ -35,7 +33,8 @@ public class ChatViewController implements ViewController
     System.out.println("OwnerName: " + viewModel.getUsername());
     System.out.println("ItemName: " + viewModel.getItemName());
     viewModel.loadMessages();
-    inputColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue()));
+    inputColumn
+        .setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue()));
     messageArea.textProperty().bindBidirectional(viewModel.requestProperty());
     tableView.setItems((ObservableList<String>) viewModel.getMessage());
     messageArea.textProperty().set("");
@@ -43,22 +42,7 @@ public class ChatViewController implements ViewController
 
   public void onSendButton()
   {
-    if (!(messageArea.textProperty().get().equals("")))
-    {
-      viewModel.send();
-      messageArea.clear();
-
-    }
-    else
-    {
-
-      errorLabel.textProperty().set("Please write something...");
-    }
-  }
-
-  public void onSend(KeyEvent e)
-  {
-    if (e.getCode().toString().equals("ENTER"))
+    if (viewModel.accountCheck() && viewModel.chatterCheck())
     {
       if (!(messageArea.textProperty().get().equals("")))
       {
@@ -70,12 +54,55 @@ public class ChatViewController implements ViewController
         errorLabel.textProperty().set("Please write something...");
       }
     }
+    else
+    {
+      Alert promote = new Alert(Alert.AlertType.WARNING);
+      promote.setTitle("Warning");
+      promote.setHeaderText("Account is banned");
+      promote.showAndWait();
+    }
 
+  }
+
+  public void onSend(KeyEvent e)
+  {
+    if (viewModel.accountCheck())
+    {
+      if (e.getCode().toString().equals("ENTER"))
+      {
+        if (!(messageArea.textProperty().get().equals("")))
+        {
+          viewModel.send();
+          messageArea.clear();
+        }
+        else
+        {
+          errorLabel.textProperty().set("Please write something...");
+        }
+      }
+    }
+    else
+    {
+      Alert promote = new Alert(Alert.AlertType.WARNING);
+      promote.setTitle("Warning");
+      promote.setHeaderText("Account is banned");
+      promote.showAndWait();
+    }
   }
 
   public void onBackButton()
   {
-    //Todo
-    vh.openItemScene();
+    if (viewModel.accountCheck())
+    {
+      vh.openAccountScene();
+    }
+    else
+    {
+      Alert promote = new Alert(Alert.AlertType.WARNING);
+      promote.setTitle("Warning");
+      promote.setHeaderText("Account is banned");
+      promote.showAndWait();
+    }
+
   }
 }

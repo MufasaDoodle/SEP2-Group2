@@ -35,59 +35,68 @@ public class ListingController implements ViewController
 
   public void createListingBtn()
   {
-
-    if (promoteBox.isSelected())
-    {
-      Alert promote = new Alert(Alert.AlertType.INFORMATION);
-      promote.setTitle("Promoted item");
-      promote.setHeaderText(
-          "You chose to promote your item, it costs 20Kr/days");
-      promote.showAndWait();
-    }
-
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setTitle("Create listing");
-    alert.setHeaderText("Do you want to add this new listing?");
-
-    Optional<ButtonType> result = alert.showAndWait();
-
-    if (result.get() == ButtonType.OK)
+    if (viewModel.accountCheck())
     {
       if (promoteBox.isSelected())
       {
+        Alert promote = new Alert(Alert.AlertType.INFORMATION);
+        promote.setTitle("Promoted item");
+        promote.setHeaderText(
+            "You chose to promote your item, it costs 20Kr/days");
+        promote.showAndWait();
+      }
 
-        if (viewModel
-            .createListing(titleField.getText(), descriptionArea.getText(),
-                priceField.getText(),
-                categoryBox.getSelectionModel().getSelectedItem(),
-                locField.getText(), durationField.getText(), "*"))
-        {
-          titleField.setText("");
-          descriptionArea.setText("");
-          priceField.setText("");
-          categoryBox.getSelectionModel().selectFirst();
-          locField.setText("");
-          durationField.setText("");
-          promoteBox.setSelected(false);
-        }
-      }
-      else
+      Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+      alert.setTitle("Create listing");
+      alert.setHeaderText("Do you want to add this new listing?");
+
+      Optional<ButtonType> result = alert.showAndWait();
+
+      if (result.get() == ButtonType.OK)
       {
-        if (viewModel
-            .createListing(titleField.getText(), descriptionArea.getText(),
-                priceField.getText(),
-                categoryBox.getSelectionModel().getSelectedItem(),
-                locField.getText(), durationField.getText(), ""))
+        if (promoteBox.isSelected())
         {
-          titleField.setText("");
-          descriptionArea.setText("");
-          priceField.setText("");
-          categoryBox.getSelectionModel().selectFirst();
-          locField.setText("");
-          durationField.setText("");
-          promoteBox.setSelected(false);
+
+          if (viewModel
+              .createListing(titleField.getText(), descriptionArea.getText(),
+                  priceField.getText(),
+                  categoryBox.getSelectionModel().getSelectedItem(),
+                  locField.getText(), durationField.getText(), "*"))
+          {
+            titleField.setText("");
+            descriptionArea.setText("");
+            priceField.setText("");
+            categoryBox.getSelectionModel().selectFirst();
+            locField.setText("");
+            durationField.setText("");
+            promoteBox.setSelected(false);
+          }
+        }
+        else
+        {
+          if (viewModel
+              .createListing(titleField.getText(), descriptionArea.getText(),
+                  priceField.getText(),
+                  categoryBox.getSelectionModel().getSelectedItem(),
+                  locField.getText(), durationField.getText(), ""))
+          {
+            titleField.setText("");
+            descriptionArea.setText("");
+            priceField.setText("");
+            categoryBox.getSelectionModel().selectFirst();
+            locField.setText("");
+            durationField.setText("");
+            promoteBox.setSelected(false);
+          }
         }
       }
+    }
+    else
+    {
+      Alert promote = new Alert(Alert.AlertType.WARNING);
+      promote.setTitle("Warning");
+      promote.setHeaderText("Account is banned");
+      promote.showAndWait();
     }
   }
 
@@ -96,13 +105,18 @@ public class ListingController implements ViewController
     vh.openLogInScene();
   }
 
-  public void onChatView()
-  {
-    vh.openChatScene();
-  }
-
   public void onSeeListing()
   {
-    vh.openSeeListingScene();
+    if (viewModel.accountCheck())
+    {
+      vh.openSeeListingScene();
+    }
+    else
+    {
+      Alert promote = new Alert(Alert.AlertType.WARNING);
+      promote.setTitle("Warning");
+      promote.setHeaderText("Account is banned");
+      promote.showAndWait();
+    }
   }
 }

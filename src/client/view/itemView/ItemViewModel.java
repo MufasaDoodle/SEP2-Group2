@@ -6,13 +6,12 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import stuffs.FeedbackToItem;
-import stuffs.Listing;
-import stuffs.Request;
-import stuffs.Transaction;
+import stuffs.*;
 
-import java.beans.PropertyChangeEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ItemViewModel
@@ -44,6 +43,7 @@ public class ItemViewModel
     avgStarRating = new SimpleStringProperty();
   }
 
+
   private void onNewFeedback(PropertyChangeEvent event) {
     FeedbackToItem feedbacky = (FeedbackToItem) event.getNewValue();
     if(feedbacky != null)
@@ -54,16 +54,57 @@ public class ItemViewModel
 
   public boolean leaveFeedback(String starRating, String feedback, int itemId, int accountId, String accountName)
   {
-    for (int i = 0; i < clientModel.getRentedTo(itemId).size(); i++)
+    if (clientModel.getListingByID(itemId) == null)
     {
-      if (accountId == clientModel.getRentedTo(itemId).get(i))
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item is deleted");
+      alert.showAndWait();
+    }
+    else
+    {
+      for (int i = 0; i < clientModel.getRentedTo(itemId).size(); i++)
       {
-          if (clientModel.createFeedbackItems(itemId, starRating, feedback, accountId, accountName))
+
+        if (accountId == clientModel.getRentedTo(itemId).get(i))
+        {
+          if ((!(starRating.equals("")) && feedback.equals("")))
           {
-            error.setValue("Feedback created");
-            return true;
+            if (clientModel.createFeedbackItems(itemId, starRating, "No feedback", accountId, accountName))
+            {
+              error.setValue("Feedback created");
+              return true;
+            }
           }
+          else if (!(feedback.equals("")) && starRating.equals(""))
+          {
+            if (clientModel
+                .createFeedbackItems(itemId, "No star rating", feedback,
+                    accountId, accountName))
+            {
+              error.setValue("Feedback created");
+              return true;
+            }
+          }
+          else if (!(feedback.equals("") && starRating.equals("")))
+
+          {
+            if (clientModel
+                .createFeedbackItems(itemId, starRating, feedback, accountId,
+                    accountName))
+            {
+              error.setValue("Feedback created");
+              return true;
+            }
+          }
+          else
+          {
+            error.setValue("All fields must be filled");
+            return false;
+          }
+          break;
         }
+
         else
         {
           error.setValue("You must rent the item before!");
@@ -76,6 +117,28 @@ public class ItemViewModel
 
   public void listOfFeedback(int itemId)
   {
+    if (clientModel.getCurrentAccountID() == 1)
+    {
+      List<FeedbackToItem> list = new ArrayList<>();
+      list.add(clientModel.getFeedbackById(clientModel.getFeedbackId()));
+      feedback = FXCollections.observableArrayList(list);
+    }
+    else
+    {
+      List<FeedbackToItem> list = clientModel.getFeedbackItems(itemId);
+      feedback = FXCollections.observableArrayList(list);
+    }
+
+
+    /*if (list == null)
+    {
+      System.out.println("List is nullito");
+    }
+    feedback = FXCollections.observableArrayList(list);
+    if (feedback == null)
+    {
+      System.out.println("Feedback is null");
+    }*/
 
     List<FeedbackToItem> list = clientModel.getFeedbackItems(itemId);
     feedback = FXCollections.observableArrayList();
@@ -85,6 +148,7 @@ public class ItemViewModel
         feedback.add(feedbacky);
       }
     }
+
 
   }
 
@@ -155,7 +219,16 @@ public class ItemViewModel
 
   public void setItem()
   {
-    if (getCurrentItemId() != 0)
+    Account tempCheck = clientModel
+        .getAccountById(clientModel.getCurrentAccountID());
+    if (tempCheck == null)
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Your account is banned");
+      alert.showAndWait();
+    }
+    if (getCurrentItemId() != 0 && tempCheck != null)
     {
       Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
       owner.set(clientModel.getAccountById(temp.getAccountId()).getName());
@@ -187,11 +260,25 @@ public class ItemViewModel
 
   public void saveChatterID()
   {
-    int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
-    if (!(clientModel.getCurrentAccountID() == accID))
+    Listing listing = clientModel
+        .getListingByID(clientModel.getCurrentItemID());
+    if (listing == null)
     {
-      clientModel.setCurrentChatterID(accID);
+      clientModel.setCurrentChatterID(1);
     }
+    else
+    {
+      int accID = clientModel.getListingByID(clientModel.getCurrentItemID())
+          .getAccountId();
+      if (!(clientModel.getCurrentAccountID() == accID)
+          || clientModel.getAccountById(accID) != null
+          || clientModel.getAccountById(clientModel.getCurrentAccountID())
+          != null)
+      {
+        clientModel.setCurrentChatterID(accID);
+      }
+    }
+
   }
 
   public void saveChatterName()
@@ -201,10 +288,10 @@ public class ItemViewModel
 
   public void rentItem()
   {
-
     int itemId = clientModel.getCurrentItemID();
     int requestFrom = clientModel.getCurrentAccountID();
-    int requestTo = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
+    int requestTo = clientModel.getListingByID(clientModel.getCurrentItemID())
+        .getAccountId();
 
     Request request = clientModel.getRequest(itemId, requestFrom);
 
@@ -240,15 +327,120 @@ public class ItemViewModel
   public Listing getListing()
   {
     int itemId = clientModel.getCurrentItemID();
-    return clientModel.getListingByID(itemId);
+    if (clientModel.getListingByID(itemId) == null)
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item is deleted");
+    }
+    else
+    {
+      return clientModel.getListingByID(itemId);
+    }
+    return null;
   }
 
   public void saveViewingAccountID()
   {
-    int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
-    if (!(clientModel.getCurrentAccountID() == accID))
+    Listing listing = clientModel
+        .getListingByID(clientModel.getCurrentItemID());
+    if (listing == null)
     {
-      clientModel.setViewingAccountID(accID);
+      clientModel.setCurrentChatterID(1);
     }
+    else
+    {
+      int accID = clientModel.getListingByID(clientModel.getCurrentItemID())
+          .getAccountId();
+      if (!(clientModel.getCurrentAccountID() == accID))
+      {
+        clientModel.setViewingAccountID(accID);
+      }
+    }
+
+  }
+
+  public void reportItem()
+  {
+    int itemId = clientModel.getCurrentItemID();
+    if (clientModel.getListingByID(itemId) == null)
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item is deleted");
+      alert.showAndWait();
+    }
+    else
+    {
+      if (clientModel.getCurrentAccountID() != 1)
+      {
+        int reportFrom = clientModel.getCurrentAccountID();
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+
+        clientModel
+            .createReport(reportFrom, itemId, 0, 0, dateFormat.format(date));
+      }
+    }
+  }
+
+  public int getAccountId()
+  {
+    return clientModel.getCurrentAccountID();
+  }
+
+  public void reportFeedback(int feedbackId)
+  {
+    int itemId = clientModel.getCurrentItemID();
+    if (clientModel.getListingByID(itemId) == null)
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item is deleted");
+      alert.showAndWait();
+    }
+    else
+    {
+      int reportFrom = clientModel.getCurrentAccountID();
+      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+      Date date = new Date();
+
+      clientModel
+          .createReport(reportFrom, 0, 0, feedbackId, dateFormat.format(date));
+    }
+  }
+
+  public boolean getReportByItem(){
+    return clientModel.getReportByItemId(clientModel.getCurrentItemID()) == null;
+  }
+
+  public boolean getReportByFeedbackId(int feedbackId){
+    return clientModel.getReportByFeedbackId(feedbackId) == null;
+  }
+
+  public FeedbackToItem getFeedback(int feedbackId){
+    return clientModel.getFeedbackById(feedbackId);
+  }
+
+  public Listing getListingById(int id){
+    if (clientModel.getListingByID(id) == null)
+    {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("Warning");
+      alert.setHeaderText("Item is deleted");
+    }
+    else
+    {
+      return clientModel.getListingByID(id);
+    }
+    return null;
+  }
+
+
+
+  public boolean accountCheck()
+  {
+    return clientModel.accountCheck();
   }
 }

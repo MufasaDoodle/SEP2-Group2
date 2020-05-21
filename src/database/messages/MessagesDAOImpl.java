@@ -114,4 +114,16 @@ public class MessagesDAOImpl implements MessagesDAO
       return result;
     }
   }
+
+  @Override public void deleteByAccount(int accountId) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection
+          .prepareStatement("DELETE FROM \"SEP2\".message WHERE fromaccount = ? OR toaccount = ?");
+      statement.setInt(1, accountId);
+      statement.setInt(2, accountId);
+      statement.executeUpdate();
+    }
+  }
 }
