@@ -36,8 +36,13 @@ public class ClientModelManager implements ClientModel
     this.client = client;
     client.startClient();
     client.addListener("NewMessage", this::onNewMessage);
-    //client.addListener("NewListing", this::onNewListing);
+    client.addListener("NewFeedback", this::onNewFeedback);
   }
+
+  private void onNewFeedback(PropertyChangeEvent event) {
+    support.firePropertyChange(event);
+  }
+
 
   @Override public void setFromListingViewOpen(boolean whereFrom)
   {
@@ -214,10 +219,6 @@ public class ClientModelManager implements ClientModel
     support.firePropertyChange(propertyChangeEvent);
   }
 
-  private void onNewListing(PropertyChangeEvent event)
-  {
-    support.firePropertyChange(event);
-  }
 
   @Override public List<Listing> getListings()
   {

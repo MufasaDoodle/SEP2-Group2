@@ -29,7 +29,7 @@ public class ItemViewModel
   public ItemViewModel(ClientModel clientModel)
   {
     this.clientModel = clientModel;
-    //clientModel.addListener("NewFeedback", this::onNewFeedback);
+    clientModel.addListener("NewFeedback", this::onNewFeedback);
     request = new SimpleStringProperty();
     reply = new SimpleStringProperty();
     owner = new SimpleStringProperty();
@@ -44,30 +44,20 @@ public class ItemViewModel
     avgStarRating = new SimpleStringProperty();
   }
 
+  private void onNewFeedback(PropertyChangeEvent event) {
+    FeedbackToItem feedbacky = (FeedbackToItem) event.getNewValue();
+    if(feedbacky != null)
+    {
+      feedback.add((FeedbackToItem) event.getNewValue());
+    }
+  }
+
   public boolean leaveFeedback(String starRating, String feedback, int itemId, int accountId, String accountName)
   {
     for (int i = 0; i < clientModel.getRentedTo(itemId).size(); i++)
     {
       if (accountId == clientModel.getRentedTo(itemId).get(i))
       {
-        if ((!(starRating.equals("")) && feedback.equals("")))
-        {
-          if (clientModel.createFeedbackItems(itemId, starRating, "No feedback", accountId, accountName))
-          {
-            error.setValue("Feedback created");
-            return true;
-          }
-        }
-        else if (!(feedback.equals("")) && starRating.equals(""))
-        {
-          if (clientModel.createFeedbackItems(itemId, "No star rating", feedback, accountId, accountName))
-          {
-            error.setValue("Feedback created");
-            return true;
-          }
-        }
-        else if (!(feedback.equals("") && starRating.equals("")))
-        {
           if (clientModel.createFeedbackItems(itemId, starRating, feedback, accountId, accountName))
           {
             error.setValue("Feedback created");
@@ -76,12 +66,11 @@ public class ItemViewModel
         }
         else
         {
-          error.setValue("All fields must be filled");
+          error.setValue("You must rent the item before!");
           return false;
         }
         break;
       }
-    }
     return false;
   }
 
@@ -89,15 +78,14 @@ public class ItemViewModel
   {
 
     List<FeedbackToItem> list = clientModel.getFeedbackItems(itemId);
-    if (list == null)
-    {
-      System.out.println("List is nullito");
+    feedback = FXCollections.observableArrayList();
+    for (FeedbackToItem feedbacky : list) {
+      if(feedbacky != null)
+      {
+        feedback.add(feedbacky);
+      }
     }
-    feedback = FXCollections.observableArrayList(list);
-    if (feedback == null)
-    {
-      System.out.println("Feedback is null");
-    }
+
   }
 
   ObservableList<FeedbackToItem> getFeedbackItems()

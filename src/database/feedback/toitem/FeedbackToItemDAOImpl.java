@@ -49,7 +49,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
       ResultSet keys = statement.getGeneratedKeys();
       if (keys.next())
       {
-        return new FeedbackToItem(keys.getInt(1), starRating, writtenFeedback,
+        return new FeedbackToItem(keys.getInt(3), starRating, writtenFeedback,
             itemId, accountId, accountName);
       }
       else
