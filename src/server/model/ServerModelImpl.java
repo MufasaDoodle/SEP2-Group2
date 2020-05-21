@@ -72,8 +72,7 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
-  @Override public List<Listing> getSorting(String request, String title,
-      String category, String location) throws RemoteException
+  @Override public List<Listing> getSorting(String request, String title, String category, String location) throws RemoteException
   {
     try
     {
@@ -176,23 +175,17 @@ public class ServerModelImpl implements ServerModel
       else if (request.equals("categoryLocationPriceHighLow"))
         return listingDAO.categoryLocationPriceHighToLow(category, location);
       else if (request.equals("titleCategoryLocationOldNew"))
-        return listingDAO
-            .titleCategoryLocationOldNew(title, category, location);
+        return listingDAO.titleCategoryLocationOldNew(title, category, location);
       else if (request.equals("titleCategoryLocationNewOld"))
-        return listingDAO
-            .titleCategoryLocationNewOld(title, category, location);
+        return listingDAO.titleCategoryLocationNewOld(title, category, location);
       else if (request.equals("titleCategoryLocationRatingLowHigh"))
-        return listingDAO
-            .titleCategoryLocationRatingLowToHigh(title, category, location);
+        return listingDAO.titleCategoryLocationRatingLowToHigh(title, category, location);
       else if (request.equals("titleCategoryLocationRatingHighLow"))
-        return listingDAO
-            .titleCategoryLocationRatingHighToLow(title, category, location);
+        return listingDAO.titleCategoryLocationRatingHighToLow(title, category, location);
       else if (request.equals("titleCategoryLocationPriceLowHigh"))
-        return listingDAO
-            .titleCategoryLocationPriceLowToHigh(title, category, location);
+        return listingDAO.titleCategoryLocationPriceLowToHigh(title, category, location);
       else if (request.equals("titleCategoryLocationPriceHighLow"))
-        return listingDAO
-            .titleCategoryLocationPriceHighToLow(title, category, location);
+        return listingDAO.titleCategoryLocationPriceHighToLow(title, category, location);
     }
     catch (SQLException e)
     {
@@ -228,17 +221,14 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
-  @Override public boolean createListing(String title, String descText,
-      String price, String category, String location, String duration,
-      String date, int accountId, String promoted)
+  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId, String promoted)
   {
     try
     {
-      Listing temp = listingDAO.create(title, descText, category, location,
-          Double.parseDouble(price), duration, Date.valueOf(date), accountId,promoted);
-      support.firePropertyChange("NewListing", null, temp);
+      Listing temp = listingDAO.create(title, descText, category, location, Double.parseDouble(price), duration, Date.valueOf(date), accountId, promoted);
       if (temp != null)
       {
+        support.firePropertyChange("NewListing", null, temp);
         return true;
       }
       else
@@ -253,15 +243,13 @@ public class ServerModelImpl implements ServerModel
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email,
-      String password1, String address, String phoneNumber)
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
   {
     try
     {
       if (accountDAO.readByEmail(email) == null)
       {
-        Account temp = accountDAO
-            .createAccount(name, email, password1, address, phoneNumber);
+        Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber);
         if (temp != null)
         {
           return true;
@@ -286,8 +274,7 @@ public class ServerModelImpl implements ServerModel
       Account temp = accountDAO.readByEmail(email);
       if (temp != null)
       {
-        if (temp.getEmail().equals(email) && temp.getPassword()
-            .equals(password))
+        if (temp.getEmail().equals(email) && temp.getPassword().equals(password))
         {
           return true;
         }
@@ -305,15 +292,13 @@ public class ServerModelImpl implements ServerModel
     return false;
   }
 
-  @Override public boolean createAccount(String name, String email,
-      String password1, String address, String phoneNumber, String bio)
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
   {
     try
     {
       if (accountDAO.readByEmail(email) == null)
       {
-        Account temp = accountDAO
-            .createAccount(name, email, password1, address, phoneNumber, bio);
+        Account temp = accountDAO.createAccount(name, email, password1, address, phoneNumber, bio);
         if (temp != null)
         {
           return true;
@@ -426,11 +411,14 @@ public class ServerModelImpl implements ServerModel
     return 0;
   }
 
-  @Override
-  public String getAccountName(String email) throws RemoteException {
-    try {
+  @Override public String getAccountName(String email) throws RemoteException
+  {
+    try
+    {
       return accountDAO.getAccountName(email);
-    } catch (SQLException e) {
+    }
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return "";
@@ -532,8 +520,7 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override public void createRequest(int itemId, int requestFrom,
-      int requestTo)
+  @Override public void createRequest(int itemId, int requestFrom, int requestTo)
   {
     try
     {
@@ -596,16 +583,19 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override
-  public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName)  {
-    try {
-        FeedbackToItem temp = feedbackToItemDAO.createFeedback(starRating, feedback, itemId, accountId, accountName);
-        support.firePropertyChange("NewFeedback", null, temp);
-        if (temp != null) {
-          return true;
-        } else {
-          return false;
-        }
+  @Override public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName)
+  {
+    try
+    {
+      FeedbackToItem temp = feedbackToItemDAO.createFeedback(starRating, feedback, itemId, accountId, accountName);
+      if (temp != null)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
     catch (SQLException e)
     {
@@ -614,8 +604,8 @@ public class ServerModelImpl implements ServerModel
     return false;
   }
 
-  @Override
-  public List<FeedbackToItem> getFeedbackItems(int itemId) {
+  @Override public List<FeedbackToItem> getFeedbackItems(int itemId)
+  {
     try
     {
       return feedbackToItemDAO.getFeedback(itemId);
@@ -640,8 +630,8 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override
-  public String getAvgStarRating(int itemId) {
+  @Override public String getAvgStarRating(int itemId)
+  {
     try
     {
       return feedbackToItemDAO.getAvgStarRating(itemId);
@@ -653,8 +643,8 @@ public class ServerModelImpl implements ServerModel
     return "";
   }
 
-  @Override
-  public List<Integer> getRentedTo(int itemId){
+  @Override public List<Integer> getRentedTo(int itemId)
+  {
     try
     {
       return transactionDAO.getRentedToId(itemId);
@@ -666,13 +656,11 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override public void createTransaction(int itemId, String date,
-      int rentedToId, int rentedFromId)
+  @Override public void createTransaction(int itemId, String date, int rentedToId, int rentedFromId)
   {
     try
     {
-      transactionDAO
-          .create(itemId, Date.valueOf(date), rentedToId, rentedFromId);
+      transactionDAO.create(itemId, Date.valueOf(date), rentedToId, rentedFromId);
     }
     catch (SQLException e)
     {
@@ -693,8 +681,7 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override public List<TransactionListing> getTransactionByRentedTo(
-      int rentedTo)
+  @Override public List<TransactionListing> getTransactionByRentedTo(int rentedTo)
   {
     try
     {
@@ -707,8 +694,7 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override public List<TransactionListing> getTransactionByRentedFrom(
-      int rentedFrom)
+  @Override public List<TransactionListing> getTransactionByRentedFrom(int rentedFrom)
   {
     try
     {
@@ -721,14 +707,12 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override public void createReport(int reportFrom, int reportedItemId,
-      int reportedAccountId, int reportedItemFeedbackId,
-        String date)
+  @Override public void createReport(int reportFrom, int reportedItemId, int reportedAccountId, int reportedItemFeedbackId, String date)
   {
     {
       try
       {
-        reportDAO.create(reportFrom,reportedItemId,reportedAccountId,reportedItemFeedbackId,Date.valueOf(date));
+        reportDAO.create(reportFrom, reportedItemId, reportedAccountId, reportedItemFeedbackId, Date.valueOf(date));
       }
       catch (SQLException e)
       {
@@ -946,14 +930,12 @@ public class ServerModelImpl implements ServerModel
     return null;
   }
 
-  @Override public void addListener(String eventName,
-      PropertyChangeListener listener)
+  @Override public void addListener(String eventName, PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(eventName, listener);
   }
 
-  @Override public void removeListener(String eventName,
-      PropertyChangeListener listener)
+  @Override public void removeListener(String eventName, PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(eventName, listener);
   }

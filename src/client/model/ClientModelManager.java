@@ -38,17 +38,12 @@ public class ClientModelManager implements ClientModel
     this.client = client;
     client.startClient();
     client.addListener("NewMessage", this::onNewMessage);
-    client.addListener("NewFeedback", this::onNewFeedback);
   }
 
   @Override public boolean accountCheck()
   {
     Account account = getAccountById(getCurrentAccountID());
     return account != null;
-  }
-
-  private void onNewFeedback(PropertyChangeEvent event) {
-    support.firePropertyChange(event);
   }
 
   @Override public void setFromListingViewOpen(boolean whereFrom)
@@ -81,8 +76,7 @@ public class ClientModelManager implements ClientModel
     return fromModeratorOpen;
   }
 
-  @Override public void createRequest(int itemId, int requestFrom,
-      int requestTo)
+  @Override public void createRequest(int itemId, int requestFrom, int requestTo)
   {
     System.out.println("Request sent");
     client.createRequest(itemId, requestFrom, requestTo);
@@ -110,8 +104,7 @@ public class ClientModelManager implements ClientModel
     return client.getRequest(itemId, requestFrom);
   }
 
-  @Override public void createTransaction(int itemId, String date,
-      int rentedToId, int rentedFromId)
+  @Override public void createTransaction(int itemId, String date, int rentedToId, int rentedFromId)
   {
     System.out.println("Transaction created");
     client.createTransaction(itemId, date, rentedToId, rentedFromId);
@@ -122,23 +115,19 @@ public class ClientModelManager implements ClientModel
     return client.getTransactionByItemId(itemId);
   }
 
-  @Override public List<TransactionListing> getTransactionByRentedTo(
-      int rentedTo)
+  @Override public List<TransactionListing> getTransactionByRentedTo(int rentedTo)
   {
     return client.getTransactionByRentedTo(rentedTo);
   }
 
-  @Override public List<TransactionListing> getTransactionByRentedFrom(
-      int rentedFrom)
+  @Override public List<TransactionListing> getTransactionByRentedFrom(int rentedFrom)
   {
     return client.getTransactionByRentedFrom(rentedFrom);
   }
 
-  @Override public void createReport(int reportFrom, int reportedItemId,
-      int reportedAccountId, int reportedItemFeedbackId, String date)
+  @Override public void createReport(int reportFrom, int reportedItemId, int reportedAccountId, int reportedItemFeedbackId, String date)
   {
-    client.createReport(reportFrom, reportedItemId, reportedAccountId,
-        reportedItemFeedbackId, date);
+    client.createReport(reportFrom, reportedItemId, reportedAccountId, reportedItemFeedbackId, date);
   }
 
   @Override public List<Report> getAllReports()
@@ -265,12 +254,10 @@ public class ClientModelManager implements ClientModel
     return client.getListingsByAccount(accountId);
   }
 
-  @Override public boolean updateAccount(String email, String pass,
-      String address, String number, String bio)
+  @Override public boolean updateAccount(String email, String pass, String address, String number, String bio)
   {
     Account currentAccount = client.getAccountById(currentAccountID);
-    Account updatedAccount = new Account(currentAccount.getId(),
-        currentAccount.getName(), email, pass, address, number, bio);
+    Account updatedAccount = new Account(currentAccount.getId(), currentAccount.getName(), email, pass, address, number, bio);
     if (client.updateAccount(updatedAccount))
     {
       System.out.println("Account updated");
@@ -294,17 +281,13 @@ public class ClientModelManager implements ClientModel
     moderatedAccount = getAccountById(accountId);
   }
 
-  @Override public boolean updateListing(String title, String description,
-      String category, String location, double price, String duration,
-      String rented, String promoted)
+  @Override public boolean updateListing(String title, String description, String category, String location, double price, String duration, String rented, String promoted)
   {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
 
     Listing currentListing = client.getListingByID(currentItemID);
-    Listing updatedListing = new Listing(title, description, category, location,
-        price, duration, dateFormat.format(date), currentListing.getId(),
-        currentListing.getAccountId(), rented, promoted);
+    Listing updatedListing = new Listing(title, description, category, location, price, duration, dateFormat.format(date), currentListing.getId(), currentListing.getAccountId(), rented, promoted);
     if (client.updateListing(updatedListing))
     {
       System.out.println("Listing updated");
@@ -313,16 +296,12 @@ public class ClientModelManager implements ClientModel
     return false;
   }
 
-  @Override public boolean updateListingRented(String title, String description,
-      String category, String location, double price, String duration,
-      String rented, int itemId, int accountId, String promoted)
+  @Override public boolean updateListingRented(String title, String description, String category, String location, double price, String duration, String rented, int itemId, int accountId, String promoted)
   {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
 
-    Listing updatedListing = new Listing(title, description, category, location,
-        price, duration, dateFormat.format(date), itemId, accountId, rented,
-        promoted);
+    Listing updatedListing = new Listing(title, description, category, location, price, duration, dateFormat.format(date), itemId, accountId, rented, promoted);
     if (client.updateListing(updatedListing))
     {
       System.out.println("Listing updated");
@@ -347,12 +326,10 @@ public class ClientModelManager implements ClientModel
     return client.getDeletedItemIds();
   }
 
-  @Override public boolean createFeedbackItems(int itemId, String starRating,
-      String feedback, int accountId, String accountName)
+  @Override public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName)
   {
     System.out.println("Feedback was created");
-    return client.createFeedbackItems(itemId, starRating, feedback, accountId,
-        accountName);
+    return client.createFeedbackItems(itemId, starRating, feedback, accountId, accountName);
   }
 
   @Override public List<FeedbackToItem> getFeedbackItems(int itemId)
@@ -382,15 +359,13 @@ public class ClientModelManager implements ClientModel
     support.firePropertyChange(propertyChangeEvent);
   }
 
-
   @Override public List<Listing> getListings()
   {
     System.out.println("All listings have been retrieved");
     return client.getListings();
   }
 
-  @Override public List<Listing> getSorting(String request, String title,
-      String category, String location)
+  @Override public List<Listing> getSorting(String request, String title, String category, String location)
   {
     System.out.println("Listings have been retrieved");
     return client.getSorting(request, title, category, location);
@@ -401,8 +376,7 @@ public class ClientModelManager implements ClientModel
     return client.getListingByID(id);
   }
 
-  @Override public boolean createAccount(String name, String email,
-      String password1, String address, String phoneNumber)
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
   {
     System.out.println("Account created!");
     return client.createAccount(name, email, password1, address, phoneNumber);
@@ -414,15 +388,11 @@ public class ClientModelManager implements ClientModel
     return null;
   }
 
-  @Override public boolean createListing(String title, String descText,
-      String price, String category, String location, String duration,
-      String date, int accountId, String promoted)
+  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId, String promoted)
   {
     System.out.println("Listing created!");
     accountId = getCurrentAccountID();
-    return client
-        .createListing(title, descText, price, category, location, duration,
-            date, accountId, promoted);
+    return client.createListing(title, descText, price, category, location, duration, date, accountId, promoted);
   }
 
   @Override public boolean checkLogIn(String email, String password)
@@ -430,12 +400,10 @@ public class ClientModelManager implements ClientModel
     return client.checkLogIn(email, password);
   }
 
-  @Override public boolean createAccount(String name, String email,
-      String password1, String address, String phoneNumber, String bio)
+  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
   {
     System.out.println("Account created! (but not really)");
-    return client
-        .createAccount(name, email, password1, address, phoneNumber, bio);
+    return client.createAccount(name, email, password1, address, phoneNumber, bio);
   }
 
   @Override public String broadCastMessage(String msg)
@@ -450,8 +418,7 @@ public class ClientModelManager implements ClientModel
 
   @Override public List<ChatItem> getMessagesInvolving()
   {
-    List<Message> messagesList = client
-        .getAllMessagesInvolvingAccount(currentAccountID);
+    List<Message> messagesList = client.getAllMessagesInvolvingAccount(currentAccountID);
     List<ChatItem> chatItemList = new ArrayList<>();
     List<Integer> seenSenderIDs = new ArrayList<>();
 
@@ -463,8 +430,7 @@ public class ClientModelManager implements ClientModel
         if (!seenSenderIDs.contains(message.getFromAccount()))
         {
           seenSenderIDs.add(message.getFromAccount());
-          String chatterName = client.getAccountById(message.getFromAccount())
-              .getName();
+          String chatterName = client.getAccountById(message.getFromAccount()).getName();
           chatItemList.add(new ChatItem(chatterName, message.getFromAccount()));
         }
       }
@@ -475,8 +441,7 @@ public class ClientModelManager implements ClientModel
         if (!seenSenderIDs.contains(message.getToAccount()))
         {
           seenSenderIDs.add(message.getToAccount());
-          String chatterName = client.getAccountById(message.getToAccount())
-              .getName();
+          String chatterName = client.getAccountById(message.getToAccount()).getName();
           chatItemList.add(new ChatItem(chatterName, message.getToAccount()));
         }
       }
@@ -519,20 +484,6 @@ public class ClientModelManager implements ClientModel
   @Override public int getCurrentChatterID()
   {
     return currentChatterID;
-  }
-
-  @Override public void setCurrentChatterID()
-  {
-    int accID = getListingByID(getCurrentItemID()).getAccountId();
-    if (!(getCurrentAccountID() == accID))
-    {
-      setCurrentChatterID(accID);
-    }
-    else
-    {
-      setCurrentChatterID(1);
-    }
-    saveChatterName();
   }
 
   @Override public void setCurrentChatterID(int currentChatterID)
@@ -597,14 +548,12 @@ public class ClientModelManager implements ClientModel
     viewingAccountID = currentAccountID;
   }
 
-  @Override public void addListener(String eventName,
-      PropertyChangeListener listener)
+  @Override public void addListener(String eventName, PropertyChangeListener listener)
   {
     support.addPropertyChangeListener(eventName, listener);
   }
 
-  @Override public void removeListener(String eventName,
-      PropertyChangeListener listener)
+  @Override public void removeListener(String eventName, PropertyChangeListener listener)
   {
     support.removePropertyChangeListener(eventName, listener);
   }

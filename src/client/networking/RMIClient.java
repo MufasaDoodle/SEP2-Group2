@@ -738,16 +738,6 @@ public class RMIClient implements Client, ClientCallback
     support.firePropertyChange("NewMessage", null, msg);
   }
 
-  @Override
-  public void updateItems(Listing listing) {
-    support.firePropertyChange("NewListing", null, listing);
-  }
-
-  @Override
-  public void updateFeedback(FeedbackToItem feedback) {
-    support.firePropertyChange("NewFeedback", null, feedback);
-  }
-
   @Override public void addListener(String eventName,
       PropertyChangeListener listener)
   {
