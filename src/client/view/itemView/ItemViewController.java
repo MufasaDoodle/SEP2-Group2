@@ -53,8 +53,10 @@ public class ItemViewController implements ViewController
     descriptionTextArea.textProperty().bind(viewModel.descriptionProperty());
     idLabel.textProperty().bind(viewModel.idProperty());
     errorLabel.textProperty().bind(viewModel.errorProperty());
-    accountIdLabel.textProperty().bindBidirectional(viewModel.accountIdProperty());
-    accountNameLabel.textProperty().bindBidirectional(viewModel.accountNameProperty());
+    accountIdLabel.textProperty()
+        .bindBidirectional(viewModel.accountIdProperty());
+    accountNameLabel.textProperty()
+        .bindBidirectional(viewModel.accountNameProperty());
     viewModel.setItem();
     idLabel.setVisible(false);
     accountNameLabel.setVisible(false);
@@ -66,7 +68,10 @@ public class ItemViewController implements ViewController
   {
     if (viewModel.accountCheck())
     {
-      if (viewModel.leaveFeedback(buttonRate, feedbackTextArea.getText(), Integer.parseInt(idLabel.getText()), Integer.parseInt(accountIdLabel.getText()), accountNameLabel.getText()))
+      if (viewModel.leaveFeedback(buttonRate, feedbackTextArea.getText(),
+          Integer.parseInt(idLabel.getText()),
+          Integer.parseInt(accountIdLabel.getText()),
+          accountNameLabel.getText()))
       {
         feedbackTextArea.setText("");
         buttonRate = "";
@@ -78,7 +83,8 @@ public class ItemViewController implements ViewController
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("No renting for this listing");
         alert.setHeaderText("Leaving feedback not allowed");
-        alert.setContentText("You must rent an item before leaving feedback for it!");
+        alert.setContentText(
+            "You must rent an item before leaving feedback for it!");
         alert.showAndWait();
       }
       feedbackTextArea.setText("");
@@ -129,7 +135,8 @@ public class ItemViewController implements ViewController
   {
     if (viewModel.accountCheck())
     {
-      if (!(viewModel.getDeletedItemIds().contains(viewModel.getCurrentItemId())))
+      if (!(viewModel.getDeletedItemIds()
+          .contains(viewModel.getCurrentItemId())))
       {
         viewModel.setWhereFromOpen(false);
         viewModel.saveChatterID();
@@ -160,9 +167,12 @@ public class ItemViewController implements ViewController
   {
     viewModel.listOfFeedback(Integer.parseInt(idLabel.getText()));
     feedbackTable.setItems(viewModel.getFeedbackItems());
-    accountNameColumn.setCellValueFactory(new PropertyValueFactory<>("accountName"));
-    starRatingColumn.setCellValueFactory(new PropertyValueFactory<>("startRating"));
-    feedbackColumn.setCellValueFactory(new PropertyValueFactory<>("writtenFeedback"));
+    accountNameColumn
+        .setCellValueFactory(new PropertyValueFactory<>("accountName"));
+    starRatingColumn
+        .setCellValueFactory(new PropertyValueFactory<>("startRating"));
+    feedbackColumn
+        .setCellValueFactory(new PropertyValueFactory<>("writtenFeedback"));
   }
 
   public void onBackToListing()
@@ -213,7 +223,8 @@ public class ItemViewController implements ViewController
           Alert alert = new Alert(Alert.AlertType.WARNING);
           alert.setTitle("Warning");
           alert.setHeaderText("Item rented");
-          alert.setContentText("Item is already rented, contact the owner for more information!");
+          alert.setContentText(
+              "Item is already rented, contact the owner for more information!");
           alert.showAndWait();
         }
       }
@@ -287,7 +298,13 @@ public class ItemViewController implements ViewController
       {
         int feedbackId = feedbackTable.getItems().get(selectIndex).getId();
 
-        if (viewModel.getListingById(viewModel.getFeedback(feedbackId).getItemId()).getAccountId() == viewModel.getAccountId())
+        if (viewModel.getAccountId() == 1)
+        {
+          vh.openModeratorScene();
+        }
+        else if (viewModel
+            .getListingById(viewModel.getFeedback(feedbackId).getItemId())
+            .getAccountId() == viewModel.getAccountId())
         {
           if (viewModel.getReportByFeedbackId(feedbackId))
           {
@@ -312,7 +329,9 @@ public class ItemViewController implements ViewController
             promote.showAndWait();
           }
         }
-        if (viewModel.getListingById(viewModel.getFeedback(feedbackId).getItemId()).getAccountId() != viewModel.getAccountId())
+        else if (viewModel
+            .getListingById(viewModel.getFeedback(feedbackId).getItemId())
+            .getAccountId() != viewModel.getAccountId())
         {
           Alert promote = new Alert(Alert.AlertType.WARNING);
           promote.setTitle("Warning");

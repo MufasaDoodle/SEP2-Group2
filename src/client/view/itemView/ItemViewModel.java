@@ -107,28 +107,6 @@ public class ItemViewModel
       List<FeedbackToItem> list = clientModel.getFeedbackItems(itemId);
       feedback = FXCollections.observableArrayList(list);
     }
-
-
-    /*if (list == null)
-    {
-      System.out.println("List is nullito");
-    }
-    feedback = FXCollections.observableArrayList(list);
-    if (feedback == null)
-    {
-      System.out.println("Feedback is null");
-    }*/
-
-    List<FeedbackToItem> list = clientModel.getFeedbackItems(itemId);
-    feedback = FXCollections.observableArrayList();
-    for (FeedbackToItem feedbacky : list)
-    {
-      if (feedbacky != null)
-      {
-        feedback.add(feedbacky);
-      }
-    }
-
   }
 
   ObservableList<FeedbackToItem> getFeedbackItems()
@@ -251,7 +229,6 @@ public class ItemViewModel
         clientModel.setCurrentChatterID(accID);
       }
     }
-
   }
 
   public void saveChatterName()
@@ -289,11 +266,6 @@ public class ItemViewModel
       alert.setHeaderText("Request already sent!");
       alert.showAndWait();
     }
-  }
-
-  public Transaction getTransaction(int itemID)
-  {
-    return clientModel.getTransactionByItemId(itemID);
   }
 
   public Listing getListing()

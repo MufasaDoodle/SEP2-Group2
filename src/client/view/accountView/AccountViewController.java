@@ -348,6 +348,8 @@ public class AccountViewController implements ViewController
             {
               viewModel.acceptRent(itemID, rentedToId);
               viewModel.updateListing(listing.getTitle(), listing.getDescription(), listing.getCategory(), listing.getLocation(), listing.getDuration(), listing.getPrice(), "Rented", listing.getId(), listing.getAccountId(), listing.getPromoted());
+              viewModel.listOfOwnerRequests();
+              requestTable.setItems(viewModel.getRequests());
             }
           }
           else
@@ -408,6 +410,8 @@ public class AccountViewController implements ViewController
             if (result.get() == ButtonType.OK)
             {
               viewModel.declineRent(itemID, rentedToId);
+              viewModel.listOfOwnerRequests();
+              requestTable.setItems(viewModel.getRequests());
             }
           }
           else

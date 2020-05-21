@@ -3,7 +3,6 @@ package client.view.moderator;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -74,6 +73,8 @@ public class ModeratorViewController implements ViewController
         viewModel.setItemFeedback(feedbackToItem.getItemId());
         viewModel.setFeedbackId(feedbackItemId);
         vh.openItemScene();
+        viewModel.setReports();
+        reportTable.setItems(viewModel.getReports());
       }
     }
   }
@@ -98,6 +99,8 @@ public class ModeratorViewController implements ViewController
       if (result.get() == ButtonType.OK)
       {
         viewModel.deleteReport(reportId);
+        viewModel.setReports();
+        reportTable.setItems(viewModel.getReports());
         Alert promote = new Alert(Alert.AlertType.INFORMATION);
         promote.setTitle("Archived");
         promote.setHeaderText("Successfully archived!");
@@ -171,6 +174,8 @@ public class ModeratorViewController implements ViewController
           viewModel.deleteItemFeedback(feedbackItemId);
           viewModel.deleteReport(reportId);
         }
+        viewModel.setReports();
+        reportTable.setItems(viewModel.getReports());
         Alert promote = new Alert(Alert.AlertType.INFORMATION);
         promote.setTitle("Deleted");
         promote.setHeaderText("Successfully deleted!");
@@ -194,6 +199,8 @@ public class ModeratorViewController implements ViewController
       int accountID = reportTable.getItems().get(selectIndex).getReportFrom();
       viewModel.saveChatterId(accountID);
       vh.openChatScene();
+      viewModel.setReports();
+      reportTable.setItems(viewModel.getReports());
     }
   }
 
@@ -201,11 +208,8 @@ public class ModeratorViewController implements ViewController
   {
     viewModel.setAccountIDToLocalID();
     vh.openMessagesScene();
-  }
-
-  public void onRefresh()
-  {
     viewModel.setReports();
     reportTable.setItems(viewModel.getReports());
   }
+
 }

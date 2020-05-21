@@ -94,7 +94,14 @@ public class ChatViewController implements ViewController
   {
     if (viewModel.accountCheck())
     {
-      vh.openAccountScene();
+      if (viewModel.getModerator() == 1)
+      {
+        vh.openModeratorScene();
+      }
+      else
+      {
+        vh.openAccountScene();
+      }
     }
     else
     {

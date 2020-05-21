@@ -108,6 +108,10 @@ public class ChatViewModel
         != null;
   }
 
+  public int getModerator(){
+    return clientModel.getCurrentAccountID();
+  }
+
 }
 
 

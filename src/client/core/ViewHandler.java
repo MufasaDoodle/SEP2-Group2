@@ -70,6 +70,8 @@ public class ViewHandler
         e.printStackTrace();
       }
     }
+    itemScene = null;
+    accountScene = null;
     stage.setScene(moderatorScene);
     stage.show();
   }
@@ -90,6 +92,7 @@ public class ViewHandler
         e.printStackTrace();
       }
     }
+    itemScene = null;
     seeListingScene = null;
     accountScene = null;
     stage.setScene(editItemScene);
