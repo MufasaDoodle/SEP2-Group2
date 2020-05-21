@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import stuffs.*;
 
+import java.beans.PropertyChangeEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,10 +44,10 @@ public class ItemViewModel
     avgStarRating = new SimpleStringProperty();
   }
 
-
-  private void onNewFeedback(PropertyChangeEvent event) {
+  private void onNewFeedback(PropertyChangeEvent event)
+  {
     FeedbackToItem feedbacky = (FeedbackToItem) event.getNewValue();
-    if(feedbacky != null)
+    if (feedbacky != null)
     {
       feedback.add((FeedbackToItem) event.getNewValue());
     }
@@ -65,7 +66,6 @@ public class ItemViewModel
     {
       for (int i = 0; i < clientModel.getRentedTo(itemId).size(); i++)
       {
-
         if (accountId == clientModel.getRentedTo(itemId).get(i))
         {
           if ((!(starRating.equals("")) && feedback.equals("")))
@@ -78,20 +78,7 @@ public class ItemViewModel
           }
           else if (!(feedback.equals("")) && starRating.equals(""))
           {
-            if (clientModel
-                .createFeedbackItems(itemId, "No star rating", feedback,
-                    accountId, accountName))
-            {
-              error.setValue("Feedback created");
-              return true;
-            }
-          }
-          else if (!(feedback.equals("") && starRating.equals("")))
-
-          {
-            if (clientModel
-                .createFeedbackItems(itemId, starRating, feedback, accountId,
-                    accountName))
+            if (clientModel.createFeedbackItems(itemId, "No star rating", feedback, accountId, accountName))
             {
               error.setValue("Feedback created");
               return true;
@@ -104,14 +91,8 @@ public class ItemViewModel
           }
           break;
         }
-
-        else
-        {
-          error.setValue("You must rent the item before!");
-          return false;
-        }
-        break;
       }
+    }
     return false;
   }
 
@@ -142,13 +123,13 @@ public class ItemViewModel
 
     List<FeedbackToItem> list = clientModel.getFeedbackItems(itemId);
     feedback = FXCollections.observableArrayList();
-    for (FeedbackToItem feedbacky : list) {
-      if(feedbacky != null)
+    for (FeedbackToItem feedbacky : list)
+    {
+      if (feedbacky != null)
       {
         feedback.add(feedbacky);
       }
     }
-
 
   }
 
@@ -219,8 +200,7 @@ public class ItemViewModel
 
   public void setItem()
   {
-    Account tempCheck = clientModel
-        .getAccountById(clientModel.getCurrentAccountID());
+    Account tempCheck = clientModel.getAccountById(clientModel.getCurrentAccountID());
     if (tempCheck == null)
     {
       Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -260,20 +240,15 @@ public class ItemViewModel
 
   public void saveChatterID()
   {
-    Listing listing = clientModel
-        .getListingByID(clientModel.getCurrentItemID());
+    Listing listing = clientModel.getListingByID(clientModel.getCurrentItemID());
     if (listing == null)
     {
       clientModel.setCurrentChatterID(1);
     }
     else
     {
-      int accID = clientModel.getListingByID(clientModel.getCurrentItemID())
-          .getAccountId();
-      if (!(clientModel.getCurrentAccountID() == accID)
-          || clientModel.getAccountById(accID) != null
-          || clientModel.getAccountById(clientModel.getCurrentAccountID())
-          != null)
+      int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
+      if (!(clientModel.getCurrentAccountID() == accID) || clientModel.getAccountById(accID) != null || clientModel.getAccountById(clientModel.getCurrentAccountID()) != null)
       {
         clientModel.setCurrentChatterID(accID);
       }
@@ -290,8 +265,7 @@ public class ItemViewModel
   {
     int itemId = clientModel.getCurrentItemID();
     int requestFrom = clientModel.getCurrentAccountID();
-    int requestTo = clientModel.getListingByID(clientModel.getCurrentItemID())
-        .getAccountId();
+    int requestTo = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
 
     Request request = clientModel.getRequest(itemId, requestFrom);
 
@@ -342,16 +316,14 @@ public class ItemViewModel
 
   public void saveViewingAccountID()
   {
-    Listing listing = clientModel
-        .getListingByID(clientModel.getCurrentItemID());
+    Listing listing = clientModel.getListingByID(clientModel.getCurrentItemID());
     if (listing == null)
     {
       clientModel.setCurrentChatterID(1);
     }
     else
     {
-      int accID = clientModel.getListingByID(clientModel.getCurrentItemID())
-          .getAccountId();
+      int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
       if (!(clientModel.getCurrentAccountID() == accID))
       {
         clientModel.setViewingAccountID(accID);
@@ -379,8 +351,7 @@ public class ItemViewModel
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
 
-        clientModel
-            .createReport(reportFrom, itemId, 0, 0, dateFormat.format(date));
+        clientModel.createReport(reportFrom, itemId, 0, 0, dateFormat.format(date));
       }
     }
   }
@@ -406,24 +377,27 @@ public class ItemViewModel
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
       Date date = new Date();
 
-      clientModel
-          .createReport(reportFrom, 0, 0, feedbackId, dateFormat.format(date));
+      clientModel.createReport(reportFrom, 0, 0, feedbackId, dateFormat.format(date));
     }
   }
 
-  public boolean getReportByItem(){
+  public boolean getReportByItem()
+  {
     return clientModel.getReportByItemId(clientModel.getCurrentItemID()) == null;
   }
 
-  public boolean getReportByFeedbackId(int feedbackId){
+  public boolean getReportByFeedbackId(int feedbackId)
+  {
     return clientModel.getReportByFeedbackId(feedbackId) == null;
   }
 
-  public FeedbackToItem getFeedback(int feedbackId){
+  public FeedbackToItem getFeedback(int feedbackId)
+  {
     return clientModel.getFeedbackById(feedbackId);
   }
 
-  public Listing getListingById(int id){
+  public Listing getListingById(int id)
+  {
     if (clientModel.getListingByID(id) == null)
     {
       Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -436,8 +410,6 @@ public class ItemViewModel
     }
     return null;
   }
-
-
 
   public boolean accountCheck()
   {

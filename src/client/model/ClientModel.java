@@ -10,25 +10,30 @@ import java.util.List;
 
 public interface ClientModel extends Subject
 {
+  //listings
+
+  //accounts
+
+  //feedback
+
+  //chat
+
+  //moderator
+
+
   List<Listing> getListings();
-  List<Listing> getSorting(String request, String title, String category,
-      String location);
+  List<Listing> getSorting(String request, String title, String category, String location);
   Listing getListingByID(int id);
-  boolean createAccount(String name, String email, String password1,
-      String address, String phoneNumber);
+  boolean createAccount(String name, String email, String password1, String address, String phoneNumber);
   String getAllAccounts() throws IOException, ClassNotFoundException;
-  boolean createListing(String title, String descText, String price,
-      String category, String location, String duration, String date,
-      int accountId, String promoted);
+  boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId, String promoted);
   boolean checkLogIn(String email, String password);
-  boolean createAccount(String name, String email, String password1,
-      String address, String phoneNumber, String bio);
+  boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio);
   String broadCastMessage(String msg);
   List<Message> getMessage();
   List<ChatItem> getMessagesInvolving();
   int getCurrentItemID();
   void setCurrentItemID(int itemID);
-  //Todo
   String getItemName();
   Account getAccountById(int id);
 
@@ -38,8 +43,7 @@ public interface ClientModel extends Subject
   String getCurrentAccountName();
   List<Listing> getListingsByAccount(int accountId);
 
-  boolean updateAccount(String email, String pass, String address,
-      String number, String bio);
+  boolean updateAccount(String email, String pass, String address, String number, String bio);
   boolean isEmailTaken(String email);
 
   Account getModeratedAccount();
@@ -47,11 +51,8 @@ public interface ClientModel extends Subject
   void setModeratorOpen(boolean whereFrom);
   boolean getModeratorOpen();
 
-  boolean updateListing(String title, String description, String category,
-      String location, double price, String duration, String rented, String promoted);
-  boolean updateListingRented(String title, String description, String category,
-      String location, double price, String duration, String rented, int itemId,
-      int accountId,String promoted);
+  boolean updateListing(String title, String description, String category, String location, double price, String duration, String rented, String promoted);
+  boolean updateListingRented(String title, String description, String category, String location, double price, String duration, String rented, int itemId, int accountId, String promoted);
   void deleteListing(int id);
 
   void addDeletedItemId(int itemId);
@@ -60,7 +61,7 @@ public interface ClientModel extends Subject
   //create feedback for items
   boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName);
   List<FeedbackToItem> getFeedbackItems(int itemId);
-  FeedbackToItem getFeedbackById(int id) ;
+  FeedbackToItem getFeedbackById(int id);
   void setFeedbackId(int feedbackId);
   int getFeedbackId();
   String getAvgStarRating(int itemId);
@@ -85,32 +86,30 @@ public interface ClientModel extends Subject
   List<RequestListing> getRequestByAccountId(int requestTo);
   Request getRequest(int itemId, int requestFrom);
 
-  void createTransaction(int itemId, String date, int rentedToId,
-      int rentedFromId);
+  void createTransaction(int itemId, String date, int rentedToId, int rentedFromId);
   Transaction getTransactionByItemId(int itemId);
   List<TransactionListing> getTransactionByRentedTo(int rentedTo);
   List<TransactionListing> getTransactionByRentedFrom(int rentedFrom);
   void setCurrentChatterID();
   boolean accountCheck();
 
-  void createReport(int reportFrom, int reportedItemId,
-      int reportedAccountId, int reportedItemFeedbackId, String date);
+  //moderator
+  void createReport(int reportFrom, int reportedItemId, int reportedAccountId, int reportedItemFeedbackId, String date);
   List<Report> getAllReports();
-  void deleteReport(int id) ;
+  void deleteReport(int id);
   void deleteTransaction(int id);
-  void deleteAccount(int id) ;
-  void deleteItemFeedback(int id) ;
-  void deleteTransactionByAccount(int id) ;
+  void deleteAccount(int id);
+  void deleteItemFeedback(int id);
+  void deleteTransactionByAccount(int id);
   void deleteTransactionByItem(int id);
   void deleteFeedbackByItemId(int id);
-  void deleteRequestByAccount(int id) ;
+  void deleteRequestByAccount(int id);
   void deleteItemByAccount(int id);
-  void deleteReportByAccount(int id) ;
-  void deleteReportByItem(int id)  ;
-  void deleteReportByItemFeedback(int id)  ;
+  void deleteReportByAccount(int id);
+  void deleteReportByItem(int id);
+  void deleteReportByItemFeedback(int id);
   void deleteMessageByAccount(int id);
-
-  Report getReportByItemId(int id) ;
-  Report getReportByFeedbackId(int id)  ;
-  Report getReportByAccountId(int id)  ;
+  Report getReportByItemId(int id);
+  Report getReportByFeedbackId(int id);
+  Report getReportByAccountId(int id);
 }
