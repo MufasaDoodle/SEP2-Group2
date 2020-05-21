@@ -117,9 +117,11 @@ public class RMIClient implements Client, ClientCallback
   {
     try
     {
-      return server
-          .createListing(title, descText, price, category, location, duration,
-              date, accountId, promoted);
+      boolean condition = server
+              .createListing(title, descText, price, category, location, duration,
+                      date, accountId, promoted);
+      support.firePropertyChange("CreateListing", null, condition);
+      return condition;
     }
     catch (RemoteException e)
     {
@@ -734,6 +736,16 @@ public class RMIClient implements Client, ClientCallback
   @Override public void update(Message msg)
   {
     support.firePropertyChange("NewMessage", null, msg);
+  }
+
+  @Override
+  public void updateItems(Listing listing) {
+    support.firePropertyChange("NewListing", null, listing);
+  }
+
+  @Override
+  public void updateFeedback(FeedbackToItem feedback) {
+    support.firePropertyChange("NewFeedback", null, feedback);
   }
 
   @Override public void addListener(String eventName,

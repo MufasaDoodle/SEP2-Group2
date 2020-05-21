@@ -36,7 +36,7 @@ public class ItemViewController implements ViewController
   private @FXML Button rate3;
   private @FXML Button rate4;
   private @FXML Button rate5;
-  private String buttonRate = "";
+  private String buttonRate= "";
 
   private ItemViewModel viewModel;
   private ViewHandler vh;
@@ -61,19 +61,27 @@ public class ItemViewController implements ViewController
     idLabel.setVisible(false);
     accountNameLabel.setVisible(false);
     accountIdLabel.setVisible(false);
-  }
-
+    feedbackTextArea.setText("");
+}
   public void onLeaveFeedback()
   {
     if (viewModel.accountCheck())
     {
-      if (viewModel.leaveFeedback(buttonRate, feedbackTextArea.getText(),
-          Integer.parseInt(idLabel.getText()),
-          Integer.parseInt(accountIdLabel.getText()),
-          accountNameLabel.getText()))
-      {
+      if (!(feedbackTextArea.getText().equals("")) && buttonRate.equals("")) {
+        viewModel.leaveFeedback("No star rating", feedbackTextArea.getText(), 
+        Integer.parseInt(idLabel.getText()), 
+        Integer.parseInt(accountIdLabel.getText()), 
+        accountNameLabel.getText());
         feedbackTextArea.setText("");
         buttonRate = "";
+      }
+    else if(feedbackTextArea.getText().equals("") && !buttonRate.equals("")) {
+      viewModel.leaveFeedback(buttonRate, "No feedback", Integer.parseInt(idLabel.getText()), Integer.parseInt(accountIdLabel.getText()), accountNameLabel.getText());
+        feedbackTextArea.setText("");
+        buttonRate = "";
+      }
+    else if(!(feedbackTextArea.getText().equals("") && buttonRate.equals(""))) {
+      viewModel.leaveFeedback(buttonRate, feedbackTextArea.getText(), Integer.parseInt(idLabel.getText()), Integer.parseInt(accountIdLabel.getText()), accountNameLabel.getText());
       }
       else
       {
@@ -87,7 +95,7 @@ public class ItemViewController implements ViewController
         alert.showAndWait();
       }
       feedbackTextArea.setText("");
-    }
+      }
     else
     {
       Alert promote = new Alert(Alert.AlertType.WARNING);
@@ -95,9 +103,21 @@ public class ItemViewController implements ViewController
       promote.setHeaderText("Account is banned");
       promote.showAndWait();
     }
-
+    feedbackTextArea.setText("");
+     buttonRate = ""; 
   }
-
+    }
+    /*else {
+        feedbackTextArea.setText("");
+        buttonRate = "";
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("No renting for this listing");
+        alert.setHeaderText("Leaving feedback not allowed");
+        alert.setContentText("You must rent an item before leaving feedback for it!");
+        alert.showAndWait();
+      }*/
+    }
+    
   public void onRateButtons(ActionEvent actionEvent)
   {
     if (actionEvent.getSource() == rate1)

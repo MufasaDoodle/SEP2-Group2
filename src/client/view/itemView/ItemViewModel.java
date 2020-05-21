@@ -28,7 +28,7 @@ public class ItemViewModel
   public ItemViewModel(ClientModel clientModel)
   {
     this.clientModel = clientModel;
-    //clientModel.addListener("NewFeedback", this::onNewFeedback);
+    clientModel.addListener("NewFeedback", this::onNewFeedback);
     request = new SimpleStringProperty();
     reply = new SimpleStringProperty();
     owner = new SimpleStringProperty();
@@ -43,8 +43,16 @@ public class ItemViewModel
     avgStarRating = new SimpleStringProperty();
   }
 
-  public boolean leaveFeedback(String starRating, String feedback, int itemId,
-      int accountId, String accountName)
+
+  private void onNewFeedback(PropertyChangeEvent event) {
+    FeedbackToItem feedbacky = (FeedbackToItem) event.getNewValue();
+    if(feedbacky != null)
+    {
+      feedback.add((FeedbackToItem) event.getNewValue());
+    }
+  }
+
+  public boolean leaveFeedback(String starRating, String feedback, int itemId, int accountId, String accountName)
   {
     if (clientModel.getListingByID(itemId) == null)
     {
@@ -57,13 +65,12 @@ public class ItemViewModel
     {
       for (int i = 0; i < clientModel.getRentedTo(itemId).size(); i++)
       {
+
         if (accountId == clientModel.getRentedTo(itemId).get(i))
         {
           if ((!(starRating.equals("")) && feedback.equals("")))
           {
-            if (clientModel
-                .createFeedbackItems(itemId, starRating, "No feedback",
-                    accountId, accountName))
+            if (clientModel.createFeedbackItems(itemId, starRating, "No feedback", accountId, accountName))
             {
               error.setValue("Feedback created");
               return true;
@@ -80,6 +87,7 @@ public class ItemViewModel
             }
           }
           else if (!(feedback.equals("") && starRating.equals("")))
+
           {
             if (clientModel
                 .createFeedbackItems(itemId, starRating, feedback, accountId,
@@ -96,8 +104,14 @@ public class ItemViewModel
           }
           break;
         }
+
+        else
+        {
+          error.setValue("You must rent the item before!");
+          return false;
+        }
+        break;
       }
-    }
     return false;
   }
 
@@ -115,6 +129,7 @@ public class ItemViewModel
       feedback = FXCollections.observableArrayList(list);
     }
 
+
     /*if (list == null)
     {
       System.out.println("List is nullito");
@@ -124,6 +139,17 @@ public class ItemViewModel
     {
       System.out.println("Feedback is null");
     }*/
+
+    List<FeedbackToItem> list = clientModel.getFeedbackItems(itemId);
+    feedback = FXCollections.observableArrayList();
+    for (FeedbackToItem feedbacky : list) {
+      if(feedbacky != null)
+      {
+        feedback.add(feedbacky);
+      }
+    }
+
+
   }
 
   ObservableList<FeedbackToItem> getFeedbackItems()

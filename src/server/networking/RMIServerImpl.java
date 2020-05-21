@@ -154,6 +154,20 @@ public class RMIServerImpl implements RMIServer
       }
     };
     serverModel.addListener("NewMessage", listener);
+    PropertyChangeListener feedbackListener = null;
+    PropertyChangeListener finalFeedbackListener = feedbackListener;
+
+    feedbackListener = evt -> {
+      try
+      {
+        client.updateFeedback((FeedbackToItem) evt.getNewValue());
+      }
+      catch (RemoteException e)
+      {
+        serverModel.removeListener("NewFeedback", finalFeedbackListener);
+      }
+    };
+    serverModel.addListener("NewFeedback", feedbackListener);
   }
 
   @Override public String broadCastMessage(String msg, int fromAccount, int toAccount)

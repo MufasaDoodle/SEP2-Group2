@@ -236,7 +236,7 @@ public class ServerModelImpl implements ServerModel
     {
       Listing temp = listingDAO.create(title, descText, category, location,
           Double.parseDouble(price), duration, Date.valueOf(date), accountId,promoted);
-      // support.firePropertyChange("NewListing", null, temp);
+      support.firePropertyChange("NewListing", null, temp);
       if (temp != null)
       {
         return true;
@@ -600,6 +600,7 @@ public class ServerModelImpl implements ServerModel
   public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName)  {
     try {
         FeedbackToItem temp = feedbackToItemDAO.createFeedback(starRating, feedback, itemId, accountId, accountName);
+        support.firePropertyChange("NewFeedback", null, temp);
         if (temp != null) {
           return true;
         } else {
