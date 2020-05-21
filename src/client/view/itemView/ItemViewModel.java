@@ -29,7 +29,6 @@ public class ItemViewModel
   public ItemViewModel(ClientModel clientModel)
   {
     this.clientModel = clientModel;
-    clientModel.addListener("NewFeedback", this::onNewFeedback);
     request = new SimpleStringProperty();
     reply = new SimpleStringProperty();
     owner = new SimpleStringProperty();
@@ -42,15 +41,6 @@ public class ItemViewModel
     accountId = new SimpleStringProperty();
     accountName = new SimpleStringProperty();
     avgStarRating = new SimpleStringProperty();
-  }
-
-  private void onNewFeedback(PropertyChangeEvent event)
-  {
-    FeedbackToItem feedbacky = (FeedbackToItem) event.getNewValue();
-    if (feedbacky != null)
-    {
-      feedback.add((FeedbackToItem) event.getNewValue());
-    }
   }
 
   public boolean leaveFeedback(String starRating, String feedback, int itemId, int accountId, String accountName)
@@ -76,9 +66,17 @@ public class ItemViewModel
               return true;
             }
           }
-          else if (!(feedback.equals("")) && starRating.equals(""))
+          if (!(feedback.equals("")) && starRating.equals(""))
           {
             if (clientModel.createFeedbackItems(itemId, "No star rating", feedback, accountId, accountName))
+            {
+              error.setValue("Feedback created");
+              return true;
+            }
+          }
+          if (!(feedback.equals("") && starRating.equals("")))
+          {
+            if (clientModel.createFeedbackItems(itemId, starRating, feedback, accountId, accountName))
             {
               error.setValue("Feedback created");
               return true;
@@ -324,10 +322,7 @@ public class ItemViewModel
     else
     {
       int accID = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
-      if (!(clientModel.getCurrentAccountID() == accID))
-      {
-        clientModel.setViewingAccountID(accID);
-      }
+      clientModel.setViewingAccountID(accID);
     }
 
   }

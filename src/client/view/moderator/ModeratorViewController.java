@@ -3,6 +3,7 @@ package client.view.moderator;
 import client.core.ViewHandler;
 import client.core.ViewModelFactory;
 import client.view.ViewController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -33,14 +34,10 @@ public class ModeratorViewController implements ViewController
 
     viewModel.setReports();
     reportTable.setItems(viewModel.getReports());
-    reportFromColumn
-        .setCellValueFactory(new PropertyValueFactory<>("reportFrom"));
-    itemIDColumn
-        .setCellValueFactory(new PropertyValueFactory<>("reportedItemId"));
-    accountColumn
-        .setCellValueFactory(new PropertyValueFactory<>("reportedAccountId"));
-    feedbackItemColumn.setCellValueFactory(
-        new PropertyValueFactory<>("reportedItemFeedbackId"));
+    reportFromColumn.setCellValueFactory(new PropertyValueFactory<>("reportFrom"));
+    itemIDColumn.setCellValueFactory(new PropertyValueFactory<>("reportedItemId"));
+    accountColumn.setCellValueFactory(new PropertyValueFactory<>("reportedAccountId"));
+    feedbackItemColumn.setCellValueFactory(new PropertyValueFactory<>("reportedItemFeedbackId"));
     dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
   }
@@ -58,10 +55,8 @@ public class ModeratorViewController implements ViewController
     else
     {
       int itemId = reportTable.getItems().get(selectIndex).getReportedItemId();
-      int accountId = reportTable.getItems().get(selectIndex)
-          .getReportedAccountId();
-      int feedbackItemId = reportTable.getItems().get(selectIndex)
-          .getReportedItemFeedbackId();
+      int accountId = reportTable.getItems().get(selectIndex).getReportedAccountId();
+      int feedbackItemId = reportTable.getItems().get(selectIndex).getReportedItemFeedbackId();
 
       if (itemId != 0)
       {
@@ -75,8 +70,7 @@ public class ModeratorViewController implements ViewController
       }
       else if (feedbackItemId != 0)
       {
-        FeedbackToItem feedbackToItem = viewModel
-            .getItemFeedback(feedbackItemId);
+        FeedbackToItem feedbackToItem = viewModel.getItemFeedback(feedbackItemId);
         viewModel.setItemFeedback(feedbackToItem.getItemId());
         viewModel.setFeedbackId(feedbackItemId);
         vh.openItemScene();
@@ -127,10 +121,8 @@ public class ModeratorViewController implements ViewController
     {
       int reportId = reportTable.getItems().get(selectIndex).getId();
       int itemId = reportTable.getItems().get(selectIndex).getReportedItemId();
-      int accountId = reportTable.getItems().get(selectIndex)
-          .getReportedAccountId();
-      int feedbackItemId = reportTable.getItems().get(selectIndex)
-          .getReportedItemFeedbackId();
+      int accountId = reportTable.getItems().get(selectIndex).getReportedAccountId();
+      int feedbackItemId = reportTable.getItems().get(selectIndex).getReportedItemFeedbackId();
 
       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
       alert.setTitle("Delete");
@@ -140,11 +132,9 @@ public class ModeratorViewController implements ViewController
       {
         if (itemId != 0)
         {
-          for (int i = 0;
-               i < viewModel.getItemFeedbackByItemDd(itemId).size(); i++)
+          for (int i = 0; i < viewModel.getItemFeedbackByItemDd(itemId).size(); i++)
           {
-            viewModel.deleteReportByItemFeedback(
-                viewModel.getItemFeedbackByItemDd(itemId).get(i).getId());
+            viewModel.deleteReportByItemFeedback(viewModel.getItemFeedbackByItemDd(itemId).get(i).getId());
           }
           viewModel.deleteFeedbackBelongsToItem(itemId);
           viewModel.deleteItemTransaction(itemId);
@@ -156,28 +146,17 @@ public class ModeratorViewController implements ViewController
         }
         else if (accountId != 0)
         {
-          for (int i = 0;
-               i < viewModel.getItemsByAccount(accountId).size(); i++)
+          for (int i = 0; i < viewModel.getItemsByAccount(accountId).size(); i++)
           {
-            viewModel.deleteFeedbackBelongsToItem(
-                viewModel.getItemsByAccount(accountId).get(i).getId());
-            viewModel.deleteRequestByItem(
-                viewModel.getItemsByAccount(accountId).get(i).getId());
-            viewModel.deleteItemTransaction(
-                viewModel.getItemsByAccount(accountId).get(i).getId());
-            viewModel.deleteReportByItem(
-                viewModel.getItemsByAccount(accountId).get(i).getId());
-            for (int j = 0; i < viewModel.getItemFeedbackByItemDd(
-                viewModel.getItemsByAccount(accountId).get(i).getId())
-                .size(); i++)
+            viewModel.deleteFeedbackBelongsToItem(viewModel.getItemsByAccount(accountId).get(i).getId());
+            viewModel.deleteRequestByItem(viewModel.getItemsByAccount(accountId).get(i).getId());
+            viewModel.deleteItemTransaction(viewModel.getItemsByAccount(accountId).get(i).getId());
+            viewModel.deleteReportByItem(viewModel.getItemsByAccount(accountId).get(i).getId());
+            for (int j = 0; i < viewModel.getItemFeedbackByItemDd(viewModel.getItemsByAccount(accountId).get(i).getId()).size(); i++)
             {
-              viewModel.deleteReportByItemFeedback(viewModel
-                  .getItemFeedbackByItemDd(
-                      viewModel.getItemsByAccount(accountId).get(i).getId())
-                  .get(j).getId());
+              viewModel.deleteReportByItemFeedback(viewModel.getItemFeedbackByItemDd(viewModel.getItemsByAccount(accountId).get(i).getId()).get(j).getId());
             }
-            viewModel.addDeletedItemId(
-                viewModel.getItemsByAccount(accountId).get(i).getId());
+            viewModel.addDeletedItemId(viewModel.getItemsByAccount(accountId).get(i).getId());
           }
           viewModel.deleteMessageByItemAccount(accountId);
           viewModel.deleteAccountTransaction(accountId);
@@ -224,4 +203,9 @@ public class ModeratorViewController implements ViewController
     vh.openMessagesScene();
   }
 
+  public void onRefresh()
+  {
+    viewModel.setReports();
+    reportTable.setItems(viewModel.getReports());
+  }
 }
