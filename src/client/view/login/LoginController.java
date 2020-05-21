@@ -21,18 +21,28 @@ public class LoginController implements ViewController
   {
     this.vh = vh;
     this.viewModel = vmf.getLoginViewModel();
-    errorLabel.textProperty().bind(viewModel.errorProperty());
   }
 
   public void onLogIn()
   {
     if (viewModel.checkLogIn(emailField.getText(), passwordField.getText()))
     {
-      viewModel.setAccountId(emailField.getText());
-      viewModel.setAccountName(emailField.getText());
-      vh.openSeeListingScene();
-      emailField.setText("");
-      passwordField.setText("");
+      if (emailField.getText().equals("mod@mod.mod") && passwordField.getText()
+          .equals("mod"))
+      {
+        viewModel.setAccountId(emailField.getText());
+        vh.openModeratorScene();
+        emailField.setText("");
+        passwordField.setText("");
+      }
+      else
+      {
+        viewModel.setAccountId(emailField.getText());
+        viewModel.setAccountName(emailField.getText());
+        vh.openSeeListingScene();
+        emailField.setText("");
+        passwordField.setText("");
+      }
     }
 
   }
@@ -42,8 +52,4 @@ public class LoginController implements ViewController
     vh.openAccountCreateScene();
   }
 
-  public void onChatView()
-  {
-    vh.openChatScene();
-  }
 }

@@ -49,6 +49,7 @@ public interface RMIServer extends Remote
   //create feedback for items
   boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) throws RemoteException;
   List<FeedbackToItem> getFeedbackItems(int itemId) throws RemoteException;
+  FeedbackToItem getFeedbackById(int id) throws RemoteException;
   String getAvgStarRating(int itemId) throws RemoteException;
   List<Integer> getRentedTo(int itemId) throws RemoteException;
 
@@ -64,4 +65,26 @@ public interface RMIServer extends Remote
   Transaction getTransactionByItemId(int itemId) throws RemoteException;
   List<TransactionListing> getTransactionByRentedTo(int rentedTo) throws RemoteException;
   List<TransactionListing> getTransactionByRentedFrom(int rentedFrom) throws RemoteException;
+
+  void createReport(int reportFrom, int reportedItemId,
+      int reportedAccountId, int reportedItemFeedbackId,
+        String date) throws  RemoteException;
+  List<Report> getAllReports() throws RemoteException;
+  void deleteReport(int id) throws RemoteException;
+  void deleteTransaction(int id) throws RemoteException;
+  void deleteAccount(int id) throws RemoteException;
+  void deleteItemFeedback(int id) throws RemoteException;
+  void deleteTransactionByAccount(int id) throws RemoteException;
+  void deleteTransactionByItem(int id) throws RemoteException;
+  void deleteFeedbackByItemId(int id) throws RemoteException;
+  void deleteRequestByAccount(int id) throws RemoteException;
+  void deleteItemByAccount(int id) throws RemoteException;
+  void deleteReportByAccount(int id) throws RemoteException;
+  void deleteReportByItem(int id) throws RemoteException;
+  void deleteReportByItemFeedback(int id) throws RemoteException;
+  void deleteMessageByAccount(int id)throws RemoteException;
+
+  Report getReportByItemId(int id) throws RemoteException;
+  Report getReportByFeedbackId(int id) throws RemoteException;
+  Report getReportByAccountId(int id) throws RemoteException;
 }

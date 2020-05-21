@@ -21,6 +21,7 @@ public class ViewHandler
   private Scene accountScene;
   private Scene editItemScene;
   private Scene messagesScene;
+  private Scene moderatorScene;
 
   public ViewHandler(ViewModelFactory vmf)
   {
@@ -50,6 +51,26 @@ public class ViewHandler
       }
     }
     stage.setScene(loginScene);
+    stage.show();
+  }
+
+  public void openModeratorScene()
+  {
+    if (moderatorScene == null)
+    {
+      try
+      {
+        Parent root = loadFXML("../view/moderator/moderatorView.fxml");
+
+        stage.setTitle("Moderator");
+        moderatorScene = new Scene(root);
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    stage.setScene(moderatorScene);
     stage.show();
   }
 
@@ -91,6 +112,7 @@ public class ViewHandler
         e.printStackTrace();
       }
     }
+    moderatorScene = null;
     listingScene = null;
     itemScene = null;
     editItemScene = null;
@@ -136,6 +158,7 @@ public class ViewHandler
         e.printStackTrace();
       }
     }
+    accountScene = null;
     itemScene = null; //must be set to null in order to initialize properly with new items
     stage.setScene(seeListingScene);
     stage.show();
@@ -214,6 +237,7 @@ public class ViewHandler
       }
 
     }
+    moderatorScene = null;
     seeListingScene = null;
     accountScene = null;
     chatScene = null;

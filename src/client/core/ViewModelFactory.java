@@ -9,6 +9,7 @@ import client.view.listingView.SeeListingViewModel;
 import client.view.itemView.ItemViewModel;
 import client.view.login.LoginViewModel;
 import client.view.messages.MessagesViewModel;
+import client.view.moderator.ModeratorViewModel;
 
 public class ViewModelFactory
 {
@@ -22,6 +23,7 @@ public class ViewModelFactory
   private AccountViewModel accountViewModel;
   private EditItemViewModel editItemViewModel;
   private MessagesViewModel messagesViewModel;
+  private ModeratorViewModel moderatorViewModel;
 
   public ViewModelFactory(ModelFactory mf)
   {
@@ -37,6 +39,18 @@ public class ViewModelFactory
     else
     {
       return messagesViewModel;
+    }
+  }
+
+  public ModeratorViewModel getModeratorViewModel()
+  {
+    if (moderatorViewModel == null)
+    {
+      return (moderatorViewModel = new ModeratorViewModel(mf.getClientModel()));
+    }
+    else
+    {
+      return moderatorViewModel;
     }
   }
 

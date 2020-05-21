@@ -75,7 +75,6 @@ public class EditItemViewModel
     return duration;
   }
 
-
   public void updateEditFields()
   {
     Listing item = clientModel.getListingByID(clientModel.getCurrentItemID());
@@ -133,16 +132,14 @@ public class EditItemViewModel
       {
         Alert promote = new Alert(Alert.AlertType.INFORMATION);
         promote.setTitle("Item Update");
-        promote
-            .setHeaderText("Successfully updated item!");
+        promote.setHeaderText("Successfully updated item!");
         promote.showAndWait();
       }
       else
       {
         Alert promote = new Alert(Alert.AlertType.WARNING);
         promote.setTitle("Item Update");
-        promote
-            .setHeaderText("Listing could not be updated, try again later!");
+        promote.setHeaderText("Listing could not be updated, try again later!");
         promote.showAndWait();
       }
     }
@@ -150,10 +147,39 @@ public class EditItemViewModel
     {
       Alert promote = new Alert(Alert.AlertType.WARNING);
       promote.setTitle("Item Update");
-      promote
-          .setHeaderText("All fields must be filled!");
+      promote.setHeaderText("All fields must be filled!");
       promote.showAndWait();
     }
+  }
+
+  public void deleteItemRequest()
+  {
+    clientModel.deleteRequest(clientModel.getCurrentItemID());
+  }
+
+  public void deleteItemTransaction()
+  {
+    clientModel.deleteTransactionByItem(clientModel.getCurrentItemID());
+  }
+
+  public void deleteItemFeedback()
+  {
+    clientModel.deleteFeedbackByItemId(clientModel.getCurrentItemID());
+  }
+
+  public void deleteItemReport()
+  {
+    clientModel.deleteReportByItem(clientModel.getCurrentItemID());
+  }
+
+  public void addDeletedItemId()
+  {
+    clientModel.addDeletedItemId(clientModel.getCurrentItemID());
+  }
+
+  public boolean accountCheck()
+  {
+    return clientModel.accountCheck();
   }
 
 }

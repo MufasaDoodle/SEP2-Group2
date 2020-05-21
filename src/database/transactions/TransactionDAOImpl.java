@@ -54,7 +54,36 @@ public class TransactionDAOImpl implements TransactionDAO
 
   @Override public void delete(int id) throws SQLException
   {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection
+          .prepareStatement("DELETE FROM \"SEP2\".transactions WHERE id = ?");
+      statement.setInt(1, id);
+      statement.executeUpdate();
+    }
+  }
 
+  @Override public void deleteByAccount(int id) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection
+          .prepareStatement("DELETE FROM \"SEP2\".transactions WHERE rentedtoid = ? OR rentedfromid = ?");
+      statement.setInt(1, id);
+      statement.setInt(2, id);
+      statement.executeUpdate();
+    }
+  }
+
+  @Override public void deleteByItem(int id) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection
+          .prepareStatement("DELETE FROM \"SEP2\".transactions WHERE itemid = ?");
+      statement.setInt(1, id);
+      statement.executeUpdate();
+    }
   }
 
   @Override public List<TransactionListing> getTransactionByRentedTo(int rentedTo) throws SQLException

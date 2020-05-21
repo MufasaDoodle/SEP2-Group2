@@ -99,6 +99,15 @@ public class ChatViewModel
     return messages;
   }
 
+  public boolean accountCheck(){
+    return clientModel.accountCheck();
+  }
+
+  public boolean chatterCheck(){
+    return clientModel.getAccountById(clientModel.getCurrentChatterID())
+        != null;
+  }
+
 }
 
 

@@ -81,6 +81,18 @@ public class RequestDAOImpl implements RequestDAO
     }
   }
 
+  @Override public void deleteByAccount(int id) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection
+          .prepareStatement("DELETE FROM \"SEP2\".Requests WHERE requestfrom = ? OR requestto = ?");
+      statement.setInt(1, id);
+      statement.setInt(2, id);
+      statement.executeUpdate();
+    }
+  }
+
   @Override public List<RequestListing> getRequestByAccountId(int requestTo)
       throws SQLException
   {

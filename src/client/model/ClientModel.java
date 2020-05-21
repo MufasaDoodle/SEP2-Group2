@@ -5,6 +5,7 @@ import shared.util.Subject;
 import stuffs.*;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.List;
 
 public interface ClientModel extends Subject
@@ -41,6 +42,11 @@ public interface ClientModel extends Subject
       String number, String bio);
   boolean isEmailTaken(String email);
 
+  Account getModeratedAccount();
+  void setModeratedAccount(int accountId);
+  void setModeratorOpen(boolean whereFrom);
+  boolean getModeratorOpen();
+
   boolean updateListing(String title, String description, String category,
       String location, double price, String duration, String rented, String promoted);
   boolean updateListingRented(String title, String description, String category,
@@ -54,6 +60,9 @@ public interface ClientModel extends Subject
   //create feedback for items
   boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName);
   List<FeedbackToItem> getFeedbackItems(int itemId);
+  FeedbackToItem getFeedbackById(int id) ;
+  void setFeedbackId(int feedbackId);
+  int getFeedbackId();
   String getAvgStarRating(int itemId);
   List<Integer> getRentedTo(int itemId);
 
@@ -81,4 +90,27 @@ public interface ClientModel extends Subject
   Transaction getTransactionByItemId(int itemId);
   List<TransactionListing> getTransactionByRentedTo(int rentedTo);
   List<TransactionListing> getTransactionByRentedFrom(int rentedFrom);
+  void setCurrentChatterID();
+  boolean accountCheck();
+
+  void createReport(int reportFrom, int reportedItemId,
+      int reportedAccountId, int reportedItemFeedbackId, String date);
+  List<Report> getAllReports();
+  void deleteReport(int id) ;
+  void deleteTransaction(int id);
+  void deleteAccount(int id) ;
+  void deleteItemFeedback(int id) ;
+  void deleteTransactionByAccount(int id) ;
+  void deleteTransactionByItem(int id);
+  void deleteFeedbackByItemId(int id);
+  void deleteRequestByAccount(int id) ;
+  void deleteItemByAccount(int id);
+  void deleteReportByAccount(int id) ;
+  void deleteReportByItem(int id)  ;
+  void deleteReportByItemFeedback(int id)  ;
+  void deleteMessageByAccount(int id);
+
+  Report getReportByItemId(int id) ;
+  Report getReportByFeedbackId(int id)  ;
+  Report getReportByAccountId(int id)  ;
 }

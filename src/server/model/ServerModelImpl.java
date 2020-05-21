@@ -11,6 +11,8 @@ import database.feedback.toitem.FeedbackToItemDAOImpl;
 
 import database.messages.MessagesDAO;
 import database.messages.MessagesDAOImpl;
+import database.reports.ReportDAO;
+import database.reports.ReportDAOImpl;
 import shared.transferobjects.Message;
 
 import database.requests.RequestDAO;
@@ -39,6 +41,7 @@ public class ServerModelImpl implements ServerModel
   private List<Listing> listings;
   private RequestDAO requestDAO;
   private TransactionDAO transactionDAO;
+  private ReportDAO reportDAO;
 
   private List<Integer> deletedItemIds;
   private List<Integer> rentedItemIds;
@@ -51,6 +54,7 @@ public class ServerModelImpl implements ServerModel
       listingDAO = ListingDAOImpl.getInstance();
       feedbackToAccountDAO = FeedbackToAccountDAOImpl.getInstance();
       feedbackToItemDAO = FeedbackToItemDAOImpl.getInstance();
+      reportDAO = ReportDAOImpl.getInstance();
 
       messageDAO = MessagesDAOImpl.getInstance();
 
@@ -593,7 +597,7 @@ public class ServerModelImpl implements ServerModel
   }
 
   @Override
-  public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) throws RemoteException {
+  public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName)  {
     try {
         FeedbackToItem temp = feedbackToItemDAO.createFeedback(starRating, feedback, itemId, accountId, accountName);
         if (temp != null) {
@@ -610,10 +614,23 @@ public class ServerModelImpl implements ServerModel
   }
 
   @Override
-  public List<FeedbackToItem> getFeedbackItems(int itemId) throws RemoteException {
+  public List<FeedbackToItem> getFeedbackItems(int itemId) {
     try
     {
       return feedbackToItemDAO.getFeedback(itemId);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public FeedbackToItem getFeedbackById(int id)
+  {
+    try
+    {
+      return feedbackToItemDAO.getFeedbackById(id);
     }
     catch (SQLException e)
     {
@@ -695,6 +712,231 @@ public class ServerModelImpl implements ServerModel
     try
     {
       return transactionDAO.getTransactionByRentedFrom(rentedFrom);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void createReport(int reportFrom, int reportedItemId,
+      int reportedAccountId, int reportedItemFeedbackId,
+        String date)
+  {
+    {
+      try
+      {
+        reportDAO.create(reportFrom,reportedItemId,reportedAccountId,reportedItemFeedbackId,Date.valueOf(date));
+      }
+      catch (SQLException e)
+      {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  @Override public List<Report> getAllReports()
+  {
+    try
+    {
+      return reportDAO.getAll();
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public void deleteReport(int id)
+  {
+    try
+    {
+      reportDAO.delete(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteTransaction(int id)
+  {
+    try
+    {
+      transactionDAO.delete(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteAccount(int id)
+  {
+    try
+    {
+      accountDAO.delete(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteItemFeedback(int id)
+  {
+    try
+    {
+      feedbackToItemDAO.delete(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteTransactionByAccount(int id)
+  {
+    try
+    {
+      transactionDAO.deleteByAccount(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteTransactionByItem(int id)
+  {
+    try
+    {
+      transactionDAO.deleteByItem(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteFeedbackByItemId(int id)
+  {
+    try
+    {
+      feedbackToItemDAO.deleteByItemId(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteRequestByAccount(int id)
+  {
+    try
+    {
+      requestDAO.deleteByAccount(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteItemByAccount(int id)
+  {
+    try
+    {
+      listingDAO.deleteByAccount(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteReportByAccount(int id)
+  {
+    try
+    {
+      reportDAO.deleteByAccount(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteReportByItem(int id)
+  {
+    try
+    {
+      reportDAO.deleteByItem(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteReportByItemFeedback(int id)
+  {
+    try
+    {
+      reportDAO.deleteByItemFeedback(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void deleteMessageByAccount(int accountId)
+
+  {
+    try
+    {
+      messageDAO.deleteByAccount(accountId);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public Report getReportByItemId(int id)
+  {
+    try
+    {
+      return reportDAO.getByItemId(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public Report getReportByFeedbackId(int id) throws RemoteException
+  {
+    try
+    {
+      return reportDAO.getByFeedbackId(id);
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override public Report getReportByAccountId(int id) throws RemoteException
+  {
+    try
+    {
+      return reportDAO.getByAccountId(id);
     }
     catch (SQLException e)
     {

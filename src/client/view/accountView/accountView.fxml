@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,15 +8,13 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.accountView.AccountViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.accountView.AccountViewController">
     <children>
         <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -84,32 +77,25 @@
                                                 <Label fx:id="avgRateLabel" prefHeight="50.0" prefWidth="220.0" />
                                             </children>
                                         </HBox>
-                                        <Button mnemonicParsing="false" onAction="#onBackButton" prefHeight="35.0" prefWidth="90.0" text="Back To Item">
-                                            <VBox.margin>
-                                                <Insets left="100.0" />
-                                            </VBox.margin>
-                                        </Button>
+                              <HBox prefHeight="67.0" prefWidth="300.0">
+                                 <children>
+                                              <Button mnemonicParsing="false" onAction="#onBackButton" prefHeight="35.0" prefWidth="100.0" text="Back To Item">
+                                       <HBox.margin>
+                                          <Insets left="35.0" top="10.0" />
+                                       </HBox.margin>
+                                              </Button>
+                                    <Button mnemonicParsing="false" onAction="#onBackToListing" prefHeight="35.0" prefWidth="100.0" text="Back To Listings">
+                                       <HBox.margin>
+                                          <Insets left="35.0" top="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
                                     </children>
                                 </VBox>
-                                <Pane fx:id="feedbackPane" layoutX="300.0" layoutY="8.0" prefHeight="275.0" prefWidth="300.0">
-                                    <children>
-                                        <TextArea layoutX="7.0" layoutY="52.0" prefHeight="88.0" prefWidth="272.0" promptText="Aa" wrapText="true" />
-                                        <Button layoutX="101.0" layoutY="184.0" mnemonicParsing="false" style="-fx-background-color: #5499C7;" text="Leave feedback" textFill="WHITE" />
-                                        <Label layoutX="7.0" layoutY="20.0" text="Rate:" />
-                                        <Label fx:id="errorLabel" layoutX="20.0" layoutY="146.0" prefHeight="28.0" prefWidth="254.0" text="Error" />
-                                        <HBox layoutX="164.0" layoutY="16.0" prefHeight="26.0" prefWidth="107.0">
-                                            <children>
-                                                <Button mnemonicParsing="false" style="-fx-background-color: #D5F5E3;" text="1" />
-                                                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #ABEBC6;" text="2" />
-                                                <Button layoutX="62.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #82E0AA;" text="3" />
-                                                <Button layoutX="114.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #2ECC71;" text="4" />
-                                                <Button layoutX="160.0" layoutY="10.0" mnemonicParsing="false" style="-fx-background-color: #28B463;" text="5" />
-                                            </children>
-                                        </HBox>
-                                    </children>
-                                </Pane>
-                                <Button fx:id="messageBtn" layoutX="415.0" layoutY="303.0" mnemonicParsing="false" onAction="#onMessage" prefHeight="35.0" prefWidth="70.0" text="Message" />
-                        <Button fx:id="seeMessagesBtn" layoutX="398.0" layoutY="303.0" mnemonicParsing="false" onAction="#onSeeMessages" prefHeight="35.0" prefWidth="105.0" text="See Messages" />
+                                <Button fx:id="messageBtn" layoutX="414.0" layoutY="308.0" mnemonicParsing="false" onAction="#onMessage" prefHeight="35.0" prefWidth="70.0" text="Message" />
+                        <Button fx:id="seeMessagesBtn" layoutX="397.0" layoutY="308.0" mnemonicParsing="false" onAction="#onSeeMessages" prefHeight="35.0" prefWidth="105.0" text="See Messages" />
+                        <Button layoutX="400.0" layoutY="245.0" mnemonicParsing="false" onAction="#onReport" prefHeight="35.0" text="Report Account" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -131,19 +117,6 @@
                                 </TableView>
                                 <Button layoutX="178.0" layoutY="322.0" mnemonicParsing="false" onAction="#onSeeItem" prefHeight="35.0" prefWidth="80.0" text="See Item" />
                                 <Button fx:id="editItemButton" layoutX="332.0" layoutY="322.0" mnemonicParsing="false" onAction="#onEditItem" prefHeight="35.0" prefWidth="80.0" text="Edit Item" />
-                            </children></AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Written Feedbacks">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <TableView prefHeight="375.0" prefWidth="600.0">
-                                    <columns>
-                                        <TableColumn prefWidth="599.0" text="Feedbacks" />
-                                    </columns>
-                                </TableView>
-                                <HBox layoutY="291.0" prefHeight="75.0" prefWidth="600.0" />
                             </children></AnchorPane>
                     </content>
                 </Tab>
@@ -290,7 +263,6 @@
                                                 <Button layoutY="24.0" mnemonicParsing="false" onAction="#onUpdate" text="Update" />
                                             </children>
                                         </AnchorPane>
-                                        <Label fx:id="editErrorLabel" />
                                     </children>
                                 </VBox>
                             </children>

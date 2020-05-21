@@ -380,6 +380,18 @@ public class RMIClient implements Client, ClientCallback
     }
   }
 
+  @Override public FeedbackToItem getFeedbackById(int id)
+  {
+    try
+    {
+      return server.getFeedbackById(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException("Could not retrieve feedback");
+    }
+  }
+
   @Override
   public String getAvgStarRating(int itemId) {
     try
@@ -456,6 +468,241 @@ public class RMIClient implements Client, ClientCallback
     {
       throw new RuntimeException(
           "Could not contact server (get transactions)...");
+    }
+  }
+
+  @Override public void createReport(int reportFrom, int reportedItemId,
+      int reportedAccountId, int reportedItemFeedbackId, String date)
+  {
+    try
+    {
+      server.createReport(reportFrom, reportedItemId, reportedAccountId, reportedItemFeedbackId,date);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (create report)...");
+    }
+  }
+
+  @Override public List<Report> getAllReports()
+  {
+    try
+    {
+      return server.getAllReports();
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (get reports)...");
+    }
+  }
+
+  @Override public void deleteReport(int id)
+  {
+    try
+    {
+      server.deleteReport(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete report)...");
+    }
+  }
+
+  @Override public void deleteTransaction(int id)
+  {
+    try
+    {
+      server.deleteTransaction(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete transaction)...");
+    }
+  }
+
+  @Override public void deleteAccount(int id)
+  {
+    try
+    {
+      server.deleteAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete transaction)...");
+    }
+  }
+
+  @Override public void deleteItemFeedback(int id)
+  {
+    try
+    {
+      server.deleteItemFeedback(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete item feedback)...");
+    }
+  }
+
+  @Override public void deleteTransactionByAccount(int id)
+  {
+    try
+    {
+      server.deleteTransactionByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete transaction )...");
+    }
+  }
+
+  @Override public void deleteTransactionByItem(int id)
+  {
+    try
+    {
+      server.deleteTransactionByItem(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete transaction )...");
+    }
+  }
+
+  @Override public void deleteFeedbackByItemId(int id)
+  {
+    try
+    {
+      server.deleteFeedbackByItemId(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete item feedback )...");
+    }
+  }
+
+  @Override public void deleteRequestByAccount(int id)
+  {
+    try
+    {
+      server.deleteRequestByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete request )...");
+    }
+  }
+
+  @Override public void deleteItemByAccount(int id)
+  {
+    try
+    {
+      server.deleteItemByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete item )...");
+    }
+  }
+
+  @Override public void deleteReportByAccount(int id)
+  {
+    try
+    {
+      server.deleteReportByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete report )...");
+    }
+  }
+
+  @Override public void deleteReportByItem(int id)
+  {
+    try
+    {
+      server.deleteReportByItem(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete report )...");
+    }
+  }
+
+  @Override public void deleteReportByItemFeedback(int id)
+  {
+    try
+    {
+      server.deleteReportByItemFeedback(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete report )...");
+    }
+  }
+
+  @Override public void deleteMessageByAccount(int id)
+  {
+    try
+    {
+      server.deleteMessageByAccount(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (delete messages )...");
+    }
+  }
+
+  @Override public Report getReportByItemId(int id)
+  {
+    try
+    {
+      return server.getReportByItemId(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (get report)...");
+    }
+  }
+
+  @Override public Report getReportByFeedbackId(int id)
+  {
+    try
+    {
+      return server.getReportByFeedbackId(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (get report)...");
+    }
+  }
+
+  @Override public Report getReportByAccountId(int id)
+  {
+    try
+    {
+      return server.getReportByAccountId(id);
+    }
+    catch (RemoteException e)
+    {
+      throw new RuntimeException(
+          "Could not contact server (get report)...");
     }
   }
 

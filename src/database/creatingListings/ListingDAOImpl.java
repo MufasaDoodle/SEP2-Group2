@@ -1943,7 +1943,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings order by promoted DESC");
+          "SELECT * FROM \"SEP2\".Listings where id > 1 order by promoted DESC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1990,7 +1990,6 @@ public class ListingDAOImpl implements ListingDAO
       statement.executeUpdate();
     }
   }
-
   @Override public void delete(int itemId) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -1998,6 +1997,17 @@ public class ListingDAOImpl implements ListingDAO
       PreparedStatement statement = connection
           .prepareStatement("DELETE FROM \"SEP2\".Listings WHERE id = ?");
       statement.setInt(1, itemId);
+      statement.executeUpdate();
+    }
+  }
+
+  @Override public void deleteByAccount(int id) throws SQLException
+  {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection
+          .prepareStatement("DELETE FROM \"SEP2\".Listings WHERE accountid = ?");
+      statement.setInt(1, id);
       statement.executeUpdate();
     }
   }

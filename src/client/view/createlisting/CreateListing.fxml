@@ -47,11 +47,9 @@
             <HBox />
          </children>
       </VBox>
-      <Button layoutX="371.0" layoutY="325.0" mnemonicParsing="false" onAction="#createListingBtn" text="Create Listing" />
-      <Button layoutX="494.0" layoutY="325.0" mnemonicParsing="false" onAction="#backBtn" text="Back" />
-      <Label layoutX="319.0" layoutY="218.0" text="Picture &lt;Upload?&gt;" />
-      <Button layoutX="364.0" layoutY="361.0" mnemonicParsing="false" onAction="#onChatView" text="Debug - to chat" />
-      <Button layoutX="489.0" layoutY="361.0" mnemonicParsing="false" onAction="#onSeeListing" text="See listings" />
+      <Button layoutX="342.0" layoutY="244.0" mnemonicParsing="false" onAction="#createListingBtn" text="Create Listing" />
+      <Button layoutX="449.0" layoutY="361.0" mnemonicParsing="false" onAction="#backBtn" text="Log off" />
+      <Button layoutX="411.0" layoutY="309.0" mnemonicParsing="false" onAction="#onSeeListing" text="See listings" />
       <Label layoutX="315.0" layoutY="183.0" text="Promote:" />
       <CheckBox fx:id="promoteBox" layoutX="378.0" layoutY="183.0" mnemonicParsing="false" />
    </children>

@@ -12,4 +12,5 @@ public interface MessagesDAO
   List<Message> getAllMessagesToAccount(int toAccount) throws SQLException;
   List<Message> getAllMessagesInvolvingAccount(int account) throws SQLException;
   List<Message> getAllMessagesBetween(int account1, int account2) throws SQLException;
+  void deleteByAccount(int accountId)throws SQLException;
 }
