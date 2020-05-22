@@ -1,187 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="792.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.createaccount.CreateAccountViewController">
+<AnchorPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.createaccount.CreateAccountViewController">
    <children>
-      <VBox layoutX="-2.0" prefHeight="792.0" prefWidth="500.0">
+      <VBox layoutX="-2.0" prefHeight="400.0" prefWidth="750.0">
          <children>
             <HBox prefHeight="66.0" prefWidth="500.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="66.0" prefWidth="600.0" text="Create Account" textAlignment="CENTER">
+                  <Label alignment="CENTER" prefHeight="66.0" prefWidth="754.0" text="Create Account" textAlignment="CENTER" textFill="#394d6f">
                      <font>
-                        <Font size="23.0" />
+                        <Font name="Century Gothic Bold" size="31.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets top="30.0" />
+                     </HBox.margin>
                   </Label>
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
             </HBox>
-            <HBox prefHeight="66.0" prefWidth="500.0">
+            <HBox minHeight="30.0" prefHeight="30.0" prefWidth="750.0">
                <children>
-                  <Label prefHeight="66.0" prefWidth="170.0" text="*Name:">
+                  <Label prefHeight="30.0" prefWidth="74.0" text="*Name:" textFill="#677184">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Century Gothic" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="nameField" prefHeight="33.0" prefWidth="250.0">
+                  <TextField fx:id="nameField" prefHeight="38.0" prefWidth="250.0">
                      <HBox.margin>
-                        <Insets top="16.0" />
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+                  <Label prefHeight="30.0" prefWidth="74.0" text="*Address:" textFill="#677184">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="addressField" minHeight="28.8" prefHeight="33.0" prefWidth="250.0" />
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox minHeight="30.4" prefHeight="66.0" prefWidth="750.0">
+               <children>
+                  <Label minHeight="0.0" prefHeight="18.0" prefWidth="95.0" text="*Email:" textFill="#677184" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets left="30.0" top="17.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="emailField" maxWidth="250.0" minHeight="30.4" minWidth="250.0" prefHeight="27.2" prefWidth="250.0">
+                     <HBox.margin>
+                        <Insets left="-20.0" top="10.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label prefHeight="38.0" prefWidth="107.0" text="*Phone number:" textFill="#677184">
+                     <HBox.margin>
+                        <Insets left="30.0" top="3.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="phoneNumberField" minHeight="30.4" minWidth="2.0" prefHeight="30.0" prefWidth="217.0">
+                     <HBox.margin>
+                        <Insets top="8.0" />
                      </HBox.margin>
                   </TextField>
                </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </HBox>
-            <HBox prefHeight="66.0" prefWidth="500.0">
+            <HBox prefHeight="12.0" prefWidth="750.0">
                <children>
-                  <Label prefHeight="66.0" prefWidth="170.0" text="*Email:">
+                  <Label minHeight="0.0" prefHeight="34.0" prefWidth="84.0" text="*Password:" textFill="#677184">
                      <HBox.margin>
-                        <Insets left="30.0" />
+                        <Insets left="30.0" right="-40.0" />
                      </HBox.margin>
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Century Gothic" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="emailField" prefHeight="33.0" prefWidth="250.0">
+                  <PasswordField fx:id="password1Field" minHeight="30.4" minWidth="250.4" prefHeight="33.0" prefWidth="250.0">
                      <HBox.margin>
-                        <Insets top="16.0" />
+                        <Insets left="30.0" right="-25.0" top="3.0" />
                      </HBox.margin>
-                  </TextField>
+                  </PasswordField>
+                  <Label prefHeight="34.0" prefWidth="164.0" text="Bio:" textFill="#677184">
+                     <HBox.margin>
+                        <Insets left="45.0" right="-100.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
+                     <padding>
+                        <Insets left="13.0" />
+                     </padding>
+                  </Label>
+                  <TextArea fx:id="bioField" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="252.0" wrapText="true" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets bottom="-70.0" left="20.0" right="38.0" />
+                     </HBox.margin>
+                  </TextArea>
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </HBox>
             <HBox prefHeight="66.0" prefWidth="500.0">
                <children>
-                  <Label prefHeight="66.0" prefWidth="170.0" text="*Password:">
+                  <Label prefHeight="54.0" prefWidth="87.0" text="*Password confirmation:" textFill="#677184" wrapText="true">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Century Gothic" size="13.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="password1Field" prefHeight="33.0" prefWidth="250.0">
+                  <PasswordField fx:id="password2Field" minHeight="30.4" minWidth="238.0" prefHeight="30.4" prefWidth="235.0">
                      <HBox.margin>
-                        <Insets top="16.0" />
+                        <Insets top="13.0" />
                      </HBox.margin>
                   </PasswordField>
                </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
             </HBox>
-            <HBox prefHeight="66.0" prefWidth="500.0">
+            <HBox prefHeight="34.0" prefWidth="750.0">
                <children>
-                  <Label prefHeight="66.0" prefWidth="170.0" text="*Password confirmation:">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
+                  <Label alignment="CENTER" prefHeight="34.0" prefWidth="374.0" text="All fields  marked * are required" textFill="#677184">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Century Gothic" size="13.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="password2Field" prefHeight="33.0" prefWidth="250.0">
+                  <Button mnemonicParsing="false" onAction="#OnAccountCreate" prefHeight="34.0" prefWidth="122.0" style="-fx-background-color: #3A729C;" text="Create Account" textFill="WHITE">
                      <HBox.margin>
-                        <Insets top="16.0" />
-                     </HBox.margin>
-                  </PasswordField>
-               </children>
-            </HBox>
-            <HBox prefHeight="66.0" prefWidth="500.0">
-               <children>
-                  <Label prefHeight="66.0" prefWidth="170.0" text="*Address:">
-                     <HBox.margin>
-                        <Insets left="30.0" />
+                        <Insets left="140.0" right="50.0" />
                      </HBox.margin>
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Century Gothic" size="13.0" />
                      </font>
-                  </Label>
-                  <TextField fx:id="addressField" prefHeight="33.0" prefWidth="250.0">
-                     <HBox.margin>
-                        <Insets top="16.0" />
-                     </HBox.margin>
-                  </TextField>
+                  </Button>
                </children>
             </HBox>
-            <HBox prefHeight="66.0" prefWidth="500.0">
+            <HBox prefHeight="47.0" prefWidth="750.0">
                <children>
-                  <Label prefHeight="66.0" prefWidth="170.0" text="*Phone number:">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
+                  <Label fx:id="AccountErrorLabel" alignment="CENTER" prefHeight="33.0" prefWidth="500.0" textFill="#677184">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Century Gothic" size="13.0" />
                      </font>
+                     <padding>
+                        <Insets left="-90.0" right="37.0" />
+                     </padding>
                   </Label>
-                  <TextField fx:id="phoneNumberField" prefHeight="33.0" prefWidth="250.0">
-                     <HBox.margin>
-                        <Insets top="16.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="66.0" prefWidth="500.0">
-               <children>
-                  <Label prefHeight="66.0" prefWidth="170.0" text="Picture:">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
+                  <Button mnemonicParsing="false" onAction="#OnLogInView" prefHeight="34.0" prefWidth="122.0" style="-fx-background-color: #3A729C;" text="Login" textFill="WHITE">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Century Gothic" size="13.0" />
                      </font>
-                  </Label>
-                  <TextField fx:id="pictureField" prefHeight="33.0" prefWidth="250.0">
                      <HBox.margin>
-                        <Insets top="16.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="132.0" prefWidth="500.0">
-               <children>
-                  <Label prefHeight="66.0" prefWidth="170.0" text="Bio:">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="bioField" prefHeight="99.0" prefWidth="250.0">
-                     <HBox.margin>
-                        <Insets top="16.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="66.0" prefWidth="500.0">
-               <children>
-                  <VBox prefHeight="66.0" prefWidth="500.0">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="33.0" prefWidth="500.0" text="All fields  marked * are required" />
-                        <Label fx:id="AccountErrorLabel" prefHeight="33.0" prefWidth="500.0" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox prefHeight="66.0" prefWidth="500.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#OnAccountCreate" prefHeight="50.0" prefWidth="100.0" text="Create Account">
-                     <HBox.margin>
-                        <Insets left="125.0" right="50.0" />
+                        <Insets left="15.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#OnLogInView" prefHeight="50.0" prefWidth="100.0" text="Login" />
                </children>
+               <VBox.margin>
+                  <Insets bottom="-50.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>

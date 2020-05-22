@@ -8,9 +8,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.listingView.SeeListingController">
    <children>
@@ -18,64 +20,116 @@
          <children>
             <HBox prefHeight="35.0" prefWidth="700.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="38.0" text="Title:">
+                  <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="38.0" text="Title:" textFill="#677184">
                      <HBox.margin>
                         <Insets left="20.0" top="10.0" />
-                     </HBox.margin></Label>
+                     </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font></Label>
                   <TextField fx:id="titleField" prefHeight="26.0" prefWidth="134.0">
                      <HBox.margin>
                         <Insets left="20.0" top="5.0" />
                      </HBox.margin></TextField>
-                  <ComboBox fx:id="categoryBox" prefHeight="26.0" prefWidth="127.0">
-                     <HBox.margin>
-                        <Insets left="20.0" top="5.0" />
-                     </HBox.margin></ComboBox>
-                  <TextField fx:id="locationField" prefHeight="26.0" prefWidth="136.0">
-                     <HBox.margin>
-                        <Insets left="20.0" top="5.0" />
-                     </HBox.margin></TextField>
-                  <CheckBox fx:id="isAvailable" mnemonicParsing="false" text="Only Available">
+                  <Label prefHeight="16.0" prefWidth="70.0" text="Location:" textFill="#677184">
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
                      <HBox.margin>
                         <Insets left="20.0" top="10.0" />
                      </HBox.margin>
-                  </CheckBox>
-                  <Button mnemonicParsing="false" onAction="#onSearchButton" text="Search">
+                  </Label>
+                  <TextField fx:id="locationField" prefHeight="26.0" prefWidth="136.0">
                      <HBox.margin>
-                        <Insets left="20.0" top="5.0" />
-                     </HBox.margin></Button>
+                        <Insets left="15.0" top="5.0" />
+                     </HBox.margin></TextField>
+                  <ComboBox fx:id="sortingBox" prefWidth="150.0" style="-fx-background-color: white;">
+                     <HBox.margin>
+                        <Insets left="130.0" top="5.0" />
+                     </HBox.margin>
+                  </ComboBox>
                </children>
             </HBox>
-            <ComboBox fx:id="sortingBox" prefWidth="150.0" />
-            <Button mnemonicParsing="false" onAction="#onSortButton" text="Sort" />
+            <HBox prefHeight="42.0" prefWidth="750.0">
+               <children>
+                  <Label text="Category:" textFill="#677184">
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="categoryBox" prefHeight="26.0" prefWidth="127.0" style="-fx-background-color: white;">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></ComboBox>
+                  <CheckBox fx:id="isAvailable" mnemonicParsing="false" text="Only Available" textFill="#677184">
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
+                  </CheckBox>
+                  <Button mnemonicParsing="false" onAction="#onSearchButton" style="-fx-background-color: #3A729C;" text="Search" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" top="5.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#onSortButton" style="-fx-background-color: #3A729C;" text="Sort" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="265.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
             <TableView fx:id="listingTable" prefHeight="251.0" prefWidth="700.0">
               <columns>
-                  <TableColumn fx:id="promoteColumn" prefWidth="15.0" resizable="false" />
-                <TableColumn fx:id="titleColumn" prefWidth="120.0" resizable="false" text="Title" />
-                  <TableColumn fx:id="categoryColumn" prefWidth="85.0" resizable="false" text="Category" />
-                  <TableColumn fx:id="descriptionColumn" prefWidth="150.0" resizable="false" text="Description" />
-                  <TableColumn fx:id="locationColumn" prefWidth="100.0" resizable="false" text="Location" />
-                  <TableColumn fx:id="durationColumn" resizable="false" text="Duration" />
-                <TableColumn fx:id="priceColumn" prefWidth="45.0" resizable="false" text="Price" />
-                  <TableColumn fx:id="dateColumn" prefWidth="75.0" resizable="false" text="Date" />
-                  <TableColumn fx:id="statusColumn" prefWidth="75.0" resizable="false" text="Status" />
+                  <TableColumn fx:id="promoteColumn" prefWidth="15.0" resizable="false" style="-fx-background-color: white;" />
+                <TableColumn fx:id="titleColumn" prefWidth="120.0" resizable="false" style="-fx-background-color: white;" text="Title" />
+                  <TableColumn fx:id="categoryColumn" prefWidth="85.0" resizable="false" style="-fx-background-color: white;" text="Category" />
+                  <TableColumn fx:id="descriptionColumn" prefWidth="150.0" resizable="false" style="-fx-background-color: white;" text="Description" />
+                  <TableColumn fx:id="locationColumn" prefWidth="100.0" resizable="false" style="-fx-background-color: white;" text="Location" />
+                  <TableColumn fx:id="durationColumn" resizable="false" style="-fx-background-color: white;" text="Duration" />
+                <TableColumn fx:id="priceColumn" prefWidth="45.0" resizable="false" style="-fx-background-color: white;" text="Price" />
+                  <TableColumn fx:id="dateColumn" prefWidth="75.0" resizable="false" style="-fx-background-color: white;" text="Date" />
+                  <TableColumn fx:id="statusColumn" prefWidth="75.0" resizable="false" style="-fx-background-color: white;" text="Status" />
               </columns>
+               <effect>
+                  <ColorAdjust />
+               </effect>
             </TableView>
             <HBox prefHeight="50.0" prefWidth="630.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onCreateListing" prefHeight="35.0" prefWidth="90.0" text="Create Listing">
+                  <Button mnemonicParsing="false" onAction="#onCreateListing" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #3A729C;" text="Create Listing" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="150.0" top="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onSeeItem" prefHeight="35.0" prefWidth="90.0" text="See item">
+                  <Button mnemonicParsing="false" onAction="#onSeeItem" prefHeight="35.0" prefWidth="98.0" style="-fx-background-color: #3A729C;" text="See item" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="70.0" top="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onMyAccount" prefHeight="35.0" prefWidth="90.0" text="My Account">
+                  <Button mnemonicParsing="false" onAction="#onMyAccount" prefHeight="35.0" prefWidth="104.0" style="-fx-background-color: #3A729C;" text="My Account" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="70.0" top="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
                   </Button>
                </children>
             </HBox>

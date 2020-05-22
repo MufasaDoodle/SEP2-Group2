@@ -16,8 +16,7 @@ public class CreateAccountViewController implements ViewController
   @FXML private PasswordField password2Field;
   @FXML private TextField addressField;
   @FXML private TextField phoneNumberField;
-  @FXML private TextField pictureField;
-  @FXML private TextField bioField;
+  @FXML private TextArea bioField;
 
   @FXML private Label AccountErrorLabel;
 
@@ -66,7 +65,6 @@ public class CreateAccountViewController implements ViewController
     password2Field.setText("");
     addressField.setText("");
     phoneNumberField.setText("");
-    pictureField.setText("");
     bioField.setText("");
     viewModel.errorProperty().set("");
   }

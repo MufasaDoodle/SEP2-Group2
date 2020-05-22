@@ -14,43 +14,71 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.createlisting.ListingController">
    <children>
-      <Label layoutX="240.0" layoutY="14.0" text="Create Listing">
+      <Label layoutX="198.0" layoutY="24.0" text="Create Listing" textFill="#394d6f">
          <font>
-            <Font size="20.0" />
+            <Font name="Century Gothic Bold" size="31.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="53.0" style="-fx-font-weight: BOLD;" text="Product details:" />
-      <Label layoutX="307.0" layoutY="53.0" style="-fx-font-weight: BOLD;" text="Pricing and other details:" />
       <VBox layoutX="55.0" layoutY="84.0">
          <children>
-            <Label text="Title" />
+            <Label text="Title" textFill="#677184">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Label>
             <TextField fx:id="titleField" />
-            <Label text="Description" />
-            <TextArea fx:id="descriptionArea" prefHeight="99.0" prefWidth="200.0">
+            <Label text="Description" textFill="#677184">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Label>
+            <TextArea fx:id="descriptionArea" prefHeight="99.0" prefWidth="200.0" wrapText="true">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </TextArea>
-            <Label text="Category" />
+            <Label text="Category" textFill="#677184">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Label>
             <ComboBox fx:id="categoryBox" prefWidth="150.0" />
-            <Label text="Location" />
+            <Label text="Location" textFill="#677184">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Label>
             <TextField fx:id="locField" />
          </children>
       </VBox>
-      <VBox layoutX="315.0" layoutY="84.0">
+      <VBox layoutX="355.0" layoutY="84.0">
          <children>
-            <Label layoutX="323.0" layoutY="70.0" text="Price" />
+            <Label layoutX="323.0" layoutY="70.0" text="Price" textFill="#677184">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Label>
             <TextField fx:id="priceField" layoutX="323.0" layoutY="87.0" />
-            <Label layoutX="314.0" layoutY="128.0" text="Duration" />
+            <Label layoutX="314.0" layoutY="128.0" text="Duration" textFill="#677184">
+               <font>
+                  <Font name="Century Gothic" size="13.0" />
+               </font></Label>
             <TextField fx:id="durationField" layoutX="314.0" layoutY="145.0" />
             <HBox />
             <HBox />
          </children>
       </VBox>
-      <Button layoutX="342.0" layoutY="244.0" mnemonicParsing="false" onAction="#createListingBtn" text="Create Listing" />
-      <Button layoutX="449.0" layoutY="361.0" mnemonicParsing="false" onAction="#backBtn" text="Log off" />
-      <Button layoutX="411.0" layoutY="309.0" mnemonicParsing="false" onAction="#onSeeListing" text="See listings" />
-      <Label layoutX="315.0" layoutY="183.0" text="Promote:" />
-      <CheckBox fx:id="promoteBox" layoutX="378.0" layoutY="183.0" mnemonicParsing="false" />
+      <Button layoutX="377.0" layoutY="245.0" mnemonicParsing="false" onAction="#createListingBtn" style="-fx-background-color: #3A729C;" text="Create Listing" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="13.0" />
+         </font></Button>
+      <Button layoutX="511.0" layoutY="359.0" mnemonicParsing="false" onAction="#backBtn" style="-fx-background-color: #3A729C;" text="Log off" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="13.0" />
+         </font></Button>
+      <Button layoutX="377.0" layoutY="285.0" mnemonicParsing="false" onAction="#onSeeListing" prefHeight="26.0" prefWidth="104.0" style="-fx-background-color: #3A729C;" text="See listings" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="13.0" />
+         </font></Button>
+      <Label layoutX="355.0" layoutY="183.0" text="Promote:" textFill="#677184">
+         <font>
+            <Font name="Century Gothic" size="13.0" />
+         </font></Label>
+      <CheckBox fx:id="promoteBox" layoutX="421.0" layoutY="182.0" mnemonicParsing="false" />
    </children>
 </AnchorPane>

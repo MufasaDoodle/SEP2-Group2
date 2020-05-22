@@ -26,10 +26,13 @@
                                     <children>
                                         <HBox prefHeight="50.0" prefWidth="300.0">
                                             <children>
-                                                <Label prefHeight="50.0" prefWidth="50.0" text="Name: ">
+                                                <Label prefHeight="50.0" prefWidth="50.0" text="Name: " textFill="#677184">
                                                     <HBox.margin>
                                                         <Insets left="20.0" />
                                                     </HBox.margin>
+                                       <font>
+                                          <Font name="Century Gothic" size="13.0" />
+                                       </font>
                                                 </Label>
                                                 <Label fx:id="nameLabel" prefHeight="50.0" prefWidth="230.0" />
                                             </children>
@@ -39,63 +42,87 @@
                                         </HBox>
                                         <HBox prefHeight="50.0" prefWidth="301.0">
                                             <children>
-                                                <Label prefHeight="50.0" prefWidth="50.0" text="Address:">
+                                                <Label prefHeight="46.0" prefWidth="64.0" text="Address:" textFill="#677184">
                                                     <HBox.margin>
                                                         <Insets left="20.0" />
                                                     </HBox.margin>
+                                       <font>
+                                          <Font name="Century Gothic" size="13.0" />
+                                       </font>
                                                 </Label>
                                                 <Label fx:id="addressLabel" prefHeight="50.0" prefWidth="230.0" />
                                             </children>
                                         </HBox>
                                         <HBox prefHeight="50.0" prefWidth="300.0">
                                             <children>
-                                                <Label prefHeight="50.0" prefWidth="50.0" text="Phone:">
+                                                <Label prefHeight="50.0" prefWidth="50.0" text="Phone:" textFill="#677184">
                                                     <HBox.margin>
                                                         <Insets left="20.0" />
                                                     </HBox.margin>
+                                       <font>
+                                          <Font name="Century Gothic" size="13.0" />
+                                       </font>
                                                 </Label>
                                                 <Label fx:id="phoneLabel" prefHeight="50.0" prefWidth="230.0" />
                                             </children>
                                         </HBox>
                                         <HBox prefHeight="100.0" prefWidth="300.0">
                                             <children>
-                                                <Label prefHeight="50.0" prefWidth="50.0" text="Bio:">
+                                                <Label prefHeight="50.0" prefWidth="50.0" text="Bio:" textFill="#677184">
                                                     <HBox.margin>
                                                         <Insets left="20.0" />
                                                     </HBox.margin>
+                                       <font>
+                                          <Font name="Century Gothic" size="13.0" />
+                                       </font>
                                                 </Label>
                                                 <Label fx:id="bioLabel" prefHeight="100.0" prefWidth="230.0" />
                                             </children>
                                         </HBox>
                                         <HBox prefHeight="60.0" prefWidth="300.0">
                                             <children>
-                                                <Label prefHeight="50.0" prefWidth="60.0" text="Avg. Rate:">
+                                                <Label prefHeight="50.0" prefWidth="80.0" text="Avg. Rate:" textFill="#677184">
                                                     <HBox.margin>
                                                         <Insets left="20.0" />
                                                     </HBox.margin>
+                                       <font>
+                                          <Font name="Century Gothic" size="13.0" />
+                                       </font>
                                                 </Label>
                                                 <Label fx:id="avgRateLabel" prefHeight="50.0" prefWidth="220.0" />
                                             </children>
                                         </HBox>
                               <HBox prefHeight="67.0" prefWidth="300.0">
                                  <children>
-                                              <Button mnemonicParsing="false" onAction="#onBackButton" prefHeight="35.0" prefWidth="100.0" text="Back To Item">
+                                              <Button mnemonicParsing="false" onAction="#onBackButton" prefHeight="35.0" prefWidth="100.0" text="Back To Item" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="35.0" top="10.0" />
                                        </HBox.margin>
+                                       <font>
+                                          <Font name="Century Gothic" size="13.0" />
+                                       </font>
                                               </Button>
-                                    <Button mnemonicParsing="false" onAction="#onBackToListing" prefHeight="35.0" prefWidth="100.0" text="Back To Listings">
+                                    <Button mnemonicParsing="false" onAction="#onBackToListing" prefHeight="35.0" prefWidth="100.0" text="Back To Listings" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="35.0" top="10.0" />
                                        </HBox.margin>
+                                       <font>
+                                          <Font name="Century Gothic" size="13.0" />
+                                       </font>
                                     </Button>
                                  </children>
                               </HBox>
                                     </children>
                                 </VBox>
                                 <Button fx:id="messageBtn" layoutX="414.0" layoutY="308.0" mnemonicParsing="false" onAction="#onMessage" prefHeight="35.0" prefWidth="70.0" text="Message" />
-                        <Button fx:id="seeMessagesBtn" layoutX="397.0" layoutY="308.0" mnemonicParsing="false" onAction="#onSeeMessages" prefHeight="35.0" prefWidth="105.0" text="See Messages" />
-                        <Button layoutX="400.0" layoutY="245.0" mnemonicParsing="false" onAction="#onReport" prefHeight="35.0" text="Report Account" />
+                        <Button fx:id="seeMessagesBtn" layoutX="397.0" layoutY="308.0" mnemonicParsing="false" onAction="#onSeeMessages" prefHeight="35.0" prefWidth="105.0" text="See Messages" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic" size="13.0" />
+                           </font></Button>
+                        <Button layoutX="400.0" layoutY="245.0" mnemonicParsing="false" onAction="#onReport" prefHeight="35.0" text="Report Account" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic" size="13.0" />
+                           </font></Button>
                             </children>
                         </AnchorPane>
                     </content>
