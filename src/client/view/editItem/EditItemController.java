@@ -11,7 +11,7 @@ import java.util.Optional;
 public class EditItemController implements ViewController
 {
   private @FXML TextField titleField;
-  private @FXML TextField descriptionField;
+  private @FXML TextArea descriptionField;
   private @FXML ComboBox<String> categoryCombo;
   private @FXML TextField locationField;
   private @FXML TextField priceField;

@@ -39,7 +39,7 @@
                <font>
                   <Font name="Century Gothic" size="13.0" />
                </font></Label>
-            <ComboBox fx:id="categoryBox" prefWidth="150.0" />
+            <ComboBox fx:id="categoryBox" prefWidth="150.0" style="-fx-background-color: white;" />
             <Label text="Location" textFill="#677184">
                <font>
                   <Font name="Century Gothic" size="13.0" />
@@ -63,15 +63,11 @@
             <HBox />
          </children>
       </VBox>
-      <Button layoutX="377.0" layoutY="245.0" mnemonicParsing="false" onAction="#createListingBtn" style="-fx-background-color: #3A729C;" text="Create Listing" textFill="WHITE">
+      <Button layoutX="377.0" layoutY="276.0" mnemonicParsing="false" onAction="#createListingBtn" style="-fx-background-color: #3A729C;" text="Create Listing" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="13.0" />
          </font></Button>
-      <Button layoutX="511.0" layoutY="359.0" mnemonicParsing="false" onAction="#backBtn" style="-fx-background-color: #3A729C;" text="Log off" textFill="WHITE">
-         <font>
-            <Font name="Century Gothic" size="13.0" />
-         </font></Button>
-      <Button layoutX="377.0" layoutY="285.0" mnemonicParsing="false" onAction="#onSeeListing" prefHeight="26.0" prefWidth="104.0" style="-fx-background-color: #3A729C;" text="See listings" textFill="WHITE">
+      <Button layoutX="377.0" layoutY="315.0" mnemonicParsing="false" onAction="#onSeeListing" prefHeight="26.0" prefWidth="104.0" style="-fx-background-color: #3A729C;" text="See listings" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="13.0" />
          </font></Button>

@@ -109,7 +109,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#onCreateListing" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #3A729C;" text="Create Listing" textFill="WHITE">
                      <HBox.margin>
-                        <Insets left="150.0" top="10.0" />
+                        <Insets left="65.0" top="10.0" />
                      </HBox.margin>
                      <font>
                         <Font name="Century Gothic" size="13.0" />
@@ -117,7 +117,7 @@
                   </Button>
                   <Button mnemonicParsing="false" onAction="#onSeeItem" prefHeight="35.0" prefWidth="98.0" style="-fx-background-color: #3A729C;" text="See item" textFill="WHITE">
                      <HBox.margin>
-                        <Insets left="70.0" top="10.0" />
+                        <Insets left="65.0" top="10.0" />
                      </HBox.margin>
                      <font>
                         <Font name="Century Gothic" size="13.0" />
@@ -125,11 +125,19 @@
                   </Button>
                   <Button mnemonicParsing="false" onAction="#onMyAccount" prefHeight="35.0" prefWidth="104.0" style="-fx-background-color: #3A729C;" text="My Account" textFill="WHITE">
                      <HBox.margin>
-                        <Insets left="70.0" top="10.0" />
+                        <Insets left="65.0" top="10.0" />
                      </HBox.margin>
                      <font>
                         <Font name="Century Gothic" size="13.0" />
                      </font>
+                  </Button>
+                  <Button layoutX="510.0" layoutY="20.0" mnemonicParsing="false" onAction="#logoffBtn" prefHeight="35.0" prefWidth="104.0" style="-fx-background-color: #3A729C;" text="log off" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="65.0" top="10.0" />
+                     </HBox.margin>
                   </Button>
                </children>
             </HBox>

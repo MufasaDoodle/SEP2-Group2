@@ -508,4 +508,9 @@ public class SeeListingController implements ViewController
 
   }
 
+  public void logoffBtn()
+  {
+    vh.openLogInScene();
+  }
+
 }

@@ -36,7 +36,10 @@
                                           <Font name="Century Gothic" size="13.0" />
                                        </font>
                                                 </Label>
-                                                <Label fx:id="nameLabel" prefHeight="50.0" prefWidth="230.0" />
+                                                <Label fx:id="nameLabel" prefHeight="50.0" prefWidth="230.0">
+                                       <font>
+                                          <Font name="Century Gothic" size="12.0" />
+                                       </font></Label>
                                             </children>
                                             <VBox.margin>
                                                 <Insets top="10.0" />
@@ -52,7 +55,10 @@
                                           <Font name="Century Gothic" size="13.0" />
                                        </font>
                                                 </Label>
-                                                <Label fx:id="addressLabel" prefHeight="50.0" prefWidth="230.0" />
+                                                <Label fx:id="addressLabel" prefHeight="50.0" prefWidth="230.0">
+                                       <font>
+                                          <Font name="Century Gothic" size="12.0" />
+                                       </font></Label>
                                             </children>
                                         </HBox>
                                         <HBox prefHeight="50.0" prefWidth="300.0">
@@ -65,7 +71,10 @@
                                           <Font name="Century Gothic" size="13.0" />
                                        </font>
                                                 </Label>
-                                                <Label fx:id="phoneLabel" prefHeight="50.0" prefWidth="230.0" />
+                                                <Label fx:id="phoneLabel" prefHeight="50.0" prefWidth="230.0">
+                                       <font>
+                                          <Font name="Century Gothic" size="12.0" />
+                                       </font></Label>
                                             </children>
                                         </HBox>
                                         <HBox prefHeight="100.0" prefWidth="300.0">
@@ -78,7 +87,10 @@
                                           <Font name="Century Gothic" size="13.0" />
                                        </font>
                                                 </Label>
-                                                <Label fx:id="bioLabel" prefHeight="100.0" prefWidth="230.0" />
+                                                <Label fx:id="bioLabel" prefHeight="100.0" prefWidth="230.0">
+                                       <font>
+                                          <Font name="Century Gothic" size="12.0" />
+                                       </font></Label>
                                             </children>
                                         </HBox>
                                     </children>

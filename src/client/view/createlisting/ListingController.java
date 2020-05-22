@@ -100,11 +100,6 @@ public class ListingController implements ViewController
     }
   }
 
-  public void backBtn()
-  {
-    vh.openLogInScene();
-  }
-
   public void onSeeListing()
   {
     if (viewModel.accountCheck())
