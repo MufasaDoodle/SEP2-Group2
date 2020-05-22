@@ -20,7 +20,7 @@ import java.util.Optional;
 public class AccountViewModel
 {
   private ClientModel clientModel;
-  private StringProperty name, address, phone, bio, avgRate, emailEdit, addressEdit, numberEdit, bioEdit, pass1, pass2;
+  private StringProperty name, address, phone, bio, emailEdit, addressEdit, numberEdit, bioEdit, pass1, pass2;
   private ObservableList<Listing> listings;
 
   private ObservableList<RequestListing> requests;
@@ -34,7 +34,6 @@ public class AccountViewModel
     address = new SimpleStringProperty();
     phone = new SimpleStringProperty();
     bio = new SimpleStringProperty();
-    avgRate = new SimpleStringProperty();
     emailEdit = new SimpleStringProperty();
     addressEdit = new SimpleStringProperty();
     numberEdit = new SimpleStringProperty();
@@ -61,11 +60,6 @@ public class AccountViewModel
   public StringProperty bioProperty()
   {
     return bio;
-  }
-
-  public StringProperty avgRateProperty()
-  {
-    return avgRate;
   }
 
   public StringProperty emailEditProperty()
