@@ -4,6 +4,7 @@ import client.view.ViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class ViewHandler
       }
     }
     stage.setScene(loginScene);
+    stage.setResizable(false);
     stage.show();
   }
 
@@ -73,6 +75,7 @@ public class ViewHandler
     itemScene = null;
     accountScene = null;
     stage.setScene(moderatorScene);
+    stage.setResizable(false);
     stage.show();
   }
 
@@ -96,6 +99,7 @@ public class ViewHandler
     seeListingScene = null;
     accountScene = null;
     stage.setScene(editItemScene);
+    stage.setResizable(false);
     stage.show();
   }
 
@@ -121,6 +125,7 @@ public class ViewHandler
     editItemScene = null;
     messagesScene = null;
     stage.setScene(accountScene);
+    stage.setResizable(false);
     stage.show();
   }
 
@@ -142,6 +147,7 @@ public class ViewHandler
     }
     seeListingScene = null;
     stage.setScene(listingScene);
+    stage.setResizable(false);
     stage.show();
   }
 
@@ -164,6 +170,7 @@ public class ViewHandler
     accountScene = null;
     itemScene = null; //must be set to null in order to initialize properly with new items
     stage.setScene(seeListingScene);
+    stage.setResizable(false);
     stage.show();
   }
 
@@ -186,6 +193,7 @@ public class ViewHandler
       }
     }
     stage.setScene(createAccountScene);
+    stage.setResizable(false);
     stage.show();
   }
 
@@ -220,6 +228,7 @@ public class ViewHandler
     itemScene = null; //must be set to null in order to initialize properly with new items
     messagesScene = null;
     stage.setScene(chatScene);
+    stage.setResizable(false);
     stage.show();
   }
 
@@ -245,6 +254,7 @@ public class ViewHandler
     accountScene = null;
     chatScene = null;
     stage.setScene(itemScene);
+    stage.setResizable(false);
     stage.show();
   }
 
@@ -266,6 +276,7 @@ public class ViewHandler
 
     }
     stage.setScene(messagesScene);
+    stage.setResizable(false);
     stage.show();
   }
 }

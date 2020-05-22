@@ -28,7 +28,6 @@ public class AccountViewController implements ViewController
   private @FXML Label addressLabel;
   private @FXML Label phoneLabel;
   private @FXML Label bioLabel;
-  private @FXML Label avgRateLabel;
   private @FXML Button editItemButton;
   private @FXML Button seeMessagesBtn;
 
@@ -69,7 +68,6 @@ public class AccountViewController implements ViewController
     addressLabel.textProperty().bind(viewModel.addressProperty());
     phoneLabel.textProperty().bind(viewModel.phoneProperty());
     bioLabel.textProperty().bind(viewModel.bioProperty());
-    avgRateLabel.textProperty().bind(viewModel.avgRateProperty());
     emailField.textProperty().bindBidirectional(viewModel.emailEditProperty());
     addressField.textProperty().bindBidirectional(viewModel.addressEditProperty());
     numberField.textProperty().bindBidirectional(viewModel.numberEditProperty());
