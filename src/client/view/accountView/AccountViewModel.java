@@ -362,7 +362,6 @@ public class AccountViewModel
       return true;
     }
     return false;
-
      */
   }
 

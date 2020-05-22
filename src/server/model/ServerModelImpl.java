@@ -118,7 +118,7 @@ public class ServerModelImpl implements ServerModel
         return listingDAO.titlePriceLowToHigh(title);
       else if (request.equals("titlePriceHighLow"))
         return listingDAO.titlePriceHighToLow(title);
-     else if(request.equals("availableTitlePriceLowHigh"))
+      else if(request.equals("availableTitlePriceLowHigh"))
         return listingDAO.availableTitlePriceLowToHigh(title);
       else if(request.equals("availableTitlePriceHighLow"))
         return listingDAO.availableTitlePriceHighToLow(title);
@@ -126,7 +126,7 @@ public class ServerModelImpl implements ServerModel
         return listingDAO.categoryPriceLowToHigh(category);
       else if (request.equals("categoryPriceHighLow"))
         return listingDAO.categoryPriceHighToLow(category);
-     else if(request.equals("availableCategoryPriceLowHigh"))
+      else if(request.equals("availableCategoryPriceLowHigh"))
         return listingDAO.availableCategoryPriceLowToHigh(category);
       else if(request.equals("availableCategoryPriceHighLow"))
         return listingDAO.availableCategoryPriceHighToLow(category);
@@ -142,7 +142,7 @@ public class ServerModelImpl implements ServerModel
         return listingDAO.titleCategoryPriceLowToHigh(title, category);
       else if (request.equals("titleCategoryPriceHighLow"))
         return listingDAO.titleCategoryPriceHighToLow(title, category);
-     else if(request.equals("availableTitleCategoryPriceLowHigh"))
+      else if(request.equals("availableTitleCategoryPriceLowHigh"))
         return listingDAO.availableTitleCategoryPriceLowToHigh(title, category);
       else if(request.equals("availableTitleCategoryPriceHighLow"))
         return listingDAO.availableTitleCategoryPriceHighToLow(title, category);
@@ -150,7 +150,7 @@ public class ServerModelImpl implements ServerModel
         return listingDAO.titleLocationPriceLowToHigh(title, location);
       else if (request.equals("titleLocationPriceHighLow"))
         return listingDAO.titleLocationPriceHighToLow(title, location);
-     else if(request.equals("availableTitleLocationPriceLowHigh"))
+      else if(request.equals("availableTitleLocationPriceLowHigh"))
         return listingDAO.availableTitleLocationPriceLowToHigh(title, location);
       else if(request.equals("availableTitleLocationPriceHighLow"))
         return listingDAO.availableTitleLocationPriceHighToLow(title, location);

@@ -542,7 +542,7 @@ public class RMIServerImpl implements RMIServer
 
   @Override public void createReport(int reportFrom, int reportedItemId,
       int reportedAccountId, int reportedItemFeedbackId,
-       String date)
+      String date)
   {
     try
     {

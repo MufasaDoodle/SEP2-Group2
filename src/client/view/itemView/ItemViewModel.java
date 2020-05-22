@@ -382,23 +382,4 @@ public class ItemViewModel
   {
     return clientModel.accountCheck();
   }
-
-  public void deleteListing(){
-    int deleteFrom = clientModel.getCurrentAccountID();
-    int owner = clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
-    if (deleteFrom <=12 || deleteFrom==owner)
-    {
-      clientModel.deleteTransaction(clientModel.getCurrentItemID());
-      clientModel.deleteFeedback(clientModel.getCurrentItemID());
-      clientModel.deleteListing(clientModel.getCurrentItemID());
-    }
-
-  }
-  public int getAccountID(){
-    return clientModel.getCurrentAccountID();
-  }
-
-  public int getOwnerID(){
-    return clientModel.getListingByID(clientModel.getCurrentItemID()).getAccountId();
-  }
 }

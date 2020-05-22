@@ -50,12 +50,12 @@ public class Listing implements Serializable
     this.promoted = promoted;
   }
 
-    public String getPromoted()
-    {
-        return promoted;
-    }
+  public String getPromoted()
+  {
+    return promoted;
+  }
 
-    public String getRented()
+  public String getRented()
   {
     return rented;
   }

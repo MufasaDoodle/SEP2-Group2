@@ -118,8 +118,8 @@ public class RMIClient implements Client, ClientCallback
     try
     {
       boolean condition = server
-              .createListing(title, descText, price, category, location, duration,
-                      date, accountId, promoted);
+          .createListing(title, descText, price, category, location, duration,
+              date, accountId, promoted);
       support.firePropertyChange("CreateListing", null, condition);
       return condition;
     }

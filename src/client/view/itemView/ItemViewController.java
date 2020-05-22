@@ -354,7 +354,3 @@ public class ItemViewController implements ViewController
   }
 
 }
-
-
-
-

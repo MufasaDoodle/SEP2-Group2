@@ -24,7 +24,7 @@ public class SeeListingViewModel
     error = new SimpleStringProperty();
   }
 
-  public StringProperty errorProperty()
+  public StringProperty getError()
   {
     return error;
   }

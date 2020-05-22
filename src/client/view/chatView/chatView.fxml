@@ -9,17 +9,24 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="552.0" maxWidth="327.0" minHeight="400.0" minWidth="327.0" prefHeight="535.0" prefWidth="327.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.chatView.ChatViewController">
     <children>
-        <Button layoutX="276.0" layoutY="459.0" mnemonicParsing="false" onAction="#onSendButton" style="-fx-background-color: #5499C7;" text="Send " textFill="WHITE" />
-        <TextArea fx:id="messageArea" layoutX="6.0" layoutY="459.0" onKeyReleased="#onSend" prefHeight="38.0" prefWidth="258.0" promptText="Aa" wrapText="true" />
+        <Button layoutX="276.0" layoutY="459.0" mnemonicParsing="false" onAction="#onSendButton" style="-fx-background-color: #3A729C;" text="Send " textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="12.0" />
+         </font></Button>
+        <TextArea fx:id="messageArea" layoutX="6.0" layoutY="459.0" onKeyReleased="#onSend" prefHeight="38.0" prefWidth="258.0" promptText="Aa.." wrapText="true" />
         <ImageView fitHeight="55.0" fitWidth="70.0" layoutX="252.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@Chat_Icon.png" />
             </image>
         </ImageView>
-        <Button fx:id="backButton" layoutX="276.0" layoutY="497.0" mnemonicParsing="false" onAction="#onBackButton" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #5499C7;" text="Back" textFill="WHITE" />
+        <Button fx:id="backButton" layoutX="276.0" layoutY="497.0" mnemonicParsing="false" onAction="#onBackButton" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #3A729C;" text="Back" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="12.0" />
+         </font></Button>
         <TableView fx:id="tableView" layoutX="4.0" layoutY="67.0" prefHeight="380.0" prefWidth="319.0">
             <columns>
                 <TableColumn fx:id="inputColumn" prefWidth="5000.0" />
@@ -28,8 +35,14 @@
         <Label fx:id="errorLabel" layoutX="14.0" layoutY="502.0" />
       <VBox layoutX="14.0" layoutY="12.0" prefHeight="38.0" prefWidth="210.0">
          <children>
-              <Label fx:id="ownerName" text="OwnerName " />
-              <Label fx:id="itemName" text="ItemName" />
+              <Label fx:id="ownerName" text="OwnerName ">
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font></Label>
+              <Label fx:id="itemName" text="ItemName">
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font></Label>
          </children>
       </VBox>
     </children>

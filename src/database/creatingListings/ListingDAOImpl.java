@@ -65,7 +65,7 @@ public class ListingDAOImpl implements ListingDAO
         throw new SQLException("No keys generated");
     }
   }
-  
+
   /*@Override public Listing createRentedListing(String title, String description,
       String category, String location, double price, String duration,
       Date date, int accountId) throws SQLException
@@ -85,7 +85,6 @@ public class ListingDAOImpl implements ListingDAO
       statement.setInt(8, accountId);
       statement.setString(9,"Rented");
       statement.executeUpdate();
-
       ResultSet keys = statement.getGeneratedKeys();
       if (keys.next())
       {
@@ -114,9 +113,7 @@ public class ListingDAOImpl implements ListingDAO
       statement.setString(5, duration);
       statement.setDate(6, date);
       statement.setString(7,"Available");
-
       statement.executeUpdate();
-
       ResultSet keys = statement.getGeneratedKeys();
       if (keys.next())
         return new Listing(title, category, location, price, duration,
@@ -222,7 +219,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 AND rented = 'Available'");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 AND rented = 'Available'");
       statement.setString(1, "%" + title + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -240,7 +237,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, category, location,
-                price, duration, date, id, accountId,rented,promoted);;
+            price, duration, date, id, accountId,rented,promoted);;
         result.add(listing);
       }
       return result;
@@ -283,7 +280,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND id>1 AND rented = 'Available'");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND id>1 AND rented = 'Available'");
       statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -301,7 +298,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, oldCategory, location,
-                price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -344,7 +341,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND id>1 AND rented = 'Available'");
+          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND id>1 AND rented = 'Available'");
       statement.setString(1, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -362,7 +359,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, oldLocation,
-                price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -503,7 +500,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       statement.setString(3, "%" + location + "%");
@@ -523,7 +520,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -535,7 +532,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 AND rented = 'Available'");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 AND rented = 'Available'");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -554,7 +551,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                location, price, duration, date, id, accountId,rented,promoted);
+            location, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -566,7 +563,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available'");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available'");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -585,7 +582,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, category,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -597,7 +594,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available'");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available'");
       statement.setString(1, "%" + category + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -616,7 +613,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -686,7 +683,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE id>1 AND rented = 'Available' ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE id>1 AND rented = 'Available' ORDER BY price DESC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -703,7 +700,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-                price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -715,7 +712,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE id>1 AND rented = 'Available' ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE id>1 AND rented = 'Available' ORDER BY price ASC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -732,7 +729,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-                price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -806,7 +803,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -824,7 +821,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -836,7 +833,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -854,7 +851,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -928,7 +925,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND rented = 'Available' AND id>1 ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND rented = 'Available' AND id>1 ORDER BY price ASC");
       statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -946,7 +943,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -958,7 +955,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND rented = 'Available' AND id>1 ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND rented = 'Available' AND id>1 ORDER BY price DESC");
       statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -976,7 +973,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1050,7 +1047,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND rented = 'Available' AND id>1 ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND rented = 'Available' AND id>1 ORDER BY price ASC");
       statement.setString(1, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -1068,7 +1065,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1080,7 +1077,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND rented = 'Available' AND id>1 ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND rented = 'Available' AND id>1 ORDER BY price DESC");
       statement.setString(1, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -1098,7 +1095,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1176,7 +1173,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       statement.setString(3, "%" + location + "%");
@@ -1196,7 +1193,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1208,7 +1205,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       statement.setString(3, "%" + location + "%");
@@ -1228,7 +1225,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1304,7 +1301,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -1323,7 +1320,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1335,7 +1332,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -1354,7 +1351,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1430,7 +1427,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -1449,7 +1446,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1461,7 +1458,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -1480,7 +1477,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1555,7 +1552,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
       statement.setString(1, "%" + category + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -1574,7 +1571,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1586,7 +1583,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
       statement.setString(1, "%" + category + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -1605,7 +1602,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-                oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1617,7 +1614,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * FROM \"SEP2\".Listings where rented = 'Available' AND id>1");
+          "SELECT * FROM \"SEP2\".Listings where rented = 'Available' AND id>1");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1634,7 +1631,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-                price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;

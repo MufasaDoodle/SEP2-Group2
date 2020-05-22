@@ -68,7 +68,7 @@ public interface RMIServer extends Remote
 
   void createReport(int reportFrom, int reportedItemId,
       int reportedAccountId, int reportedItemFeedbackId,
-        String date) throws  RemoteException;
+      String date) throws  RemoteException;
   List<Report> getAllReports() throws RemoteException;
   void deleteReport(int id) throws RemoteException;
   void deleteTransaction(int id) throws RemoteException;

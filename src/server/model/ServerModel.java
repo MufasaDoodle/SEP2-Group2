@@ -21,7 +21,7 @@ public interface ServerModel extends Subject
   boolean createAccount(String name, String email, String password1,
       String address, String phoneNumber) throws RemoteException;
   boolean checkLogIn(String email, String password) throws RemoteException;
-  
+
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio) throws RemoteException;
 
   List<Message> getMessage(int account1, int account2) throws RemoteException;
@@ -52,7 +52,7 @@ public interface ServerModel extends Subject
       throws RemoteException;
   Request getRequest(int itemId, int requestFrom) throws RemoteException;
 
-//Feedback for items
+  //Feedback for items
   boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName) throws RemoteException;
   List<FeedbackToItem> getFeedbackItems(int itemId) throws RemoteException;
   FeedbackToItem getFeedbackById(int id) throws RemoteException;
@@ -68,7 +68,7 @@ public interface ServerModel extends Subject
 
   void createReport(int reportFrom, int reportedItemId,
       int reportedAccountId, int reportedItemFeedbackId
-       , String date) throws  RemoteException;
+      , String date) throws  RemoteException;
   List<Report> getAllReports() throws RemoteException;
   void deleteReport(int id) throws RemoteException;
   void deleteTransaction(int id) throws RemoteException;

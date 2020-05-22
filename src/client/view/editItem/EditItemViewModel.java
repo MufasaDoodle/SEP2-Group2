@@ -105,8 +105,6 @@ public class EditItemViewModel
   public void deleteItem()
   {
     clientModel.addDeletedItemId(clientModel.getCurrentItemID());
-    clientModel.deleteTransaction(clientModel.getCurrentItemID());
-    clientModel.deleteFeedback(clientModel.getCurrentItemID());
     clientModel.deleteListing(clientModel.getCurrentItemID());
   }
 

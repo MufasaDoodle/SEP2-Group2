@@ -13,7 +13,7 @@ public class Report implements Serializable
 
   public Report(int id, int reportFrom, int reportedItemId,
       int reportedAccountId, int reportedItemFeedbackId,
-       String date)
+      String date)
   {
     this.id = id;
     this.reportFrom = reportFrom;

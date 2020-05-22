@@ -29,7 +29,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
   private Connection getConnection() throws SQLException
   {
     return DriverManager.getConnection(
-        "jdbc:postgresql://localhost:5432/projectsep2",
+        "jdbc:postgresql://localhost:5433/projectsep2",
         "group2", "password");
   }
 
@@ -64,7 +64,7 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT * from \"SEP2\".Feedbacktoitem where itemid = ? ");
+          "SELECT * from \"SEP2\".Feedbacktoitem where itemid = ? ");
       statement.setInt(1, itemId);
       ResultSet resultSet = statement.executeQuery();
       ArrayList<FeedbackToItem> result = new ArrayList<>();
@@ -78,8 +78,8 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
         FeedbackToItem temp = new FeedbackToItem(id, starRating, writtenFeedback, itemId, accountId, accountName);
         result.add(temp);
       }
-        return result;
-      }
+      return result;
+    }
   }
 
   @Override
@@ -88,17 +88,17 @@ public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-              "SELECT\n" +
-                      "    round(AVG(CAST(\n" +
-                      "        COALESCE(\n" +
-                      "            NULLIF(\n" +
-                      "                regexp_replace(starrating, '[^-0-9.]+', ''), \n" +
-                      "                ''),\n" +
-                      "            '0') \n" +
-                      "       AS numeric)), 2) as avgstarrating\n" +
-                      "FROM\n" +
-                      "    \"SEP2\".feedbacktoitem \n" +
-                      "where itemid = ?; ");
+          "SELECT\n" +
+              "    round(AVG(CAST(\n" +
+              "        COALESCE(\n" +
+              "            NULLIF(\n" +
+              "                regexp_replace(starrating, '[^-0-9.]+', ''), \n" +
+              "                ''),\n" +
+              "            '0') \n" +
+              "       AS numeric)), 2) as avgstarrating\n" +
+              "FROM\n" +
+              "    \"SEP2\".feedbacktoitem \n" +
+              "where itemid = ?; ");
       statement.setInt(1, itemId);
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next())

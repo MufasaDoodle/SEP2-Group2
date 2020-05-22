@@ -11,46 +11,61 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.moderator.ModeratorViewController">
    <children>
-      <Label layoutX="256.0" layoutY="14.0" text="Reports">
+      <Label layoutX="243.0" layoutY="14.0" text="Reports" textFill="#394d6f">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Century Gothic Bold" size="31.0" />
          </font>
       </Label>
       <TableView fx:id="reportTable" layoutX="2.0" layoutY="60.0" prefHeight="280.0" prefWidth="594.0">
         <columns>
-          <TableColumn fx:id="reportFromColumn" prefWidth="82.39996337890625" text="Report From" />
-          <TableColumn fx:id="itemIDColumn" prefWidth="74.4000244140625" text="Item ID" />
-            <TableColumn fx:id="accountColumn" prefWidth="82.39996337890625" text="Account ID" />
-            <TableColumn fx:id="feedbackItemColumn" prefWidth="107.20001220703125" text="Item Feedback ID" />
-            <TableColumn fx:id="dateColumn" prefWidth="116.00003662109373" text="Date" />
+          <TableColumn fx:id="reportFromColumn" prefWidth="120.0" text="Report From" />
+          <TableColumn fx:id="itemIDColumn" prefWidth="120.0" text="Item ID" />
+            <TableColumn fx:id="accountColumn" prefWidth="120.0" text="Account ID" />
+            <TableColumn fx:id="feedbackItemColumn" prefWidth="120.0" text="Item Feedback ID" />
+            <TableColumn fx:id="dateColumn" prefWidth="120.0" text="Date" />
         </columns>
       </TableView>
       <HBox layoutX="-1.0" layoutY="339.0" prefHeight="61.0" prefWidth="600.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onSeeReport" prefHeight="35.0" text="See Report">
+            <Button mnemonicParsing="false" onAction="#onSeeReport" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #3A729C;" text="See Report" textFill="WHITE">
                <HBox.margin>
-                  <Insets left="45.0" top="10.0" />
+                  <Insets left="35.0" top="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onDelete" prefHeight="35.0" text="Delete ">
+            <Button mnemonicParsing="false" onAction="#onDelete" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #3A729C;" text="Delete " textFill="WHITE">
                <HBox.margin>
-                  <Insets left="45.0" top="10.0" />
+                  <Insets left="35.0" top="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onArchive" prefHeight="35.0" text="Archive">
+            <Button mnemonicParsing="false" onAction="#onArchive" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #3A729C;" text="Archive" textFill="WHITE">
                <HBox.margin>
-                  <Insets left="45.0" top="10.0" />
+                  <Insets left="35.0" top="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onChat" prefHeight="35.0" text="Chat with">
+            <Button mnemonicParsing="false" onAction="#onChat" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #3A729C;" text="Chat with" textFill="WHITE">
                <HBox.margin>
-                  <Insets left="45.0" top="10.0" />
+                  <Insets left="35.0" top="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onMyAccount" prefHeight="35.0" text="Messages">
+            <Button mnemonicParsing="false" onAction="#onMyAccount" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #3A729C;" text="Messages" textFill="WHITE">
                <HBox.margin>
-                  <Insets left="45.0" top="10.0" />
+                  <Insets left="35.0" top="10.0" />
                </HBox.margin>
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font>
             </Button>
          </children>
       </HBox>

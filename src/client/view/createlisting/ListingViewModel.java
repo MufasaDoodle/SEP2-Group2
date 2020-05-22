@@ -59,6 +59,6 @@ public class ListingViewModel
   }
 
   public boolean accountCheck(){
-   return clientModel.accountCheck();
+    return clientModel.accountCheck();
   }
 }
