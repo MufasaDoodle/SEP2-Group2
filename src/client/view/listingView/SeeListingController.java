@@ -25,6 +25,7 @@ public class SeeListingController implements ViewController
   @FXML private TableColumn<String, String> priceColumn;
   @FXML private TableColumn<String, String> dateColumn;
   @FXML private TableColumn<String, String> statusColumn;
+  @FXML private CheckBox isAvailable;
   private ViewHandler vh;
   private SeeListingViewModel vm;
   private String request = "";
@@ -87,15 +88,23 @@ public class SeeListingController implements ViewController
   {
     if (!(titleField.getText().equals("")) && (categoryBox.getSelectionModel()
         .getSelectedItem().equals("All")) && (locationField.getText()
-        .equals("")))
+        .equals("")) && !(isAvailable.isSelected()))
     {
       vm.listOfChoice("title", titleField.getText(), null, null);
       listingTable.setItems(vm.getListings());
       request = "title";
     }
+    else if (!(titleField.getText().equals("")) && (categoryBox.getSelectionModel()
+            .getSelectedItem().equals("All")) && (locationField.getText()
+            .equals("")) && isAvailable.isSelected())
+    {
+      vm.listOfChoice("availableTitle", titleField.getText(), null, null);
+      listingTable.setItems(vm.getListings());
+      request = "availableTitle";
+    }
     else if ((titleField.getText().equals("")) && (categoryBox
         .getSelectionModel().getSelectedItem().equals("All")) && (locationField
-        .getText().equals("")))
+        .getText().equals("")) && !(isAvailable.isSelected()))
     {
       vm.listOfListings();
       listingTable.setItems(vm.getListings());
@@ -103,43 +112,87 @@ public class SeeListingController implements ViewController
     }
     else if (titleField.getText().equals("") && !(categoryBox
         .getSelectionModel().getSelectedItem().equals("All")) && (locationField
-        .getText().equals("")))
+        .getText().equals("")) && !(isAvailable.isSelected()))
     {
       vm.listOfChoice("category", null,
           categoryBox.getSelectionModel().getSelectedItem(), null);
       listingTable.setItems(vm.getListings());
       request = "category";
     }
+    else if (titleField.getText().equals("") && !(categoryBox
+            .getSelectionModel().getSelectedItem().equals("All")) && (locationField
+            .getText().equals("")) && isAvailable.isSelected())
+    {
+      vm.listOfChoice("availableCategory", null,
+              categoryBox.getSelectionModel().getSelectedItem(), null);
+      listingTable.setItems(vm.getListings());
+      request = "availableCategory";
+    }
     else if (titleField.getText().equals("") && categoryBox.getSelectionModel()
         .getSelectedItem().equals("All") && !(locationField.getText()
-        .equals("")))
+        .equals("")) && !(isAvailable.isSelected()))
     {
       vm.listOfChoice("location", null, null, locationField.getText());
       listingTable.setItems(vm.getListings());
       request = "location";
     }
+    else if (titleField.getText().equals("") && categoryBox.getSelectionModel()
+            .getSelectedItem().equals("All") && !(locationField.getText()
+            .equals("")) && isAvailable.isSelected())
+    {
+      vm.listOfChoice("availableLocation", null, null, locationField.getText());
+      listingTable.setItems(vm.getListings());
+      request = "availableLocation";
+    }
+    else if (titleField.getText().equals("") && categoryBox.getSelectionModel()
+            .getSelectedItem().equals("All") && locationField.getText()
+            .equals("") && isAvailable.isSelected())
+    {
+      vm.listOfChoice("available", null, null, null);
+      listingTable.setItems(vm.getListings());
+      request = "available";
+    }
     else if (
         !(titleField.getText().equals("") && categoryBox.getSelectionModel()
             .getSelectedItem().equals("All")) && locationField.getText()
-            .equals(""))
+            .equals("") && !(isAvailable.isSelected()))
     {
       vm.listOfChoice("titleCategory", titleField.getText(),
           categoryBox.getSelectionModel().getSelectedItem(), null);
       listingTable.setItems(vm.getListings());
       request = "titleCategory";
     }
+    else if (
+            !(titleField.getText().equals("") && categoryBox.getSelectionModel()
+                    .getSelectedItem().equals("All")) && locationField.getText()
+                    .equals("") && isAvailable.isSelected())
+    {
+      vm.listOfChoice("availableTitleCategory", titleField.getText(),
+              categoryBox.getSelectionModel().getSelectedItem(), null);
+      listingTable.setItems(vm.getListings());
+      request = "availableTitleCategory";
+    }
     else if (!(titleField.getText().equals("")) && categoryBox
         .getSelectionModel().getSelectedItem().equals("All") && !(locationField
-        .getText().equals("")))
+        .getText().equals("")) && !(isAvailable.isSelected()))
     {
       vm.listOfChoice("titleLocation", titleField.getText(), null,
           locationField.getText());
       listingTable.setItems(vm.getListings());
       request = "titleLocation";
     }
+    else if (!(titleField.getText().equals("")) && categoryBox
+            .getSelectionModel().getSelectedItem().equals("All") && !(locationField
+            .getText().equals("")) && isAvailable.isSelected())
+    {
+      vm.listOfChoice("availableTitleLocation", titleField.getText(), null,
+              locationField.getText());
+      listingTable.setItems(vm.getListings());
+      request = "availableTitleLocation";
+    }
     else if (!(categoryBox.getSelectionModel().getSelectedItem().equals("All")
         && locationField.getText().equals("")) && titleField.getText()
-        .equals(""))
+        .equals("") && !(isAvailable.isSelected()))
     {
       vm.listOfChoice("categoryLocation", null,
           categoryBox.getSelectionModel().getSelectedItem(),
@@ -147,9 +200,19 @@ public class SeeListingController implements ViewController
       listingTable.setItems(vm.getListings());
       request = "categoryLocation";
     }
+    else if (!(categoryBox.getSelectionModel().getSelectedItem().equals("All")
+            && locationField.getText().equals("")) && titleField.getText()
+            .equals("") && isAvailable.isSelected())
+    {
+      vm.listOfChoice("availableCategoryLocation", null,
+              categoryBox.getSelectionModel().getSelectedItem(),
+              locationField.getText());
+      listingTable.setItems(vm.getListings());
+      request = "availableCategoryLocation";
+    }
     else if (!(titleField.getText().equals("") && categoryBox
         .getSelectionModel().getSelectedItem().equals("All") && locationField
-        .getText().equals("")))
+        .getText().equals("")) && !(isAvailable.isSelected()))
     {
       vm.listOfChoice("titleCategoryLocation", titleField.getText(),
           categoryBox.getSelectionModel().getSelectedItem(),
@@ -157,363 +220,236 @@ public class SeeListingController implements ViewController
       listingTable.setItems(vm.getListings());
       request = "titleCategoryLocation";
     }
+    else if (!(titleField.getText().equals("") && categoryBox
+            .getSelectionModel().getSelectedItem().equals("All") && locationField
+            .getText().equals("")) && isAvailable.isSelected())
+    {
+      vm.listOfChoice("availableTitleCategoryLocation", titleField.getText(),
+              categoryBox.getSelectionModel().getSelectedItem(),
+              locationField.getText());
+      listingTable.setItems(vm.getListings());
+      request = "availableTitleCategoryLocation";
+    }
   }
 
-  public void onSortButton()
-  {
-    String newOld = "New to old";
-    String oldNew = "Old to new";
-    String ratingLowHigh = "Star rating low to high";
-    String ratingHighLow = "Star rating high to low";
+  public void onSortButton() {
     String priceLowHigh = "Price low to high";
     String priceHighLow = "Price high to low";
-    if (request.equals("all"))
-    {
-      if (sortingBox.getSelectionModel().getSelectedItem().equals(newOld))
-      {
-        vm.listOfChoice("newOld", null, null, null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem().equals(oldNew))
-      {
-        vm.listOfChoice("oldNew", null, null, null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceLowHigh))
-      {
+    if (request.equals("all")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
         vm.listOfChoice("priceLowHigh", null, null, null);
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceHighLow))
-      {
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
         vm.listOfChoice("priceHighLow", null, null, null);
         listingTable.setItems(vm.getListings());
       }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingHighLow))
-      {
-        vm.listOfChoice("ratingHighLow", null, null, null);
+    }
+    else if(request.equals("available"))
+    {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
+        vm.listOfChoice("availablePriceLowHigh", null, null, null);
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingLowHigh))
-      {
-        vm.listOfChoice("ratingLowHigh", null, null, null);
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
+        vm.listOfChoice("availablePriceHighLow", null, null, null);
         listingTable.setItems(vm.getListings());
       }
     }
-    else if (request.equals("title"))
-    {
-      if (sortingBox.getSelectionModel().getSelectedItem().equals(newOld))
-      {
-        vm.listOfChoice("titleNewOld", titleField.getText(), null, null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem().equals(oldNew))
-      {
-        vm.listOfChoice("titleOldNew", titleField.getText(), null, null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceLowHigh))
-      {
+    else if (request.equals("title")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
         vm.listOfChoice("titlePriceLowHigh", titleField.getText(), null, null);
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceHighLow))
-      {
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
         vm.listOfChoice("titlePriceHighLow", titleField.getText(), null, null);
         listingTable.setItems(vm.getListings());
       }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingHighLow))
-      {
-        vm.listOfChoice("titleRatingHighLow", titleField.getText(), null, null);
+    }
+    else if(request.equals("availableTitle"))
+    {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
+        vm.listOfChoice("availableTitlePriceLowHigh", titleField.getText(), null, null);
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingLowHigh))
-      {
-        vm.listOfChoice("titleRatingLowHigh", titleField.getText(), null, null);
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
+        vm.listOfChoice("availableTitlePriceHighLow", titleField.getText(), null, null);
         listingTable.setItems(vm.getListings());
       }
     }
-    else if (request.equals("category"))
-    {
-      if (sortingBox.getSelectionModel().getSelectedItem().equals(newOld))
-      {
-        vm.listOfChoice("categoryNewOld", null,
-            categoryBox.getSelectionModel().getSelectedItem(), null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem().equals(oldNew))
-      {
-        vm.listOfChoice("categoryOldNew", null,
-            categoryBox.getSelectionModel().getSelectedItem(), null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceLowHigh))
-      {
+    else if (request.equals("category")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
         vm.listOfChoice("categoryPriceLowHigh", null,
-            categoryBox.getSelectionModel().getSelectedItem(), null);
+                categoryBox.getSelectionModel().getSelectedItem(), null);
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceHighLow))
-      {
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
         vm.listOfChoice("categoryPriceHighLow", null,
-            categoryBox.getSelectionModel().getSelectedItem(), null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingHighLow))
-      {
-        vm.listOfChoice("categoryRatingHighLow", null,
-            categoryBox.getSelectionModel().getSelectedItem(), null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingLowHigh))
-      {
-        vm.listOfChoice("categoryRatingLowHigh", null,
-            categoryBox.getSelectionModel().getSelectedItem(), null);
+                categoryBox.getSelectionModel().getSelectedItem(), null);
         listingTable.setItems(vm.getListings());
       }
     }
-    else if (request.equals("location"))
-    {
-      if (sortingBox.getSelectionModel().getSelectedItem().equals(newOld))
-      {
-        vm.listOfChoice("locationNewOld", null, null, locationField.getText());
+    else if (request.equals("availableCategory")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
+        vm.listOfChoice("availableCategoryPriceLowHigh", null,
+                categoryBox.getSelectionModel().getSelectedItem(), null);
+        listingTable.setItems(vm.getListings());
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
+        vm.listOfChoice("availableCategoryPriceHighLow", null,
+                categoryBox.getSelectionModel().getSelectedItem(), null);
         listingTable.setItems(vm.getListings());
       }
-      else if (sortingBox.getSelectionModel().getSelectedItem().equals(oldNew))
-      {
-        vm.listOfChoice("locationOldNew", null, null, locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceLowHigh))
-      {
+    }
+      else if (request.equals("location")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
         vm.listOfChoice("locationPriceLowHigh", null, null,
-            locationField.getText());
+                locationField.getText());
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceHighLow))
-      {
-        vm.listOfChoice("locationPiceHighLow", null, null,
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingHighLow))
-      {
-        vm.listOfChoice("locationRatingHighLow", null, null,
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingLowHigh))
-      {
-        vm.listOfChoice("locationRatingLowHigh", null, null,
-            locationField.getText());
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
+        vm.listOfChoice("locationPriceHighLow", null, null,
+                locationField.getText());
         listingTable.setItems(vm.getListings());
       }
     }
-    else if (request.equals("titleCategory"))
-    {
-      if (sortingBox.getSelectionModel().getSelectedItem().equals(newOld))
-      {
-        vm.listOfChoice("titleCategoryNewOld", titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(), null);
+    else if (request.equals("availableLocation")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
+        vm.listOfChoice("availableLocationPriceLowHigh", null, null,
+                locationField.getText());
+        listingTable.setItems(vm.getListings());
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
+        vm.listOfChoice("availableLocationPriceHighLow", null, null,
+                locationField.getText());
         listingTable.setItems(vm.getListings());
       }
-      else if (sortingBox.getSelectionModel().getSelectedItem().equals(oldNew))
-      {
-        vm.listOfChoice("titleCategoryOldNew", titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(), null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceLowHigh))
-      {
+    }
+      else if (request.equals("titleCategory")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
         vm.listOfChoice("titleCategoryPriceLowHigh", titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(), null);
+                categoryBox.getSelectionModel().getSelectedItem(), null);
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceHighLow))
-      {
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
         vm.listOfChoice("titleCategoryPriceHighLow", titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(), null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingHighLow))
-      {
-        vm.listOfChoice("titleCategoryRatingHighLow", titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(), null);
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingLowHigh))
-      {
-        vm.listOfChoice("titleCategoryRatingLowHigh", titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(), null);
+                categoryBox.getSelectionModel().getSelectedItem(), null);
         listingTable.setItems(vm.getListings());
       }
     }
-    else if (request.equals("titleLocation"))
-    {
-      if (sortingBox.getSelectionModel().getSelectedItem().equals(newOld))
-      {
-        vm.listOfChoice("titleLocationNewOld", titleField.getText(), null,
-            locationField.getText());
+    else if (request.equals("availableTitleCategory")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
+        vm.listOfChoice("availableTitleCategoryPriceLowHigh", titleField.getText(),
+                categoryBox.getSelectionModel().getSelectedItem(), null);
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem().equals(oldNew))
-      {
-        vm.listOfChoice("titleLocationOldNew", titleField.getText(), null,
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceLowHigh))
-      {
-        vm.listOfChoice("titleLocationPriceLowHigh", titleField.getText(), null,
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceHighLow))
-      {
-        vm.listOfChoice("titleLocationPriceHighLow", titleField.getText(), null,
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingHighLow))
-      {
-        vm.listOfChoice("titleLocationRatingHighLow", titleField.getText(),
-            null, locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingLowHigh))
-      {
-        vm.listOfChoice("titleLocationRatingLowHigh", titleField.getText(),
-            null, locationField.getText());
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
+        vm.listOfChoice("availableTitleCategoryPriceHighLow", titleField.getText(),
+                categoryBox.getSelectionModel().getSelectedItem(), null);
         listingTable.setItems(vm.getListings());
       }
     }
-    else if (request.equals("categoryLocation"))
-    {
-      if (sortingBox.getSelectionModel().getSelectedItem().equals(newOld))
-      {
-        vm.listOfChoice("categoryLocationNewOld", null,
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
+      else if (request.equals("titleLocation")) {
+            if (sortingBox.getSelectionModel().getSelectedItem()
+                    .equals(priceLowHigh)) {
+              vm.listOfChoice("titleLocationPriceLowHigh", titleField.getText(), null,
+                      locationField.getText());
+              listingTable.setItems(vm.getListings());
+            } else if (sortingBox.getSelectionModel().getSelectedItem()
+                    .equals(priceHighLow)) {
+              vm.listOfChoice("titleLocationPriceHighLow", titleField.getText(), null,
+                      locationField.getText());
+              listingTable.setItems(vm.getListings());
+            }
+          }
+    else if (request.equals("availableTitleLocation")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
+        vm.listOfChoice("availableTitleLocationPriceLowHigh", titleField.getText(), null,
+                locationField.getText());
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem().equals(oldNew))
-      {
-        vm.listOfChoice("categoryLocationOldNew", null,
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceLowHigh))
-      {
-        vm.listOfChoice("categoryLocationPriceLowHigh", null,
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceHighLow))
-      {
-        vm.listOfChoice("categoryLocationPriceHighLow", null,
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingHighLow))
-      {
-        vm.listOfChoice("categoryLocationRatingHighLow", null,
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingLowHigh))
-      {
-        vm.listOfChoice("categoryLocationRatingLowHigh", null,
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
+        vm.listOfChoice("availableTitleLocationPriceHighLow", titleField.getText(), null,
+                locationField.getText());
         listingTable.setItems(vm.getListings());
       }
     }
-    else if (request.equals("titleCategoryLocation"))
-    {
-      if (sortingBox.getSelectionModel().getSelectedItem().equals(newOld))
-      {
-        vm.listOfChoice("titleCategoryLocationNewOld", titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
+    else if (request.equals("categoryLocation")) {
+            if (sortingBox.getSelectionModel().getSelectedItem()
+                    .equals(priceLowHigh)) {
+              vm.listOfChoice("categoryLocationPriceLowHigh", null,
+                      categoryBox.getSelectionModel().getSelectedItem(),
+                      locationField.getText());
+              listingTable.setItems(vm.getListings());
+            } else if (sortingBox.getSelectionModel().getSelectedItem()
+                    .equals(priceHighLow)) {
+              vm.listOfChoice("categoryLocationPriceHighLow", null,
+                      categoryBox.getSelectionModel().getSelectedItem(),
+                      locationField.getText());
+              listingTable.setItems(vm.getListings());
+            }
+          }
+    else if (request.equals("availableCategoryLocation")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
+        vm.listOfChoice("availableCategoryLocationPriceLowHigh", null,
+                categoryBox.getSelectionModel().getSelectedItem(),
+                locationField.getText());
         listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem().equals(oldNew))
-      {
-        vm.listOfChoice("titleCategoryLocationOldNew", titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceLowHigh))
-      {
-        vm.listOfChoice("titleCategoryLocationPriceLowHigh",
-            titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(priceHighLow))
-      {
-        vm.listOfChoice("titleCategoryLocationPriceHighLow",
-            titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingHighLow))
-      {
-        vm.listOfChoice("titleCategoryLocationRatingHighLow",
-            titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
-        listingTable.setItems(vm.getListings());
-      }
-      else if (sortingBox.getSelectionModel().getSelectedItem()
-          .equals(ratingLowHigh))
-      {
-        vm.listOfChoice("titleCategoryLocationRatingLowHigh",
-            titleField.getText(),
-            categoryBox.getSelectionModel().getSelectedItem(),
-            locationField.getText());
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
+        vm.listOfChoice("availableCategoryLocationPriceHighLow", null,
+                categoryBox.getSelectionModel().getSelectedItem(),
+                locationField.getText());
         listingTable.setItems(vm.getListings());
       }
     }
-  }
+    else if (request.equals("titleCategoryLocation")) {
+            if (sortingBox.getSelectionModel().getSelectedItem()
+                    .equals(priceLowHigh)) {
+              vm.listOfChoice("titleCategoryLocationPriceLowHigh",
+                      titleField.getText(),
+                      categoryBox.getSelectionModel().getSelectedItem(),
+                      locationField.getText());
+              listingTable.setItems(vm.getListings());
+            } else if (sortingBox.getSelectionModel().getSelectedItem()
+                    .equals(priceHighLow)) {
+              vm.listOfChoice("titleCategoryLocationPriceHighLow",
+                      titleField.getText(),
+                      categoryBox.getSelectionModel().getSelectedItem(),
+                      locationField.getText());
+              listingTable.setItems(vm.getListings());
+            }
+          }else if (request.equals("availableTitleCategoryLocation")) {
+      if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceLowHigh)) {
+        vm.listOfChoice("availableTitleCategoryLocationPriceLowHigh",
+                titleField.getText(),
+                categoryBox.getSelectionModel().getSelectedItem(),
+                locationField.getText());
+        listingTable.setItems(vm.getListings());
+      } else if (sortingBox.getSelectionModel().getSelectedItem()
+              .equals(priceHighLow)) {
+        vm.listOfChoice("availableTitleCategoryLocationPriceHighLow",
+                titleField.getText(),
+                categoryBox.getSelectionModel().getSelectedItem(),
+                locationField.getText());
+        listingTable.setItems(vm.getListings());
+      }
+    }
+
+        }
 
   public void onSeeItem()
   {

@@ -2,6 +2,7 @@ package database.creatingListings;
 
 import stuffs.Listing;
 
+import java.rmi.RemoteException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,7 +163,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE accountId = ?");
+          "SELECT * FROM \"SEP2\".Listings WHERE accountId = ? AND id>1");
       statement.setInt(1, accountId);
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -191,7 +192,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ?");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1");
       statement.setString(1, "%" + title + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -216,13 +217,43 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
+  @Override
+  public List<Listing> availableTitle(String title) throws SQLException {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 AND rented = 'Available'");
+      statement.setString(1, "%" + title + "%");
+      ResultSet resultSet = statement.executeQuery();
+      ArrayList<Listing> result = new ArrayList<>();
+      while (resultSet.next())
+      {
+        String oldTitle = resultSet.getString("title");
+        String category = resultSet.getString("category");
+        String location = resultSet.getString("location");
+        double price = resultSet.getDouble("price");
+        String duration = resultSet.getString("duration");
+        String description = resultSet.getString("description");
+        String date = resultSet.getString("date");
+        int id = resultSet.getInt("id");
+        int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
+        Listing listing = new Listing(oldTitle, description, category, location,
+                price, duration, date, id, accountId,rented,promoted);;
+        result.add(listing);
+      }
+      return result;
+    }
+  }
+
   @Override public List<Listing> readByCategory(String category)
       throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ?");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND id>1");
       statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -247,13 +278,43 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
+  @Override
+  public List<Listing> availableCategory(String category) throws SQLException {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND id>1 AND rented = 'Available'");
+      statement.setString(1, "%" + category + "%");
+      ResultSet resultSet = statement.executeQuery();
+      ArrayList<Listing> result = new ArrayList<>();
+      while (resultSet.next())
+      {
+        String oldCategory = resultSet.getString("category");
+        String title = resultSet.getString("title");
+        String location = resultSet.getString("location");
+        double price = resultSet.getDouble("price");
+        String duration = resultSet.getString("duration");
+        String description = resultSet.getString("description");
+        String date = resultSet.getString("date");
+        int id = resultSet.getInt("id");
+        int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
+        Listing listing = new Listing(title, description, oldCategory, location,
+                price, duration, date, id, accountId,rented,promoted);
+        result.add(listing);
+      }
+      return result;
+    }
+  }
+
   @Override public List<Listing> readByLocation(String location)
       throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ?");
+          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND id>1");
       statement.setString(1, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -278,13 +339,43 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
+  @Override
+  public List<Listing> availableLocation(String location) throws SQLException {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+              "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND id>1 AND rented = 'Available'");
+      statement.setString(1, "%" + location + "%");
+      ResultSet resultSet = statement.executeQuery();
+      ArrayList<Listing> result = new ArrayList<>();
+      while (resultSet.next())
+      {
+        String oldLocation = resultSet.getString("location");
+        String category = resultSet.getString("category");
+        String title = resultSet.getString("location");
+        double price = resultSet.getDouble("price");
+        String duration = resultSet.getString("duration");
+        String description = resultSet.getString("description");
+        String date = resultSet.getString("date");
+        int id = resultSet.getInt("id");
+        int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
+        Listing listing = new Listing(title, description, category, oldLocation,
+                price, duration, date, id, accountId,rented,promoted);
+        result.add(listing);
+      }
+      return result;
+    }
+  }
+
   @Override public List<Listing> titleCategoryLocation(String title,
       String category, String location) throws SQLException
   {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ?");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       statement.setString(3, "%" + location + "%");
@@ -317,9 +408,9 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ?");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1");
       statement.setString(1, "%" + title + "%");
-      statement.setString(1, "%" + category + "%");
+      statement.setString(2, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -349,7 +440,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ?");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -381,7 +472,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ?");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1");
       statement.setString(1, "%" + category + "%");
       statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -407,19 +498,22 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
-  @Override public List<Listing> starRatingLowToHigh() throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitleCategoryLocation(String title, String category, String location) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings ORDER BY avgstarrating ASC");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ");
+      statement.setString(1, "%" + title + "%");
+      statement.setString(2, "%" + category + "%");
+      statement.setString(3, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
       {
-        String title = resultSet.getString("title");
-        String category = resultSet.getString("category");
-        String location = resultSet.getString("location");
+        String oldTitle = resultSet.getString("title");
+        String oldCategory = resultSet.getString("category");
+        String oldLocation = resultSet.getString("location");
         double price = resultSet.getDouble("price");
         String duration = resultSet.getString("duration");
         String description = resultSet.getString("description");
@@ -428,26 +522,28 @@ public class ListingDAOImpl implements ListingDAO
         int accountId = resultSet.getInt("accountId");
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+        Listing listing = new Listing(oldTitle, description, oldCategory,
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override public List<Listing> starRatingHighToLow() throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitleCategory(String title, String category) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings ORDER BY avgstarrating DESC");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 AND rented = 'Available'");
+      statement.setString(1, "%" + title + "%");
+      statement.setString(2, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
       {
-        String title = resultSet.getString("title");
-        String category = resultSet.getString("category");
+        String oldTitle = resultSet.getString("title");
+        String oldCategory = resultSet.getString("category");
         String location = resultSet.getString("location");
         double price = resultSet.getDouble("price");
         String duration = resultSet.getString("duration");
@@ -457,8 +553,70 @@ public class ListingDAOImpl implements ListingDAO
         int accountId = resultSet.getInt("accountId");
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+        Listing listing = new Listing(oldTitle, description, oldCategory,
+                location, price, duration, date, id, accountId,rented,promoted);
+        result.add(listing);
+      }
+      return result;
+    }
+  }
+
+  @Override
+  public List<Listing> availableTitleLocation(String title, String location) throws SQLException {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available'");
+      statement.setString(1, "%" + title + "%");
+      statement.setString(2, "%" + location + "%");
+      ResultSet resultSet = statement.executeQuery();
+      ArrayList<Listing> result = new ArrayList<>();
+      while (resultSet.next())
+      {
+        String oldTitle = resultSet.getString("title");
+        String oldLocation = resultSet.getString("location");
+        String category = resultSet.getString("category");
+        double price = resultSet.getDouble("price");
+        String duration = resultSet.getString("duration");
+        String description = resultSet.getString("description");
+        String date = resultSet.getString("date");
+        int id = resultSet.getInt("id");
+        int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
+        Listing listing = new Listing(oldTitle, description, category,
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
+        result.add(listing);
+      }
+      return result;
+    }
+  }
+
+  @Override
+  public List<Listing> availableCategoryLocation(String category, String location) throws SQLException {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available'");
+      statement.setString(1, "%" + category + "%");
+      statement.setString(2, "%" + location + "%");
+      ResultSet resultSet = statement.executeQuery();
+      ArrayList<Listing> result = new ArrayList<>();
+      while (resultSet.next())
+      {
+        String oldCategory = resultSet.getString("category");
+        String oldLocation = resultSet.getString("location");
+        String title = resultSet.getString("title");
+        double price = resultSet.getDouble("price");
+        String duration = resultSet.getString("duration");
+        String description = resultSet.getString("description");
+        String date = resultSet.getString("date");
+        int id = resultSet.getInt("id");
+        int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
+        Listing listing = new Listing(title, description, oldCategory,
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -470,7 +628,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE id>1 ORDER BY price ASC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -499,7 +657,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE id>1 ORDER BY price DESC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -523,12 +681,12 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
-  @Override public List<Listing> newToOld() throws SQLException
-  {
+  @Override
+  public List<Listing> availablePriceHighToLow() throws SQLException{
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings GROUP BY date ORDER BY DESC");
+              "SELECT * FROM \"SEP2\".Listings WHERE id>1 AND rented = 'Available' ORDER BY price DESC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -545,19 +703,19 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+                price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override public List<Listing> oldToNew() throws SQLException
-  {
+  @Override
+  public List<Listing> availablePriceLowToHigh() throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings ORDER BY date ASC");
+              "SELECT * FROM \"SEP2\".Listings WHERE id>1 AND rented = 'Available' ORDER BY price ASC");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -574,129 +732,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleNewOld(String title) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? ORDER BY date DESC");
-      statement.setString(1, "%" + title + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleOldNew(String title) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? ORDER BY date ASC");
-      statement.setString(1, "%" + title + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleRatingLowToHigh(String title)
-      throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? ORDER BY avgstarrating ASC");
-      statement.setString(1, "%" + title + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleRatingHighToLow(String title)
-      throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? ORDER BY avgstarrating DESC");
-      statement.setString(1, "%" + title + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -709,7 +745,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -740,7 +776,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
@@ -765,14 +801,13 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
-  @Override public List<Listing> categoryNewOld(String category)
-      throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitlePriceLowToHigh(String title) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? ORDER BY date DESC");
-      statement.setString(2, "%" + category + "%");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
+      statement.setString(1, "%" + title + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -789,21 +824,20 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override public List<Listing> categoryOldNew(String category)
-      throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitlePriceHighToLow(String title) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? ORDER BY date ASC");
-      statement.setString(2, "%" + category + "%");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
+      statement.setString(1, "%" + title + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -820,69 +854,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> categoryRatingLowToHigh(String category)
-      throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? ORDER BY avgstarrating ASC");
-      statement.setString(2, "%" + category + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> categoryRatingHighToLow(String category)
-      throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? ORDER BY avgstarrating DESC");
-      statement.setString(2, "%" + category + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -895,8 +867,8 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? ORDER BY price ASC");
-      statement.setString(2, "%" + category + "%");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND id>1 ORDER BY price ASC");
+      statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -926,8 +898,8 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? ORDER BY price DESC");
-      statement.setString(2, "%" + category + "%");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND id>1 ORDER BY price DESC");
+      statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -951,14 +923,13 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
-  @Override public List<Listing> locationNewOld(String location)
-      throws SQLException
-  {
+  @Override
+  public List<Listing> availableCategoryPriceLowToHigh(String category) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? ORDER BY date DESC");
-      statement.setString(3, "%" + location + "%");
+              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND rented = 'Available' AND id>1 ORDER BY price ASC");
+      statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -975,21 +946,20 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override public List<Listing> locationOldNew(String location)
-      throws SQLException
-  {
+  @Override
+  public List<Listing> availableCategoryPriceHighToLow(String category) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERElocation LIKE ? ORDER BY date ASC");
-      statement.setString(3, "%" + location + "%");
+              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND rented = 'Available' AND id>1 ORDER BY price DESC");
+      statement.setString(1, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1006,69 +976,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> locationRatingLowToHigh(String location)
-      throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? ORDER BY avgstarrating ASC");
-      statement.setString(3, "%" + location + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> locationRatingHighToLow(String location)
-      throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? ORDER BY avgstarrating DESC");
-      statement.setString(3, "%" + location + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1081,8 +989,8 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? ORDER BY price ASC");
-      statement.setString(3, "%" + location + "%");
+          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND id>1 ORDER BY price ASC");
+      statement.setString(1, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1112,8 +1020,8 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? ORDER BY price DESC");
-      statement.setString(3, "%" + location + "%");
+          "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND id>1 ORDER BY price DESC");
+      statement.setString(1, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1137,16 +1045,13 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
-  @Override public List<Listing> titleCategoryLocationNewOld(String title,
-      String category, String location) throws SQLException
-  {
+  @Override
+  public List<Listing> availableLocationPriceLowToHigh(String location) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? ORDER BY date DESC");
-      statement.setString(1, "%" + title + "%");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
+              "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND rented = 'Available' AND id>1 ORDER BY price ASC");
+      statement.setString(1, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1163,23 +1068,20 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override public List<Listing> titleCategoryLocationOldNew(String title,
-      String category, String location) throws SQLException
-  {
+  @Override
+  public List<Listing> availableLocationPriceHighToLow(String location) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? ORDER BY date ASC");
-      statement.setString(1, "%" + title + "%");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
+              "SELECT * FROM \"SEP2\".Listings WHERE location LIKE ? AND rented = 'Available' AND id>1 ORDER BY price DESC");
+      statement.setString(1, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1196,73 +1098,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleCategoryLocationRatingLowToHigh(
-      String title, String category, String location) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? ORDER BY avgstarrating ASC");
-      statement.setString(1, "%" + title + "%");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleCategoryLocationRatingHighToLow(
-      String title, String category, String location) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? ORDER BY avgstarrating DESC");
-      statement.setString(1, "%" + title + "%");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1275,7 +1111,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       statement.setString(3, "%" + location + "%");
@@ -1308,7 +1144,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       statement.setString(3, "%" + location + "%");
@@ -1335,15 +1171,15 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
-  @Override public List<Listing> titleCategoryNewOld(String title,
-      String category) throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitleCategoryLocationPriceLowToHigh(String title, String category, String location) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? ORDER BY date DESC");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
+      statement.setString(3, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1360,22 +1196,22 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override public List<Listing> titleCategoryOldNew(String title,
-      String category) throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitleCategoryLocationPriceHighToLow(String title, String category, String location) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? ORDER BY date ASC");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
+      statement.setString(3, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1392,71 +1228,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleCategoryRatingLowToHigh(String title,
-      String category) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? ORDER BY avgstarrating ASC");
-      statement.setString(1, "%" + title + "%");
-      statement.setString(2, "%" + category + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleCategoryRatingHighToLow(String title,
-      String category) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? ORDER BY avgstarrating DESC");
-      statement.setString(1, "%" + title + "%");
-      statement.setString(2, "%" + category + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1469,7 +1241,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -1501,7 +1273,7 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
       statement.setString(2, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
@@ -1527,15 +1299,14 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
-  @Override public List<Listing> titleLocationNewOld(String title,
-      String location) throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitleCategoryPriceLowToHigh(String title, String category) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? ORDER BY date DESC");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
-      statement.setString(3, "%" + location + "%");
+      statement.setString(2, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1552,22 +1323,21 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override public List<Listing> titleLocationOldNew(String title,
-      String location) throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitleCategoryPriceHighToLow(String title, String category) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? ORDER BY date ASC");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND category LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
-      statement.setString(3, "%" + location + "%");
+      statement.setString(2, "%" + category + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1584,71 +1354,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleLocationRatingLowToHigh(String title,
-      String location) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? ORDER BY avgstarrating ASC");
-      statement.setString(1, "%" + title + "%");
-      statement.setString(3, "%" + location + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> titleLocationRatingHighToLow(String title,
-      String location) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? ORDER BY avgstarrating DESC");
-      statement.setString(1, "%" + title + "%");
-      statement.setString(3, "%" + location + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1661,9 +1367,9 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? ORDER BY price ASC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 ORDER BY price ASC");
       statement.setString(1, "%" + title + "%");
-      statement.setString(3, "%" + location + "%");
+      statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1693,9 +1399,9 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? ORDER BY price DESC");
+          "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 ORDER BY price DESC");
       statement.setString(1, "%" + title + "%");
-      statement.setString(3, "%" + location + "%");
+      statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1719,15 +1425,14 @@ public class ListingDAOImpl implements ListingDAO
     }
   }
 
-  @Override public List<Listing> categoryLocationNewOld(String category,
-      String location) throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitleLocationPriceLowToHigh(String title, String location) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? ORDER BY date DESC");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
+      statement.setString(1, "%" + title + "%");
+      statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1744,22 +1449,21 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override public List<Listing> categoryLocationOldNew(String category,
-      String location) throws SQLException
-  {
+  @Override
+  public List<Listing> availableTitleLocationPriceHighToLow(String title, String location) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? ORDER BY date ASC");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
+              "SELECT * FROM \"SEP2\".Listings WHERE title LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
+      statement.setString(1, "%" + title + "%");
+      statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1776,71 +1480,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> categoryLocationRatingLowToHigh(
-      String category, String location) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? ORDER BY avgstarrating AVG");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
-        result.add(listing);
-      }
-      return result;
-    }
-  }
-
-  @Override public List<Listing> categoryLocationRatingHighToLow(
-      String category, String location) throws SQLException
-  {
-    try (Connection connection = getConnection())
-    {
-      PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? ORDER BY avgstarrating DESC");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
-      ResultSet resultSet = statement.executeQuery();
-      ArrayList<Listing> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        String oldTitle = resultSet.getString("title");
-        String oldCategory = resultSet.getString("category");
-        String oldLocation = resultSet.getString("location");
-        double price = resultSet.getDouble("price");
-        String duration = resultSet.getString("duration");
-        String description = resultSet.getString("description");
-        String date = resultSet.getString("date");
-        int id = resultSet.getInt("id");
-        int accountId = resultSet.getInt("accountId");
-        String rented = resultSet.getString("rented");
-        String promoted = resultSet.getString("promoted");
-        Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
@@ -1853,9 +1493,9 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? ORDER BY price ASC");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 ORDER BY price ASC");
+      statement.setString(1, "%" + category + "%");
+      statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1885,9 +1525,9 @@ public class ListingDAOImpl implements ListingDAO
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? ORDER BY price DESC");
-      statement.setString(2, "%" + category + "%");
-      statement.setString(3, "%" + location + "%");
+          "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 ORDER BY price DESC");
+      statement.setString(1, "%" + category + "%");
+      statement.setString(2, "%" + location + "%");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1910,13 +1550,74 @@ public class ListingDAOImpl implements ListingDAO
       return result;
     }
   }
-
-  /*@Override public List<Listing> getAll() throws SQLException
-  {
+  @Override
+  public List<Listing> availableCategoryLocationPriceLowToHigh(String category, String location) throws SQLException {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
-          "SELECT l.title, l.description, l.category, l.location, l.price, l.duration, l.date, l.id, l.accountId FROM \"SEP2\".Listings l INNER JOIN  \"SEP2\".Transactions t ON l.id != t.itemId AND l.accountId != t.rentedFromId GROUP BY l.title, l.description, l.category, l.location, l.price, l.duration, l.date, l.id, l.accountId");
+              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price ASC");
+      statement.setString(1, "%" + category + "%");
+      statement.setString(2, "%" + location + "%");
+      ResultSet resultSet = statement.executeQuery();
+      ArrayList<Listing> result = new ArrayList<>();
+      while (resultSet.next())
+      {
+        String oldTitle = resultSet.getString("title");
+        String oldCategory = resultSet.getString("category");
+        String oldLocation = resultSet.getString("location");
+        double price = resultSet.getDouble("price");
+        String duration = resultSet.getString("duration");
+        String description = resultSet.getString("description");
+        String date = resultSet.getString("date");
+        int id = resultSet.getInt("id");
+        int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
+        Listing listing = new Listing(oldTitle, description, oldCategory,
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
+        result.add(listing);
+      }
+      return result;
+    }
+  }
+
+  @Override
+  public List<Listing> availableCategoryLocationPriceHighToLow(String category, String location) throws SQLException {
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+              "SELECT * FROM \"SEP2\".Listings WHERE category LIKE ? AND location LIKE ? AND id>1 AND rented = 'Available' ORDER BY price DESC");
+      statement.setString(1, "%" + category + "%");
+      statement.setString(2, "%" + location + "%");
+      ResultSet resultSet = statement.executeQuery();
+      ArrayList<Listing> result = new ArrayList<>();
+      while (resultSet.next())
+      {
+        String oldTitle = resultSet.getString("title");
+        String oldCategory = resultSet.getString("category");
+        String oldLocation = resultSet.getString("location");
+        double price = resultSet.getDouble("price");
+        String duration = resultSet.getString("duration");
+        String description = resultSet.getString("description");
+        String date = resultSet.getString("date");
+        int id = resultSet.getInt("id");
+        int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
+        Listing listing = new Listing(oldTitle, description, oldCategory,
+                oldLocation, price, duration, date, id, accountId,rented,promoted);
+        result.add(listing);
+      }
+      return result;
+    }
+  }
+
+  @Override
+  public List<Listing> isAvailable() throws SQLException{
+    try (Connection connection = getConnection())
+    {
+      PreparedStatement statement = connection.prepareStatement(
+              "SELECT * FROM \"SEP2\".Listings where rented = 'Available' AND id>1");
       ResultSet resultSet = statement.executeQuery();
       ArrayList<Listing> result = new ArrayList<>();
       while (resultSet.next())
@@ -1930,13 +1631,15 @@ public class ListingDAOImpl implements ListingDAO
         String date = resultSet.getString("date");
         int id = resultSet.getInt("id");
         int accountId = resultSet.getInt("accountId");
+        String rented = resultSet.getString("rented");
+        String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId);
+                price, duration, date, id, accountId,rented,promoted);
         result.add(listing);
       }
       return result;
     }
-  }*/
+  }
 
   @Override public List<Listing> getAll() throws SQLException
   {
