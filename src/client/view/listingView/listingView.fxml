@@ -34,7 +34,7 @@
                      <HBox.margin>
                         <Insets left="20.0" top="5.0" />
                      </HBox.margin></TextField>
-                  <CheckBox mnemonicParsing="false" text="Only Available">
+                  <CheckBox fx:id="isAvailable" mnemonicParsing="false" text="Only Available">
                      <HBox.margin>
                         <Insets left="20.0" top="10.0" />
                      </HBox.margin>
