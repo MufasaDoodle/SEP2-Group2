@@ -1,10 +1,11 @@
 package client.model;
 
+import shared.util.Subject;
 import stuffs.Account;
 import stuffs.FeedbackToItem;
 import stuffs.Listing;
 
-public interface MasterModelInterface
+public interface MasterModelInterface extends Subject
 {
   Account getAccountById(int id);
   Listing getListingByID(int id);

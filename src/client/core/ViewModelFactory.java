@@ -34,7 +34,7 @@ public class ViewModelFactory
   {
     if (messagesViewModel == null)
     {
-      return (messagesViewModel = new MessagesViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getChatModel()));
+      return (messagesViewModel = new MessagesViewModel(mf.getMasterModel(), mf.getListingsModel(), mf.getChatModel()));
     }
     else
     {
@@ -46,7 +46,7 @@ public class ViewModelFactory
   {
     if (moderatorViewModel == null)
     {
-      return (moderatorViewModel = new ModeratorViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel(), mf.getFeedbackModel(), mf.getChatModel()));
+      return (moderatorViewModel = new ModeratorViewModel(mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel(), mf.getFeedbackModel(), mf.getChatModel(), mf.getModeratorModel(), mf.getTransactionModel()));
     }
     else
     {
@@ -58,7 +58,7 @@ public class ViewModelFactory
   {
     if (listingViewModel == null)
     {
-      return (listingViewModel = new ListingViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
+      return (listingViewModel = new ListingViewModel(mf.getMasterModel(), mf.getListingsModel()));
     }
     else
     {
@@ -70,7 +70,7 @@ public class ViewModelFactory
   {
     if (accountViewModel == null)
     {
-      return (accountViewModel = new AccountViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel(), mf.getChatModel()));
+      return (accountViewModel = new AccountViewModel(mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel(), mf.getChatModel(), mf.getModeratorModel(), mf.getTransactionModel()));
     }
     else
     {
@@ -82,7 +82,7 @@ public class ViewModelFactory
   {
     if (seeListingViewModel == null)
     {
-      return (seeListingViewModel = new SeeListingViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getChatModel()));
+      return (seeListingViewModel = new SeeListingViewModel(mf.getMasterModel(), mf.getListingsModel(), mf.getChatModel()));
     }
     else
     {
@@ -94,7 +94,7 @@ public class ViewModelFactory
   {
     if (createAccountViewModel == null)
     {
-      createAccountViewModel = new CreateAccountViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getAccountModel());
+      createAccountViewModel = new CreateAccountViewModel(mf.getMasterModel(), mf.getAccountModel());
     }
     return createAccountViewModel;
   }
@@ -103,7 +103,7 @@ public class ViewModelFactory
   {
     if (loginViewModel == null)
     {
-      loginViewModel = new LoginViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel());
+      loginViewModel = new LoginViewModel(mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel());
     }
     return loginViewModel;
   }
@@ -111,21 +111,21 @@ public class ViewModelFactory
   public ChatViewModel getChatViewModel()
   {
     if (chatViewModel == null)
-      chatViewModel = new ChatViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getChatModel());
+      chatViewModel = new ChatViewModel(mf.getMasterModel(), mf.getListingsModel(), mf.getChatModel());
     return chatViewModel;
   }
 
   public EditItemViewModel getEditItemViewModel()
   {
     if (editItemViewModel == null)
-      editItemViewModel = new EditItemViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getFeedbackModel());
+      editItemViewModel = new EditItemViewModel(mf.getMasterModel(), mf.getListingsModel(), mf.getFeedbackModel(), mf.getModeratorModel(), mf.getTransactionModel());
     return editItemViewModel;
   }
 
   public ItemViewModel getItemViewModel()
   {
     if (itemViewModel == null)
-      itemViewModel = new ItemViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getFeedbackModel());
+      itemViewModel = new ItemViewModel(mf.getMasterModel(), mf.getListingsModel(), mf.getFeedbackModel(), mf.getModeratorModel(), mf.getTransactionModel());
     return itemViewModel;
   }
 }

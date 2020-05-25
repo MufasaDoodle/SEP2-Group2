@@ -1,7 +1,6 @@
 package client.view.chatView;
 
 import client.model.ChatModel;
-import client.model.ClientModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,21 +14,19 @@ import java.util.List;
 
 public class ChatViewModel
 {
-  private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
   private ChatModel chatModel;
   private ObservableList<String> messages;
   private StringProperty request, reply;
 
-  public ChatViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, ChatModel chatModel)
+  public ChatViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, ChatModel chatModel)
   {
 
-    this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
     this.chatModel = chatModel;
-    clientModel.addListener("NewMessage", this::onNewMessage);
+    masterModel.addListener("NewMessage", this::onNewMessage);
     request = new SimpleStringProperty();
     reply = new SimpleStringProperty();
   }

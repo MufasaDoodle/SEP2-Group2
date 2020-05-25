@@ -6,15 +6,25 @@ import stuffs.Account;
 import stuffs.FeedbackToItem;
 import stuffs.Listing;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 public class MasterModelInterfaceManager implements MasterModelInterface
 {
   private DataModel dataModel;
+  private PropertyChangeSupport support = new PropertyChangeSupport(this);
 
   public MasterModelInterfaceManager(Client client, DataModel dataModel)
   {
     dataModel.setClient(client);
     dataModel.getClient().startClient();
-    this.dataModel = dataModel;
+    this.dataModel = dataModel;client.addListener("NewMessage", this::onNewMessage);
+  }
+
+  private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
+  {
+    support.firePropertyChange(propertyChangeEvent);
   }
 
   @Override public Account getAccountById(int id)
@@ -124,5 +134,15 @@ public class MasterModelInterfaceManager implements MasterModelInterface
   @Override public void setViewingAccountID(int viewingAccountID)
   {
     dataModel.setViewingAccountID(viewingAccountID);
+  }
+
+  @Override public void addListener(String eventName, PropertyChangeListener listener)
+  {
+    support.addPropertyChangeListener(eventName, listener);
+  }
+
+  @Override public void removeListener(String eventName, PropertyChangeListener listener)
+  {
+    support.removePropertyChangeListener(eventName, listener);
   }
 }

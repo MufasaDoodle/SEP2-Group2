@@ -1,7 +1,6 @@
 package client.view.login;
 
 import client.model.AccountModel;
-import client.model.ClientModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,15 +10,13 @@ import shared.util.EmailCheck;
 
 public class LoginViewModel
 {
-  private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
   private AccountModel accountModel;
   private StringProperty error;
 
-  public LoginViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel)
+  public LoginViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel)
   {
-    this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
     this.accountModel = accountModel;

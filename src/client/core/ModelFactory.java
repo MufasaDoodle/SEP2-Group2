@@ -5,17 +5,36 @@ import client.model.*;
 public class ModelFactory
 {
   private final ClientFactory cf;
-  private ClientModel clientModel;
   private ListingsModel listingsModel;
   private MasterModelInterface masterModel;
   private AccountModel accountModel;
   private FeedbackModel feedbackModel;
   private ChatModelManager chatModel;
+  private ModeratorModel moderatorModel;
+  private TransactionModel transactionModel;
   private DataModel dataModel;
 
   public ModelFactory(ClientFactory cf)
   {
     this.cf = cf;
+  }
+
+  public ModeratorModel getModeratorModel()
+  {
+    if (moderatorModel == null)
+    {
+      moderatorModel = new ModeratorModelManager(getDataModel(), getMasterModel());
+    }
+    return moderatorModel;
+  }
+
+  public TransactionModel getTransactionModel()
+  {
+    if (transactionModel == null)
+    {
+      transactionModel = new TransactionModelManager(getDataModel(), getMasterModel());
+    }
+    return transactionModel;
   }
 
   public ChatModelManager getChatModel()
@@ -69,14 +88,5 @@ public class ModelFactory
       listingsModel = new ListingsModelManager(getDataModel(), getMasterModel());
     }
     return listingsModel;
-  }
-
-  public ClientModel getClientModel()
-  {
-    if (clientModel == null)
-    {
-      clientModel = new ClientModelManager(cf.getClient());
-    }
-    return clientModel;
   }
 }

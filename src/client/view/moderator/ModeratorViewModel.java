@@ -11,27 +11,29 @@ import java.util.List;
 
 public class ModeratorViewModel
 {
-  private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
   private AccountModel accountModel;
   private FeedbackModel feedbackModel;
   private ChatModel chatModel;
+  private ModeratorModel moderatorModel;
+  private TransactionModel transactionModel;
   private ObservableList<Report> reports;
 
-  public ModeratorViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, FeedbackModel feedbackModel, ChatModel chatModel)
+  public ModeratorViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, FeedbackModel feedbackModel, ChatModel chatModel, ModeratorModel moderatorModel, TransactionModel transactionModel)
   {
-    this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
     this.accountModel = accountModel;
     this.feedbackModel = feedbackModel;
     this.chatModel = chatModel;
+    this.moderatorModel = moderatorModel;
+    this.transactionModel = transactionModel;
   }
 
   public void setReports()
   {
-    List<Report> reportList = clientModel.getAllReports();
+    List<Report> reportList = moderatorModel.getAllReports();
     reports = FXCollections.observableArrayList(reportList);
   }
 
@@ -47,8 +49,8 @@ public class ModeratorViewModel
 
   public void setCurrentAccount(int accountId)
   {
-    clientModel.setModeratorOpen(true);
-    clientModel.setModeratedAccount(accountId);
+    moderatorModel.setModeratorOpen(true);
+    moderatorModel.setModeratedAccount(accountId);
   }
 
   public void setItemFeedback(int itemId)
@@ -68,7 +70,7 @@ public class ModeratorViewModel
 
   public void deleteReport(int id)
   {
-    clientModel.deleteReport(id);
+    moderatorModel.deleteReport(id);
   }
 
   public void deleteItem(int id)
@@ -83,17 +85,17 @@ public class ModeratorViewModel
 
   public void deleteAccount(int id)
   {
-    clientModel.deleteAccount(id);
+    moderatorModel.deleteAccount(id);
   }
 
   public void deleteAccountTransaction(int id)
   {
-    clientModel.deleteTransactionByAccount(id);
+    transactionModel.deleteTransactionByAccount(id);
   }
 
   public void deleteItemTransaction(int id)
   {
-    clientModel.deleteTransactionByItem(id);
+    transactionModel.deleteTransactionByItem(id);
   }
 
   public void deleteFeedbackBelongsToItem(int id)
@@ -103,12 +105,12 @@ public class ModeratorViewModel
 
   public void deleteRequestByItem(int id)
   {
-    clientModel.deleteRequest(id);
+    transactionModel.deleteRequest(id);
   }
 
   public void deleteRequestByAccount(int id)
   {
-    clientModel.deleteRequestByAccount(id);
+    transactionModel.deleteRequestByAccount(id);
   }
 
   public void deleteItemByAccount(int id)
@@ -118,22 +120,22 @@ public class ModeratorViewModel
 
   public void deleteReportByAccount(int id)
   {
-    clientModel.deleteReportByAccount(id);
+    moderatorModel.deleteReportByAccount(id);
   }
 
   public void deleteReportByItem(int id)
   {
-    clientModel.deleteReportByItem(id);
+    moderatorModel.deleteReportByItem(id);
   }
 
   public void deleteReportByItemFeedback(int id)
   {
-    clientModel.deleteReportByItemFeedback(id);
+    moderatorModel.deleteReportByItemFeedback(id);
   }
 
   public void deleteMessageByItemAccount(int id)
   {
-    clientModel.deleteMessageByAccount(id);
+    moderatorModel.deleteMessageByAccount(id);
   }
 
   public List<Listing> getItemsByAccount(int accountId)

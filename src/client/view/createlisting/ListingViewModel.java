@@ -1,10 +1,7 @@
 package client.view.createlisting;
 
-import client.model.ClientModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
 import shared.util.NumericCheck;
 import java.text.DateFormat;
@@ -13,13 +10,11 @@ import java.util.Date;
 
 public class ListingViewModel
 {
-  private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
 
-  public ListingViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
+  public ListingViewModel(MasterModelInterface masterModel, ListingsModel listingsModel)
   {
-    this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
   }

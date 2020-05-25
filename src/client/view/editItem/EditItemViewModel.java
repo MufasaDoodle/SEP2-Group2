@@ -1,9 +1,6 @@
 package client.view.editItem;
 
-import client.model.ClientModel;
-import client.model.FeedbackModel;
-import client.model.ListingsModel;
-import client.model.MasterModelInterface;
+import client.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
@@ -12,20 +9,22 @@ import stuffs.Listing;
 
 public class EditItemViewModel
 {
-  private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
   private FeedbackModel feedbackModel;
+  private ModeratorModel moderatorModel;
+  private TransactionModel transactionModel;
   private StringProperty title, description, category, location, duration, price;
   private boolean itemAvailability;
   private boolean promoted;
 
-  public EditItemViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, FeedbackModel feedbackModel)
+  public EditItemViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, FeedbackModel feedbackModel, ModeratorModel moderatorModel, TransactionModel transactionModel)
   {
-    this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
     this.feedbackModel = feedbackModel;
+    this.moderatorModel = moderatorModel;
+    this.transactionModel = transactionModel;
     title = new SimpleStringProperty();
     description = new SimpleStringProperty();
     category = new SimpleStringProperty();
@@ -157,12 +156,12 @@ public class EditItemViewModel
 
   public void deleteItemRequest()
   {
-    clientModel.deleteRequest(masterModel.getCurrentItemID());
+    transactionModel.deleteRequest(masterModel.getCurrentItemID());
   }
 
   public void deleteItemTransaction()
   {
-    clientModel.deleteTransactionByItem(masterModel.getCurrentItemID());
+    transactionModel.deleteTransactionByItem(masterModel.getCurrentItemID());
   }
 
   public void deleteItemFeedback()
@@ -172,7 +171,7 @@ public class EditItemViewModel
 
   public void deleteItemReport()
   {
-    clientModel.deleteReportByItem(masterModel.getCurrentItemID());
+    moderatorModel.deleteReportByItem(masterModel.getCurrentItemID());
   }
 
   public void addDeletedItemId()

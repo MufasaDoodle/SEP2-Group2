@@ -19,11 +19,12 @@ import java.util.Optional;
 
 public class AccountViewModel
 {
-  private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
   private AccountModel accountModel;
   private ChatModel chatModel;
+  private ModeratorModel moderatorModel;
+  private TransactionModel transactionModel;
   private StringProperty name, address, phone, bio, emailEdit, addressEdit, numberEdit, bioEdit, pass1, pass2;
   private ObservableList<Listing> listings;
 
@@ -31,13 +32,14 @@ public class AccountViewModel
   private ObservableList<TransactionListing> transactions;
   private boolean isDeclined;
 
-  public AccountViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, ChatModel chatModel)
+  public AccountViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, ChatModel chatModel, ModeratorModel moderatorModel, TransactionModel transactionModel)
   {
-    this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
     this.accountModel = accountModel;
     this.chatModel = chatModel;
+    this.moderatorModel = moderatorModel;
+    this.transactionModel = transactionModel;
     name = new SimpleStringProperty();
     address = new SimpleStringProperty();
     phone = new SimpleStringProperty();
@@ -128,9 +130,9 @@ public class AccountViewModel
       phone.set(temp.getPhoneNumber());
       bio.set(temp.getBio());
     }
-    else if (clientModel.getModeratorOpen())
+    else if (moderatorModel.getModeratorOpen())
     {
-      Account temp = clientModel.getModeratedAccount();
+      Account temp = moderatorModel.getModeratedAccount();
       name.set(temp.getName());
       address.set(temp.getAddress());
       phone.set(temp.getPhoneNumber());
@@ -191,9 +193,9 @@ public class AccountViewModel
       List<Listing> list = accountModel.getListingsByAccount(masterModel.getCurrentAccountID());
       listings = FXCollections.observableArrayList(list);
     }
-    else if (clientModel.getModeratorOpen())
+    else if (moderatorModel.getModeratorOpen())
     {
-      List<Listing> list = accountModel.getListingsByAccount(clientModel.getModeratedAccount().getId());
+      List<Listing> list = accountModel.getListingsByAccount(moderatorModel.getModeratedAccount().getId());
       listings = FXCollections.observableArrayList(list);
     }
     else if (!listingsModel.getFromListingViewOpen())
@@ -226,8 +228,8 @@ public class AccountViewModel
 
   public void listOfOwnerRentals()
   {
-    List<TransactionListing> rentedTo = clientModel.getTransactionByRentedTo(masterModel.getCurrentAccountID());
-    List<TransactionListing> rentedFrom = clientModel.getTransactionByRentedFrom(masterModel.getCurrentAccountID());
+    List<TransactionListing> rentedTo = transactionModel.getTransactionByRentedTo(masterModel.getCurrentAccountID());
+    List<TransactionListing> rentedFrom = transactionModel.getTransactionByRentedFrom(masterModel.getCurrentAccountID());
 
     List<TransactionListing> result = new ArrayList<>();
 
@@ -243,7 +245,7 @@ public class AccountViewModel
 
   public void listOfOwnerRequests()
   {
-    List<RequestListing> requestList = clientModel.getRequestByAccountId(masterModel.getCurrentAccountID());
+    List<RequestListing> requestList = transactionModel.getRequestByAccountId(masterModel.getCurrentAccountID());
     requests = FXCollections.observableArrayList(requestList);
   }
 
@@ -376,18 +378,18 @@ public class AccountViewModel
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
     int rentedFrom = masterModel.getCurrentAccountID();
-    clientModel.createTransaction(itemId, dateFormat.format(date), rentedTo, rentedFrom);
-    clientModel.deleteRequest(itemId);
+    transactionModel.createTransaction(itemId, dateFormat.format(date), rentedTo, rentedFrom);
+    transactionModel.deleteRequest(itemId);
   }
 
   public void declineRent(int itemId, int rentedTo)
   {
-    clientModel.deleteDecline(itemId, rentedTo);
+    transactionModel.deleteDecline(itemId, rentedTo);
   }
 
   public Request getRequest(int itemId, int requestFrom)
   {
-    return clientModel.getRequest(itemId, requestFrom);
+    return transactionModel.getRequest(itemId, requestFrom);
   }
 
   public Listing getListing(int itemId)
@@ -411,14 +413,14 @@ public class AccountViewModel
         int accountId = masterModel.getCurrentAccountID();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        clientModel.createReport(reportFrom, 0, accountId, 0, dateFormat.format(date));
+        moderatorModel.createReport(reportFrom, 0, accountId, 0, dateFormat.format(date));
       }
       else
       {
         int accountId = masterModel.getListingByID(itemId).getAccountId();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        clientModel.createReport(reportFrom, 0, accountId, 0, dateFormat.format(date));
+        moderatorModel.createReport(reportFrom, 0, accountId, 0, dateFormat.format(date));
       }
     }
   }
@@ -434,12 +436,12 @@ public class AccountViewModel
     if (masterModel.getListingByID(itemId) != null)
     {
       int accountId = masterModel.getListingByID(itemId).getAccountId();
-      return clientModel.getReportByAccountId(accountId) == null;
+      return moderatorModel.getReportByAccountId(accountId) == null;
     }
     else
     {
       int accountId = masterModel.getCurrentAccountID();
-      return clientModel.getReportByAccountId(accountId) == null;
+      return moderatorModel.getReportByAccountId(accountId) == null;
     }
 
   }

@@ -1,9 +1,6 @@
 package client.view.itemView;
 
-import client.model.ClientModel;
-import client.model.FeedbackModel;
-import client.model.ListingsModel;
-import client.model.MasterModelInterface;
+import client.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -20,10 +17,11 @@ import java.util.List;
 
 public class ItemViewModel
 {
-  private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
   private FeedbackModel feedbackModel;
+  private ModeratorModel moderatorModel;
+  private TransactionModel transactionModel;
   private StringProperty request, reply, owner, itemName, price, location, description;
   private StringProperty id;
   private StringProperty error;
@@ -32,12 +30,13 @@ public class ItemViewModel
   private StringProperty avgStarRating;
   ObservableList<FeedbackToItem> feedback;
 
-  public ItemViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, FeedbackModel feedbackModel)
+  public ItemViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, FeedbackModel feedbackModel, ModeratorModel moderatorModel, TransactionModel transactionModel)
   {
-    this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
     this.feedbackModel = feedbackModel;
+    this.moderatorModel = moderatorModel;
+    this.transactionModel = transactionModel;
     request = new SimpleStringProperty();
     reply = new SimpleStringProperty();
     owner = new SimpleStringProperty();
@@ -251,11 +250,11 @@ public class ItemViewModel
     int requestFrom = masterModel.getCurrentAccountID();
     int requestTo = masterModel.getListingByID(masterModel.getCurrentItemID()).getAccountId();
 
-    Request request = clientModel.getRequest(itemId, requestFrom);
+    Request request = transactionModel.getRequest(itemId, requestFrom);
 
     if (request == null && requestFrom != requestTo)
     {
-      clientModel.createRequest(itemId, requestFrom, requestTo);
+      transactionModel.createRequest(itemId, requestFrom, requestTo);
       Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
       alert1.setTitle("Rent the item");
       alert1.setHeaderText("Rent request is sent to the owner!");
@@ -327,7 +326,7 @@ public class ItemViewModel
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
 
-        clientModel.createReport(reportFrom, itemId, 0, 0, dateFormat.format(date));
+        moderatorModel.createReport(reportFrom, itemId, 0, 0, dateFormat.format(date));
       }
     }
   }
@@ -353,18 +352,18 @@ public class ItemViewModel
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
       Date date = new Date();
 
-      clientModel.createReport(reportFrom, 0, 0, feedbackId, dateFormat.format(date));
+      moderatorModel.createReport(reportFrom, 0, 0, feedbackId, dateFormat.format(date));
     }
   }
 
   public boolean getReportByItem()
   {
-    return clientModel.getReportByItemId(masterModel.getCurrentItemID()) == null;
+    return moderatorModel.getReportByItemId(masterModel.getCurrentItemID()) == null;
   }
 
   public boolean getReportByFeedbackId(int feedbackId)
   {
-    return clientModel.getReportByFeedbackId(feedbackId) == null;
+    return moderatorModel.getReportByFeedbackId(feedbackId) == null;
   }
 
   public FeedbackToItem getFeedback(int feedbackId)
