@@ -1,5 +1,6 @@
 package client.view.moderator;
 
+import client.model.AccountModel;
 import client.model.ClientModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
@@ -16,13 +17,15 @@ public class ModeratorViewModel
   private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
+  private AccountModel accountModel;
   private ObservableList<Report> reports;
 
-  public ModeratorViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
+  public ModeratorViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
+    this.accountModel = accountModel;
   }
 
   public void setReports()
@@ -134,7 +137,7 @@ public class ModeratorViewModel
 
   public List<Listing> getItemsByAccount(int accountId)
   {
-    return clientModel.getListingsByAccount(accountId);
+    return accountModel.getListingsByAccount(accountId);
   }
 
   public List<FeedbackToItem> getItemFeedbackByItemDd(int itemId)

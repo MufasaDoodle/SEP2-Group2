@@ -8,6 +8,7 @@ public class ModelFactory
   private ClientModel clientModel;
   private ListingsModel listingsModel;
   private MasterModelInterface masterModel;
+  private AccountModel accountModel;
   private DataModel dataModel;
 
   public ModelFactory(ClientFactory cf)
@@ -22,6 +23,14 @@ public class ModelFactory
       masterModel = new MasterModelInterfaceManager(cf.getClient(), getDataModel());
     }
     return masterModel;
+  }
+  public AccountModel getAccountModel()
+  {
+    if (accountModel == null)
+    {
+      accountModel = new AccountModelManager(getDataModel(), getMasterModel());
+    }
+    return accountModel;
   }
 
   public DataModel getDataModel()

@@ -46,7 +46,7 @@ public class ViewModelFactory
   {
     if (moderatorViewModel == null)
     {
-      return (moderatorViewModel = new ModeratorViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
+      return (moderatorViewModel = new ModeratorViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel()));
     }
     else
     {
@@ -70,7 +70,7 @@ public class ViewModelFactory
   {
     if (accountViewModel == null)
     {
-      return (accountViewModel = new AccountViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
+      return (accountViewModel = new AccountViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel()));
     }
     else
     {
@@ -94,7 +94,7 @@ public class ViewModelFactory
   {
     if (createAccountViewModel == null)
     {
-      createAccountViewModel = new CreateAccountViewModel(mf.getClientModel(), mf.getMasterModel());
+      createAccountViewModel = new CreateAccountViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getAccountModel());
     }
     return createAccountViewModel;
   }
@@ -103,7 +103,7 @@ public class ViewModelFactory
   {
     if (loginViewModel == null)
     {
-      loginViewModel = new LoginViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel());
+      loginViewModel = new LoginViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel());
     }
     return loginViewModel;
   }

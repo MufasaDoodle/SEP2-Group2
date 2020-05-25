@@ -1,9 +1,6 @@
 package client.view.accountView;
 
-import client.model.ClientModel;
-import client.model.ListingsModel;
-import client.model.ListingsModelManager;
-import client.model.MasterModelInterface;
+import client.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -25,6 +22,7 @@ public class AccountViewModel
   private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
+  private AccountModel accountModel;
   private StringProperty name, address, phone, bio, emailEdit, addressEdit, numberEdit, bioEdit, pass1, pass2;
   private ObservableList<Listing> listings;
 
@@ -32,11 +30,12 @@ public class AccountViewModel
   private ObservableList<TransactionListing> transactions;
   private boolean isDeclined;
 
-  public AccountViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
+  public AccountViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
+    this.accountModel = accountModel;
     name = new SimpleStringProperty();
     address = new SimpleStringProperty();
     phone = new SimpleStringProperty();
@@ -187,12 +186,12 @@ public class AccountViewModel
   {
     if (listingsModel.getFromListingViewOpen())
     {
-      List<Listing> list = clientModel.getListingsByAccount(masterModel.getCurrentAccountID());
+      List<Listing> list = accountModel.getListingsByAccount(masterModel.getCurrentAccountID());
       listings = FXCollections.observableArrayList(list);
     }
     else if (clientModel.getModeratorOpen())
     {
-      List<Listing> list = clientModel.getListingsByAccount(clientModel.getModeratedAccount().getId());
+      List<Listing> list = accountModel.getListingsByAccount(clientModel.getModeratedAccount().getId());
       listings = FXCollections.observableArrayList(list);
     }
     else if (!listingsModel.getFromListingViewOpen())
@@ -207,7 +206,7 @@ public class AccountViewModel
       }
       else
       {
-        List<Listing> list = clientModel.getListingsByAccount(masterModel.getAccountById(temp.getAccountId()).getId());
+        List<Listing> list = accountModel.getListingsByAccount(masterModel.getAccountById(temp.getAccountId()).getId());
         listings = FXCollections.observableArrayList(list);
       }
     }
@@ -217,7 +216,7 @@ public class AccountViewModel
       if (masterModel.getListingByID(masterModel.getCurrentItemID()) != null)
       {
         Listing temp = masterModel.getListingByID(masterModel.getCurrentItemID());
-        List<Listing> list = clientModel.getListingsByAccount(masterModel.getAccountById(temp.getAccountId()).getId());
+        List<Listing> list = accountModel.getListingsByAccount(masterModel.getAccountById(temp.getAccountId()).getId());
         listings = FXCollections.observableArrayList(list);
       }
     }
@@ -275,7 +274,7 @@ public class AccountViewModel
       {
         if (pass1.equals(pass2))
         {
-          if (clientModel.isEmailTaken(email) && !masterModel.getAccountById(masterModel.getCurrentAccountID()).getEmail().equals(email))
+          if (accountModel.isEmailTaken(email) && !masterModel.getAccountById(masterModel.getCurrentAccountID()).getEmail().equals(email))
           {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
@@ -293,7 +292,7 @@ public class AccountViewModel
 
             if (result.get() == ButtonType.OK)
             {
-              if (clientModel.updateAccount(email, pass1, address, number, bio))
+              if (accountModel.updateAccount(email, pass1, address, number, bio))
               {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Account Updated");

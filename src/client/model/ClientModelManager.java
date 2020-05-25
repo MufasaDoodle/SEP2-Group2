@@ -207,34 +207,6 @@ public class ClientModelManager implements ClientModel
     return client.getReportByAccountId(id);
   }
 
-  @Override public void setCurrentAccountName(String email)
-  {
-    currentAccountName = client.getAccountName(email);
-  }
-
-  @Override public List<Listing> getListingsByAccount(int accountId)
-  {
-    System.out.println("Owners's listings have been retrieved");
-    return client.getListingsByAccount(accountId);
-  }
-
-  @Override public boolean updateAccount(String email, String pass, String address, String number, String bio)
-  {
-    Account currentAccount = client.getAccountById(currentAccountID);
-    Account updatedAccount = new Account(currentAccount.getId(), currentAccount.getName(), email, pass, address, number, bio);
-    if (client.updateAccount(updatedAccount))
-    {
-      System.out.println("Account updated");
-      return true;
-    }
-    return false;
-  }
-
-  @Override public boolean isEmailTaken(String email)
-  {
-    return client.isEmailTaken(email);
-  }
-
   @Override public Account getModeratedAccount()
   {
     return moderatedAccount;
@@ -271,29 +243,6 @@ public class ClientModelManager implements ClientModel
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
   {
     support.firePropertyChange(propertyChangeEvent);
-  }
-
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
-  {
-    System.out.println("Account created!");
-    return client.createAccount(name, email, password1, address, phoneNumber);
-  }
-
-  @Override public String getAllAccounts()
-
-  {
-    return null;
-  }
-
-  @Override public boolean checkLogIn(String email, String password)
-  {
-    return client.checkLogIn(email, password);
-  }
-
-  @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio)
-  {
-    System.out.println("Account created! (but not really)");
-    return client.createAccount(name, email, password1, address, phoneNumber, bio);
   }
 
   @Override public String broadCastMessage(String msg)

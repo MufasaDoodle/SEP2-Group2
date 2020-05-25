@@ -1,5 +1,6 @@
 package client.view.login;
 
+import client.model.AccountModel;
 import client.model.ClientModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
@@ -13,13 +14,15 @@ public class LoginViewModel
   private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
+  private AccountModel accountModel;
   private StringProperty error;
 
-  public LoginViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
+  public LoginViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
+    this.accountModel = accountModel;
     error = new SimpleStringProperty();
   }
   public void setAccountId(String email){
@@ -27,14 +30,14 @@ public class LoginViewModel
   }
   public void setAccountName(String email)
   {
-    clientModel.setCurrentAccountName(email);
+    accountModel.setCurrentAccountName(email);
   }
 
   public boolean checkLogIn(String email, String password)
   {
     if (EmailCheck.isValid(email))
     {
-      boolean temp = clientModel.checkLogIn(email, password);
+      boolean temp = accountModel.checkLogIn(email, password);
       if (!temp)
       {
         Alert alert = new Alert(Alert.AlertType.ERROR);

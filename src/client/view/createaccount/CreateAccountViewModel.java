@@ -1,5 +1,6 @@
 package client.view.createaccount;
 
+import client.model.AccountModel;
 import client.model.ClientModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
@@ -12,12 +13,14 @@ public class CreateAccountViewModel
 {
   private ClientModel clientModel;
   private MasterModelInterface masterModel;
+  private AccountModel accountModel;
   private StringProperty error;
 
-  public CreateAccountViewModel(ClientModel clientModel, MasterModelInterface masterModel)
+  public CreateAccountViewModel(ClientModel clientModel, MasterModelInterface masterModel, AccountModel accountModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
+    this.accountModel = accountModel;
     error = new SimpleStringProperty();
   }
 
@@ -38,7 +41,7 @@ public class CreateAccountViewModel
           /*error.set(chatSystem.createAccount(username, password));
           System.out.println(chatSystem.getAllAccounts());*/
 
-          if (clientModel.createAccount(name, email, password1, address, phoneNumber))
+          if (accountModel.createAccount(name, email, password1, address, phoneNumber))
           {
             error.set("Account created");
           }
@@ -91,7 +94,7 @@ public class CreateAccountViewModel
           /*error.set(chatSystem.createAccount(username, password));
           System.out.println(chatSystem.getAllAccounts());*/
 
-          if (clientModel.createAccount(name, email, password1, address, phoneNumber, bio))
+          if (accountModel.createAccount(name, email, password1, address, phoneNumber, bio))
           {
             error.set("Account created");
 
