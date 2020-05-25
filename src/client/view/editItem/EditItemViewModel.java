@@ -1,6 +1,7 @@
 package client.view.editItem;
 
 import client.model.ClientModel;
+import client.model.FeedbackModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
 import javafx.beans.property.SimpleStringProperty;
@@ -14,15 +15,17 @@ public class EditItemViewModel
   private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
+  private FeedbackModel feedbackModel;
   private StringProperty title, description, category, location, duration, price;
   private boolean itemAvailability;
   private boolean promoted;
 
-  public EditItemViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
+  public EditItemViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, FeedbackModel feedbackModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
+    this.feedbackModel = feedbackModel;
     title = new SimpleStringProperty();
     description = new SimpleStringProperty();
     category = new SimpleStringProperty();
@@ -164,7 +167,7 @@ public class EditItemViewModel
 
   public void deleteItemFeedback()
   {
-    clientModel.deleteFeedbackByItemId(masterModel.getCurrentItemID());
+    feedbackModel.deleteFeedbackByItemId(masterModel.getCurrentItemID());
   }
 
   public void deleteItemReport()

@@ -1,9 +1,6 @@
 package client.view.moderator;
 
-import client.model.AccountModel;
-import client.model.ClientModel;
-import client.model.ListingsModel;
-import client.model.MasterModelInterface;
+import client.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import stuffs.FeedbackToItem;
@@ -18,14 +15,16 @@ public class ModeratorViewModel
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
   private AccountModel accountModel;
+  private FeedbackModel feedbackModel;
   private ObservableList<Report> reports;
 
-  public ModeratorViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel)
+  public ModeratorViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, FeedbackModel feedbackModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
     this.accountModel = accountModel;
+    this.feedbackModel = feedbackModel;
   }
 
   public void setReports()
@@ -77,7 +76,7 @@ public class ModeratorViewModel
 
   public void deleteItemFeedback(int id)
   {
-    clientModel.deleteItemFeedback(id);
+    feedbackModel.deleteItemFeedback(id);
   }
 
   public void deleteAccount(int id)
@@ -97,7 +96,7 @@ public class ModeratorViewModel
 
   public void deleteFeedbackBelongsToItem(int id)
   {
-    clientModel.deleteFeedbackByItemId(id);
+    feedbackModel.deleteFeedbackByItemId(id);
   }
 
   public void deleteRequestByItem(int id)
@@ -142,7 +141,7 @@ public class ModeratorViewModel
 
   public List<FeedbackToItem> getItemFeedbackByItemDd(int itemId)
   {
-    return clientModel.getFeedbackItems(itemId);
+    return feedbackModel.getFeedbackItems(itemId);
   }
 
   public void saveChatterId(int chatterId)

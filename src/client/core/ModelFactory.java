@@ -9,6 +9,7 @@ public class ModelFactory
   private ListingsModel listingsModel;
   private MasterModelInterface masterModel;
   private AccountModel accountModel;
+  private FeedbackModel feedbackModel;
   private DataModel dataModel;
 
   public ModelFactory(ClientFactory cf)
@@ -31,6 +32,15 @@ public class ModelFactory
       accountModel = new AccountModelManager(getDataModel(), getMasterModel());
     }
     return accountModel;
+  }
+
+  public FeedbackModel getFeedbackModel()
+  {
+    if (feedbackModel == null)
+    {
+      feedbackModel = new FeedbackModelManager(getDataModel(), getMasterModel());
+    }
+    return feedbackModel;
   }
 
   public DataModel getDataModel()
