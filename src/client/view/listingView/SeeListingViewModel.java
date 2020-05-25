@@ -1,5 +1,6 @@
 package client.view.listingView;
 
+import client.model.ChatModel;
 import client.model.ClientModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
@@ -19,14 +20,16 @@ public class SeeListingViewModel
   private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
+  private ChatModel chatModel;
   private StringProperty error;
   private ObservableList<Listing> listings;
 
-  public SeeListingViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
+  public SeeListingViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, ChatModel chatModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
+    this.chatModel = chatModel;
     error = new SimpleStringProperty();
   }
 
@@ -85,7 +88,7 @@ public class SeeListingViewModel
 
   public void setAccountIDToLocalID()
   {
-    clientModel.setLocalAccountID();
+    chatModel.setLocalAccountID();
   }
 
   public boolean accountCheck()

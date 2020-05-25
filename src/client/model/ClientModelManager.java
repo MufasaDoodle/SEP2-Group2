@@ -139,11 +139,6 @@ public class ClientModelManager implements ClientModel
     client.deleteAccount(id);
   }
 
-  @Override public void deleteItemFeedback(int id)
-  {
-    System.out.println("Item feedback deleted");
-    client.deleteItemFeedback(id);
-  }
 
   @Override public void deleteTransactionByAccount(int id)
   {
@@ -157,11 +152,7 @@ public class ClientModelManager implements ClientModel
     client.deleteTransactionByItem(id);
   }
 
-  @Override public void deleteFeedbackByItemId(int id)
-  {
-    System.out.println("Feedback deleted");
-    client.deleteFeedbackByItemId(id);
-  }
+
 
   @Override public void deleteRequestByAccount(int id)
   {
@@ -217,101 +208,11 @@ public class ClientModelManager implements ClientModel
     //moderatedAccount = getAccountById(accountId);
   }
 
-  @Override public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName)
-  {
-    System.out.println("Feedback was created");
-    return client.createFeedbackItems(itemId, starRating, feedback, accountId, accountName);
-  }
-
-  @Override public List<FeedbackToItem> getFeedbackItems(int itemId)
-  {
-    System.out.println("List of items feedback retrieved");
-    return client.getFeedbackItems(itemId);
-  }
-
-  @Override public String getAvgStarRating(int itemId)
-  {
-    System.out.println("Average star retrieved");
-    return client.getAvgStarRating(itemId);
-  }
-
-  @Override public List<Integer> getRentedTo(int itemId)
-  {
-    return client.getRentedTo(itemId);
-  }
-
   private void onNewMessage(PropertyChangeEvent propertyChangeEvent)
   {
     support.firePropertyChange(propertyChangeEvent);
   }
 
-  @Override public String broadCastMessage(String msg)
-  {
-    return client.broadCastMessage(msg, currentAccountID, currentChatterID);
-  }
-
-  @Override public List<Message> getMessage()
-  {
-    return client.getMessage(currentAccountID, currentChatterID);
-  }
-
-  @Override public List<ChatItem> getMessagesInvolving()
-  {
-    List<Message> messagesList = client.getAllMessagesInvolvingAccount(currentAccountID);
-    List<ChatItem> chatItemList = new ArrayList<>();
-    List<Integer> seenSenderIDs = new ArrayList<>();
-
-    for (Message message : messagesList)
-    {
-      //checks if sender is not the user's own account, and if it hasn't already been added in the list, it adds them
-      if (!(message.getFromAccount() == currentAccountID))
-      {
-        if (!seenSenderIDs.contains(message.getFromAccount()))
-        {
-          seenSenderIDs.add(message.getFromAccount());
-          String chatterName = client.getAccountById(message.getFromAccount()).getName();
-          chatItemList.add(new ChatItem(chatterName, message.getFromAccount()));
-        }
-      }
-
-      //checks if receiver is not the user's own account, and so on
-      else if (!(message.getToAccount() == currentAccountID))
-      {
-        if (!seenSenderIDs.contains(message.getToAccount()))
-        {
-          seenSenderIDs.add(message.getToAccount());
-          String chatterName = client.getAccountById(message.getToAccount()).getName();
-          chatItemList.add(new ChatItem(chatterName, message.getToAccount()));
-        }
-      }
-    }
-
-    return chatItemList;
-  }
-
-  @Override public String getChatterName()
-  {
-    return chatterName;
-  }
-
-  @Override public void setChatterName(String chatterName)
-  {
-    this.chatterName = chatterName;
-  }
-
-  @Override public boolean checkOwner()
-  {
-    if (currentAccountID == viewingAccountID)
-    {
-      return true;
-    }
-    return false;
-  }
-
-  @Override public void setLocalAccountID()
-  {
-    viewingAccountID = currentAccountID;
-  }
 
   @Override public void addListener(String eventName, PropertyChangeListener listener)
   {

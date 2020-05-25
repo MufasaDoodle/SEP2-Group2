@@ -23,6 +23,7 @@ public class AccountViewModel
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
   private AccountModel accountModel;
+  private ChatModel chatModel;
   private StringProperty name, address, phone, bio, emailEdit, addressEdit, numberEdit, bioEdit, pass1, pass2;
   private ObservableList<Listing> listings;
 
@@ -30,12 +31,13 @@ public class AccountViewModel
   private ObservableList<TransactionListing> transactions;
   private boolean isDeclined;
 
-  public AccountViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel)
+  public AccountViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, ChatModel chatModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
     this.accountModel = accountModel;
+    this.chatModel = chatModel;
     name = new SimpleStringProperty();
     address = new SimpleStringProperty();
     phone = new SimpleStringProperty();
@@ -340,7 +342,7 @@ public class AccountViewModel
 
   public boolean checkOwner(String name)
   {
-    if (clientModel.checkOwner())
+    if (chatModel.checkOwner())
     {
       return true;
     }

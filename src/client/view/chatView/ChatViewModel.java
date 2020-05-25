@@ -1,5 +1,6 @@
 package client.view.chatView;
 
+import client.model.ChatModel;
 import client.model.ClientModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
@@ -17,15 +18,17 @@ public class ChatViewModel
   private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
+  private ChatModel chatModel;
   private ObservableList<String> messages;
   private StringProperty request, reply;
 
-  public ChatViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
+  public ChatViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, ChatModel chatModel)
   {
 
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
+    this.chatModel = chatModel;
     clientModel.addListener("NewMessage", this::onNewMessage);
     request = new SimpleStringProperty();
     reply = new SimpleStringProperty();
@@ -36,7 +39,7 @@ public class ChatViewModel
     String input = request.get();
     if (input != null && !"".equals(input))
     {
-      String result = clientModel.broadCastMessage(input);
+      String result = chatModel.broadCastMessage(input);
       reply.set(result);
     }
   }
@@ -65,7 +68,7 @@ public class ChatViewModel
   {
     //String yourName = clientModel.getAccountById(clientModel.getCurrentAccountID()).getName();
     //Use above if you want to have it use the user's name instead of writing "you:" in front of messages
-    String theirName = clientModel.getChatterName();
+    String theirName = chatModel.getChatterName();
 
     if (message.getFromAccount() == masterModel.getCurrentAccountID())
     {
@@ -80,7 +83,7 @@ public class ChatViewModel
   void loadMessages()
   {
     messages = FXCollections.observableArrayList();
-    List<Message> messageList = clientModel.getMessage();
+    List<Message> messageList = chatModel.getMessage();
     for (Message message : messageList)
     {
       if (message != null)
@@ -92,7 +95,7 @@ public class ChatViewModel
 
   public String getUsername()
   {
-    return clientModel.getChatterName();
+    return chatModel.getChatterName();
   }
 
   public String getItemName()

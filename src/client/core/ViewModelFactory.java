@@ -34,7 +34,7 @@ public class ViewModelFactory
   {
     if (messagesViewModel == null)
     {
-      return (messagesViewModel = new MessagesViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
+      return (messagesViewModel = new MessagesViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getChatModel()));
     }
     else
     {
@@ -46,7 +46,7 @@ public class ViewModelFactory
   {
     if (moderatorViewModel == null)
     {
-      return (moderatorViewModel = new ModeratorViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel()));
+      return (moderatorViewModel = new ModeratorViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel(), mf.getFeedbackModel(), mf.getChatModel()));
     }
     else
     {
@@ -70,7 +70,7 @@ public class ViewModelFactory
   {
     if (accountViewModel == null)
     {
-      return (accountViewModel = new AccountViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel()));
+      return (accountViewModel = new AccountViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getAccountModel(), mf.getChatModel()));
     }
     else
     {
@@ -82,7 +82,7 @@ public class ViewModelFactory
   {
     if (seeListingViewModel == null)
     {
-      return (seeListingViewModel = new SeeListingViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
+      return (seeListingViewModel = new SeeListingViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getChatModel()));
     }
     else
     {
@@ -111,21 +111,21 @@ public class ViewModelFactory
   public ChatViewModel getChatViewModel()
   {
     if (chatViewModel == null)
-      chatViewModel = new ChatViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel());
+      chatViewModel = new ChatViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getChatModel());
     return chatViewModel;
   }
 
   public EditItemViewModel getEditItemViewModel()
   {
     if (editItemViewModel == null)
-      editItemViewModel = new EditItemViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel());
+      editItemViewModel = new EditItemViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getFeedbackModel());
     return editItemViewModel;
   }
 
   public ItemViewModel getItemViewModel()
   {
     if (itemViewModel == null)
-      itemViewModel = new ItemViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel());
+      itemViewModel = new ItemViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel(), mf.getFeedbackModel());
     return itemViewModel;
   }
 }

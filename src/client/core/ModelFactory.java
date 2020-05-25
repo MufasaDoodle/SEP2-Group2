@@ -10,11 +10,21 @@ public class ModelFactory
   private MasterModelInterface masterModel;
   private AccountModel accountModel;
   private FeedbackModel feedbackModel;
+  private ChatModelManager chatModel;
   private DataModel dataModel;
 
   public ModelFactory(ClientFactory cf)
   {
     this.cf = cf;
+  }
+
+  public ChatModelManager getChatModel()
+  {
+    if (chatModel == null)
+    {
+      chatModel = new ChatModelManager(getDataModel(), getMasterModel());
+    }
+    return chatModel;
   }
 
   public MasterModelInterface getMasterModel()

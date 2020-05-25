@@ -10,15 +10,6 @@ import java.util.List;
 
 public interface ClientModel extends Subject
 {
-  //chat
-  String broadCastMessage(String msg);
-  List<Message> getMessage();
-  List<ChatItem> getMessagesInvolving();
-  String getChatterName();
-  void setChatterName(String chatterName);
-  boolean checkOwner();
-  void setLocalAccountID();
-
   //moderator
   Account getModeratedAccount();
   void setModeratedAccount(int accountId);

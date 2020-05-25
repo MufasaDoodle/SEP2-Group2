@@ -16,15 +16,17 @@ public class ModeratorViewModel
   private ListingsModel listingsModel;
   private AccountModel accountModel;
   private FeedbackModel feedbackModel;
+  private ChatModel chatModel;
   private ObservableList<Report> reports;
 
-  public ModeratorViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, FeedbackModel feedbackModel)
+  public ModeratorViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, FeedbackModel feedbackModel, ChatModel chatModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
     this.accountModel = accountModel;
     this.feedbackModel = feedbackModel;
+    this.chatModel = chatModel;
   }
 
   public void setReports()
@@ -156,6 +158,6 @@ public class ModeratorViewModel
 
   public void setAccountIDToLocalID()
   {
-    clientModel.setLocalAccountID();
+    chatModel.setLocalAccountID();
   }
 }

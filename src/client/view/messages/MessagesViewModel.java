@@ -1,5 +1,6 @@
 package client.view.messages;
 
+import client.model.ChatModel;
 import client.model.ClientModel;
 import client.model.ListingsModel;
 import client.model.MasterModelInterface;
@@ -14,19 +15,21 @@ public class MessagesViewModel
   private ClientModel clientModel;
   private MasterModelInterface masterModel;
   private ListingsModel listingsModel;
+  private ChatModel chatModel;
   private ObservableList<ChatItem> chatItems;
 
-  public MessagesViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
+  public MessagesViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel, ChatModel chatModel)
   {
     this.clientModel = clientModel;
     this.masterModel = masterModel;
     this.listingsModel = listingsModel;
+    this.chatModel = chatModel;
   }
 
   void loadMessages()
   {
     chatItems = FXCollections.observableArrayList();
-    List<ChatItem> filteredItems = clientModel.getMessagesInvolving();
+    List<ChatItem> filteredItems = chatModel.getMessagesInvolving();
 
     this.chatItems.addAll(filteredItems);
   }
