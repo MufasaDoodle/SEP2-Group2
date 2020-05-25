@@ -34,7 +34,7 @@ public class ViewModelFactory
   {
     if (messagesViewModel == null)
     {
-      return (messagesViewModel = new MessagesViewModel(mf.getClientModel()));
+      return (messagesViewModel = new MessagesViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
     }
     else
     {
@@ -46,7 +46,7 @@ public class ViewModelFactory
   {
     if (moderatorViewModel == null)
     {
-      return (moderatorViewModel = new ModeratorViewModel(mf.getClientModel()));
+      return (moderatorViewModel = new ModeratorViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
     }
     else
     {
@@ -58,7 +58,7 @@ public class ViewModelFactory
   {
     if (listingViewModel == null)
     {
-      return (listingViewModel = new ListingViewModel(mf.getClientModel()));
+      return (listingViewModel = new ListingViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
     }
     else
     {
@@ -70,7 +70,7 @@ public class ViewModelFactory
   {
     if (accountViewModel == null)
     {
-      return (accountViewModel = new AccountViewModel(mf.getClientModel()));
+      return (accountViewModel = new AccountViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
     }
     else
     {
@@ -82,7 +82,7 @@ public class ViewModelFactory
   {
     if (seeListingViewModel == null)
     {
-      return (seeListingViewModel = new SeeListingViewModel(mf.getClientModel()));
+      return (seeListingViewModel = new SeeListingViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel()));
     }
     else
     {
@@ -94,7 +94,7 @@ public class ViewModelFactory
   {
     if (createAccountViewModel == null)
     {
-      createAccountViewModel = new CreateAccountViewModel(mf.getClientModel());
+      createAccountViewModel = new CreateAccountViewModel(mf.getClientModel(), mf.getMasterModel());
     }
     return createAccountViewModel;
   }
@@ -103,7 +103,7 @@ public class ViewModelFactory
   {
     if (loginViewModel == null)
     {
-      loginViewModel = new LoginViewModel(mf.getClientModel());
+      loginViewModel = new LoginViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel());
     }
     return loginViewModel;
   }
@@ -111,21 +111,21 @@ public class ViewModelFactory
   public ChatViewModel getChatViewModel()
   {
     if (chatViewModel == null)
-      chatViewModel = new ChatViewModel(mf.getClientModel());
+      chatViewModel = new ChatViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel());
     return chatViewModel;
   }
 
   public EditItemViewModel getEditItemViewModel()
   {
     if (editItemViewModel == null)
-      editItemViewModel = new EditItemViewModel(mf.getClientModel());
+      editItemViewModel = new EditItemViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel());
     return editItemViewModel;
   }
 
   public ItemViewModel getItemViewModel()
   {
     if (itemViewModel == null)
-      itemViewModel = new ItemViewModel(mf.getClientModel());
+      itemViewModel = new ItemViewModel(mf.getClientModel(), mf.getMasterModel(), mf.getListingsModel());
     return itemViewModel;
   }
 }

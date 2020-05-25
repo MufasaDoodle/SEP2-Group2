@@ -1,6 +1,8 @@
 package client.view.login;
 
 import client.model.ClientModel;
+import client.model.ListingsModel;
+import client.model.MasterModelInterface;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
@@ -9,15 +11,19 @@ import shared.util.EmailCheck;
 public class LoginViewModel
 {
   private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private ListingsModel listingsModel;
   private StringProperty error;
 
-  public LoginViewModel(ClientModel clientModel)
+  public LoginViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
   {
     this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.listingsModel = listingsModel;
     error = new SimpleStringProperty();
   }
   public void setAccountId(String email){
-    clientModel.setCurrentAccountID(email);
+    masterModel.setCurrentAccountID(email);
   }
   public void setAccountName(String email)
   {

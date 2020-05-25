@@ -1,6 +1,8 @@
 package client.view.chatView;
 
 import client.model.ClientModel;
+import client.model.ListingsModel;
+import client.model.MasterModelInterface;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -13,13 +15,17 @@ import java.util.List;
 public class ChatViewModel
 {
   private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private ListingsModel listingsModel;
   private ObservableList<String> messages;
   private StringProperty request, reply;
 
-  public ChatViewModel(ClientModel clientModel)
+  public ChatViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
   {
 
     this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.listingsModel = listingsModel;
     clientModel.addListener("NewMessage", this::onNewMessage);
     request = new SimpleStringProperty();
     reply = new SimpleStringProperty();
@@ -48,7 +54,7 @@ public class ChatViewModel
   private void onNewMessage(PropertyChangeEvent evt)
   {
     Message message = (Message) evt.getNewValue();
-    if (message.getToAccount() == clientModel.getCurrentAccountID() || message.getFromAccount() == clientModel.getCurrentAccountID())
+    if (message.getToAccount() == masterModel.getCurrentAccountID() || message.getFromAccount() == masterModel.getCurrentAccountID())
     {
       addNewMessage((Message) evt.getNewValue());
     }
@@ -61,11 +67,11 @@ public class ChatViewModel
     //Use above if you want to have it use the user's name instead of writing "you:" in front of messages
     String theirName = clientModel.getChatterName();
 
-    if (message.getFromAccount() == clientModel.getCurrentAccountID())
+    if (message.getFromAccount() == masterModel.getCurrentAccountID())
     {
       messages.add("You: " + message.getMessage());
     }
-    else if (message.getFromAccount() == clientModel.getCurrentChatterID())
+    else if (message.getFromAccount() == masterModel.getCurrentChatterID())
     {
       messages.add(theirName + ": " + message.getMessage());
     }
@@ -91,7 +97,7 @@ public class ChatViewModel
 
   public String getItemName()
   {
-    return clientModel.getItemName();
+    return listingsModel.getItemName();
   }
 
   public List<String> getMessage()
@@ -99,17 +105,19 @@ public class ChatViewModel
     return messages;
   }
 
-  public boolean accountCheck(){
-    return clientModel.accountCheck();
+  public boolean accountCheck()
+  {
+    return masterModel.accountCheck();
   }
 
-  public boolean chatterCheck(){
-    return clientModel.getAccountById(clientModel.getCurrentChatterID())
-        != null;
+  public boolean chatterCheck()
+  {
+    return masterModel.getAccountById(masterModel.getCurrentChatterID()) != null;
   }
 
-  public int getModerator(){
-    return clientModel.getCurrentAccountID();
+  public int getModerator()
+  {
+    return masterModel.getCurrentAccountID();
   }
 
 }

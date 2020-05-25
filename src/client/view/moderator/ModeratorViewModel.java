@@ -1,6 +1,8 @@
 package client.view.moderator;
 
 import client.model.ClientModel;
+import client.model.ListingsModel;
+import client.model.MasterModelInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import stuffs.FeedbackToItem;
@@ -12,11 +14,15 @@ import java.util.List;
 public class ModeratorViewModel
 {
   private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private ListingsModel listingsModel;
   private ObservableList<Report> reports;
 
-  public ModeratorViewModel(ClientModel clientModel)
+  public ModeratorViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
   {
     this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.listingsModel = listingsModel;
   }
 
   public void setReports()
@@ -32,7 +38,7 @@ public class ModeratorViewModel
 
   public void setCurrentItemID(int itemID)
   {
-    clientModel.setCurrentItemID(itemID);
+    masterModel.setCurrentItemID(itemID);
   }
 
   public void setCurrentAccount(int accountId)
@@ -43,17 +49,17 @@ public class ModeratorViewModel
 
   public void setItemFeedback(int itemId)
   {
-    clientModel.setCurrentItemID(itemId);
+    masterModel.setCurrentItemID(itemId);
   }
 
   public void setFeedbackId(int feedbackId)
   {
-    clientModel.setFeedbackId(feedbackId);
+    masterModel.setFeedbackId(feedbackId);
   }
 
   public FeedbackToItem getItemFeedback(int feedbackId)
   {
-    return clientModel.getFeedbackById(feedbackId);
+    return masterModel.getFeedbackById(feedbackId);
   }
 
   public void deleteReport(int id)
@@ -63,7 +69,7 @@ public class ModeratorViewModel
 
   public void deleteItem(int id)
   {
-    clientModel.deleteListing(id);
+    listingsModel.deleteListing(id);
   }
 
   public void deleteItemFeedback(int id)
@@ -103,7 +109,7 @@ public class ModeratorViewModel
 
   public void deleteItemByAccount(int id)
   {
-    clientModel.deleteItemByAccount(id);
+    listingsModel.deleteItemByAccount(id);
   }
 
   public void deleteReportByAccount(int id)
@@ -138,12 +144,12 @@ public class ModeratorViewModel
 
   public void saveChatterId(int chatterId)
   {
-    clientModel.setCurrentChatterID(chatterId);
+    masterModel.setCurrentChatterID(chatterId);
   }
 
   public void addDeletedItemId(int itemId)
   {
-    clientModel.addDeletedItemId(itemId);
+    listingsModel.addDeletedItemId(itemId);
   }
 
   public void setAccountIDToLocalID()

@@ -37,24 +37,8 @@ public class ClientModelManager implements ClientModel
   public ClientModelManager(Client client)
   {
     this.client = client;
-    client.startClient();
+    //client.startClient();
     client.addListener("NewMessage", this::onNewMessage);
-  }
-
-  @Override public boolean accountCheck()
-  {
-    Account account = getAccountById(getCurrentAccountID());
-    return account != null;
-  }
-
-  @Override public void setFromListingViewOpen(boolean whereFrom)
-  {
-    fromListingViewOpen = whereFrom;
-  }
-
-  @Override public boolean getFromListingViewOpen()
-  {
-    return fromListingViewOpen;
   }
 
   @Override public void setModeratorOpen(boolean whereFrom)
@@ -185,12 +169,6 @@ public class ClientModelManager implements ClientModel
     client.deleteRequestByAccount(id);
   }
 
-  @Override public void deleteItemByAccount(int id)
-  {
-    System.out.println("Item deleted");
-    client.deleteItemByAccount(id);
-  }
-
   @Override public void deleteReportByAccount(int id)
   {
     System.out.println("Report deleted");
@@ -229,24 +207,9 @@ public class ClientModelManager implements ClientModel
     return client.getReportByAccountId(id);
   }
 
-  @Override public void setCurrentAccountID(String email)
-  {
-    currentAccountID = client.getAccountId(email);
-  }
-
-  @Override public int getCurrentAccountID()
-  {
-    return currentAccountID;
-  }
-
   @Override public void setCurrentAccountName(String email)
   {
     currentAccountName = client.getAccountName(email);
-  }
-
-  @Override public String getCurrentAccountName()
-  {
-    return currentAccountName;
   }
 
   @Override public List<Listing> getListingsByAccount(int accountId)
@@ -279,52 +242,7 @@ public class ClientModelManager implements ClientModel
 
   @Override public void setModeratedAccount(int accountId)
   {
-    moderatedAccount = getAccountById(accountId);
-  }
-
-  @Override public boolean updateListing(String title, String description, String category, String location, double price, String duration, String rented, String promoted)
-  {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = new Date();
-
-    Listing currentListing = client.getListingByID(currentItemID);
-    Listing updatedListing = new Listing(title, description, category, location, price, duration, dateFormat.format(date), currentListing.getId(), currentListing.getAccountId(), rented, promoted);
-    if (client.updateListing(updatedListing))
-    {
-      System.out.println("Listing updated");
-      return true;
-    }
-    return false;
-  }
-
-  @Override public boolean updateListingRented(String title, String description, String category, String location, double price, String duration, String rented, int itemId, int accountId, String promoted)
-  {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date date = new Date();
-
-    Listing updatedListing = new Listing(title, description, category, location, price, duration, dateFormat.format(date), itemId, accountId, rented, promoted);
-    if (client.updateListing(updatedListing))
-    {
-      System.out.println("Listing updated");
-      return true;
-    }
-    return false;
-  }
-
-  @Override public void deleteListing(int id)
-  {
-    System.out.println("Listing deleted");
-    client.deleteListing(id);
-  }
-
-  @Override public void addDeletedItemId(int itemId)
-  {
-    client.addDeletedItemId(itemId);
-  }
-
-  @Override public List<Integer> getDeletedItemIds()
-  {
-    return client.getDeletedItemIds();
+    //moderatedAccount = getAccountById(accountId);
   }
 
   @Override public boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName)
@@ -337,11 +255,6 @@ public class ClientModelManager implements ClientModel
   {
     System.out.println("List of items feedback retrieved");
     return client.getFeedbackItems(itemId);
-  }
-
-  @Override public FeedbackToItem getFeedbackById(int id)
-  {
-    return client.getFeedbackById(id);
   }
 
   @Override public String getAvgStarRating(int itemId)
@@ -360,23 +273,6 @@ public class ClientModelManager implements ClientModel
     support.firePropertyChange(propertyChangeEvent);
   }
 
-  @Override public List<Listing> getListings()
-  {
-    System.out.println("All listings have been retrieved");
-    return client.getListings();
-  }
-
-  @Override public List<Listing> getSorting(String request, String title, String category, String location)
-  {
-    System.out.println("Listings have been retrieved");
-    return client.getSorting(request, title, category, location);
-  }
-
-  @Override public Listing getListingByID(int id)
-  {
-    return client.getListingByID(id);
-  }
-
   @Override public boolean createAccount(String name, String email, String password1, String address, String phoneNumber)
   {
     System.out.println("Account created!");
@@ -387,13 +283,6 @@ public class ClientModelManager implements ClientModel
 
   {
     return null;
-  }
-
-  @Override public boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId, String promoted)
-  {
-    System.out.println("Listing created!");
-    accountId = getCurrentAccountID();
-    return client.createListing(title, descText, price, category, location, duration, date, accountId, promoted);
   }
 
   @Override public boolean checkLogIn(String email, String password)
@@ -451,65 +340,6 @@ public class ClientModelManager implements ClientModel
     return chatItemList;
   }
 
-  @Override public int getCurrentItemID()
-  {
-    return currentItemID;
-  }
-
-  @Override public void setCurrentItemID(int itemID)
-  {
-    currentItemID = itemID;
-    if (client.getListingByID(currentItemID) != null)
-    {
-      itemName = client.getListingByID(currentItemID).getTitle();
-    }
-    else
-    {
-      Alert alert = new Alert(Alert.AlertType.WARNING);
-      alert.setTitle("Warning");
-      alert.setHeaderText("Item deleted");
-      alert.showAndWait();
-    }
-  }
-
-  @Override public Account getAccountById(int id)
-  {
-    return client.getAccountById(id);
-  }
-
-  @Override public String getItemName()
-  {
-    return this.itemName;
-  }
-
-  @Override public int getCurrentChatterID()
-  {
-    return currentChatterID;
-  }
-
-  @Override public void setCurrentChatterID(int currentChatterID)
-  {
-    if (!(getCurrentAccountID() == currentChatterID))
-    {
-      this.currentChatterID = currentChatterID;
-    }
-    else
-    {
-      this.currentChatterID = 1;
-    }
-    saveChatterName();
-  }
-
-  @Override public int getViewingAccountID()
-  {
-    return viewingAccountID;
-  }
-
-  @Override public void setViewingAccountID(int viewingAccountID)
-  {
-    this.viewingAccountID = viewingAccountID;
-  }
-
   @Override public String getChatterName()
   {
     return chatterName;
@@ -518,21 +348,6 @@ public class ClientModelManager implements ClientModel
   @Override public void setChatterName(String chatterName)
   {
     this.chatterName = chatterName;
-  }
-
-  @Override public void saveChatterName()
-  {
-    if (client.getAccountById(currentChatterID) == null)
-    {
-      Alert promote = new Alert(Alert.AlertType.WARNING);
-      promote.setTitle("Warning");
-      promote.setHeaderText("Account is deleted");
-    }
-    else
-    {
-      setChatterName(client.getAccountById(currentChatterID).getName());
-    }
-
   }
 
   @Override public boolean checkOwner()

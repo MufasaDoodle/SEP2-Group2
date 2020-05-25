@@ -1,6 +1,8 @@
 package client.view.messages;
 
 import client.model.ClientModel;
+import client.model.ListingsModel;
+import client.model.MasterModelInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import stuffs.ChatItem;
@@ -10,11 +12,15 @@ import java.util.List;
 public class MessagesViewModel
 {
   private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private ListingsModel listingsModel;
   private ObservableList<ChatItem> chatItems;
 
-  public MessagesViewModel(ClientModel clientModel)
+  public MessagesViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
   {
     this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.listingsModel = listingsModel;
   }
 
   void loadMessages()
@@ -32,19 +38,19 @@ public class MessagesViewModel
 
   public void setChatterID(int theirAccountID)
   {
-    clientModel.setCurrentChatterID(theirAccountID);
+    masterModel.setCurrentChatterID(theirAccountID);
   }
 
   public boolean accountCheck(){
-    return clientModel.accountCheck();
+    return masterModel.accountCheck();
   }
 
   public boolean chatterCheck(){
-    return clientModel.getAccountById(clientModel.getCurrentChatterID())
+    return masterModel.getAccountById(masterModel.getCurrentChatterID())
         != null;
   }
 
   public boolean isModeratorOpen(){
-    return clientModel.getCurrentAccountID() == 1;
+    return masterModel.getCurrentAccountID() == 1;
   }
 }

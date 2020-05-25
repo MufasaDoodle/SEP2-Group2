@@ -1,6 +1,8 @@
 package client.view.editItem;
 
 import client.model.ClientModel;
+import client.model.ListingsModel;
+import client.model.MasterModelInterface;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
@@ -10,13 +12,17 @@ import stuffs.Listing;
 public class EditItemViewModel
 {
   private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private ListingsModel listingsModel;
   private StringProperty title, description, category, location, duration, price;
   private boolean itemAvailability;
   private boolean promoted;
 
-  public EditItemViewModel(ClientModel clientModel)
+  public EditItemViewModel(ClientModel clientModel, MasterModelInterface masterModel, ListingsModel listingsModel)
   {
     this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.listingsModel = listingsModel;
     title = new SimpleStringProperty();
     description = new SimpleStringProperty();
     category = new SimpleStringProperty();
@@ -77,7 +83,7 @@ public class EditItemViewModel
 
   public void updateEditFields()
   {
-    Listing item = clientModel.getListingByID(clientModel.getCurrentItemID());
+    Listing item = masterModel.getListingByID(masterModel.getCurrentItemID());
     title.set(item.getTitle());
     description.set(item.getDescription());
     category.set(item.getDescription());
@@ -104,31 +110,25 @@ public class EditItemViewModel
 
   public void deleteItem()
   {
-    clientModel.addDeletedItemId(clientModel.getCurrentItemID());
-    clientModel.deleteListing(clientModel.getCurrentItemID());
+    listingsModel.addDeletedItemId(masterModel.getCurrentItemID());
+    listingsModel.deleteListing(masterModel.getCurrentItemID());
   }
 
   public Account getAccount(int accountId)
   {
-    return clientModel.getAccountById(accountId);
+    return masterModel.getAccountById(accountId);
   }
 
   public Listing getItem()
   {
-    return clientModel.getListingByID(clientModel.getCurrentItemID());
+    return masterModel.getListingByID(masterModel.getCurrentItemID());
   }
 
-  public void updateListing(String title, String description, String category,
-      String location, String duration, double price, String rented,
-      String promoted)
+  public void updateListing(String title, String description, String category, String location, String duration, double price, String rented, String promoted)
   {
-    if (!title.equals("") && !description.equals("") && !category.equals("")
-        && !String.valueOf(price).equals("") && !location.equals("")
-        && !duration.equals(""))
+    if (!title.equals("") && !description.equals("") && !category.equals("") && !String.valueOf(price).equals("") && !location.equals("") && !duration.equals(""))
     {
-      if (clientModel
-          .updateListing(title, description, category, location, price,
-              duration, rented, promoted))
+      if (listingsModel.updateListing(title, description, category, location, price, duration, rented, promoted))
       {
         Alert promote = new Alert(Alert.AlertType.INFORMATION);
         promote.setTitle("Item Update");
@@ -154,32 +154,32 @@ public class EditItemViewModel
 
   public void deleteItemRequest()
   {
-    clientModel.deleteRequest(clientModel.getCurrentItemID());
+    clientModel.deleteRequest(masterModel.getCurrentItemID());
   }
 
   public void deleteItemTransaction()
   {
-    clientModel.deleteTransactionByItem(clientModel.getCurrentItemID());
+    clientModel.deleteTransactionByItem(masterModel.getCurrentItemID());
   }
 
   public void deleteItemFeedback()
   {
-    clientModel.deleteFeedbackByItemId(clientModel.getCurrentItemID());
+    clientModel.deleteFeedbackByItemId(masterModel.getCurrentItemID());
   }
 
   public void deleteItemReport()
   {
-    clientModel.deleteReportByItem(clientModel.getCurrentItemID());
+    clientModel.deleteReportByItem(masterModel.getCurrentItemID());
   }
 
   public void addDeletedItemId()
   {
-    clientModel.addDeletedItemId(clientModel.getCurrentItemID());
+    listingsModel.addDeletedItemId(masterModel.getCurrentItemID());
   }
 
   public boolean accountCheck()
   {
-    return clientModel.accountCheck();
+    return masterModel.accountCheck();
   }
 
 }

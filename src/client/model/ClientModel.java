@@ -10,38 +10,6 @@ import java.util.List;
 
 public interface ClientModel extends Subject
 {
-  //we need these for all
-  Account getAccountById(int id);
-  Listing getListingByID(int id);
-  int getCurrentItemID();
-  void setCurrentItemID(int itemID);
-  void setCurrentAccountID(String email);
-  int getCurrentAccountID();
-  String getCurrentAccountName();
-  boolean accountCheck();
-  FeedbackToItem getFeedbackById(int id);
-  void setFeedbackId(int feedbackId);
-  int getFeedbackId();
-  int getCurrentChatterID();
-  void setCurrentChatterID(int currentChatterID);
-  int getViewingAccountID();
-  void setViewingAccountID(int viewingAccountID);
-
-
-  //listings
-  List<Listing> getListings();
-  List<Listing> getSorting(String request, String title, String category, String location);
-  boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId, String promoted);
-  String getItemName();
-  boolean updateListing(String title, String description, String category, String location, double price, String duration, String rented, String promoted);
-  boolean updateListingRented(String title, String description, String category, String location, double price, String duration, String rented, int itemId, int accountId, String promoted);
-  void deleteListing(int id);
-  void addDeletedItemId(int itemId);
-  List<Integer> getDeletedItemIds();
-  void setFromListingViewOpen(boolean whereFrom);
-  boolean getFromListingViewOpen();
-  void deleteItemByAccount(int id);
-
   //accounts
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber);
   String getAllAccounts() throws IOException, ClassNotFoundException;
@@ -66,7 +34,7 @@ public interface ClientModel extends Subject
   List<ChatItem> getMessagesInvolving();
   String getChatterName();
   void setChatterName(String chatterName);
-  void saveChatterName();
+
   boolean checkOwner();
   void setLocalAccountID();
 

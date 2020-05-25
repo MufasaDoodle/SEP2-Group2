@@ -1,6 +1,8 @@
 package client.view.createaccount;
 
 import client.model.ClientModel;
+import client.model.ListingsModel;
+import client.model.MasterModelInterface;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
@@ -9,11 +11,13 @@ import shared.util.EmailCheck;
 public class CreateAccountViewModel
 {
   private ClientModel clientModel;
+  private MasterModelInterface masterModel;
   private StringProperty error;
 
-  public CreateAccountViewModel(ClientModel clientModel)
+  public CreateAccountViewModel(ClientModel clientModel, MasterModelInterface masterModel)
   {
     this.clientModel = clientModel;
+    this.masterModel = masterModel;
     error = new SimpleStringProperty();
   }
 
