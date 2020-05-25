@@ -49,7 +49,7 @@
                   <TextField fx:id="emailField" layoutX="24.0" layoutY="51.0" />
                   <ImageView fitHeight="231.0" fitWidth="232.0" layoutX="235.0" opacity="0.85" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@loggogogog.png" />
+                        <Image url="@logo.png" />
                      </image>
                   </ImageView>
                </children>
