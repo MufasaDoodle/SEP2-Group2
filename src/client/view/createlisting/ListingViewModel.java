@@ -1,8 +1,7 @@
 package client.view.createlisting;
 
-import client.model.ClientModel;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import client.model.ListingsModel;
+import client.model.MasterModelInterface;
 import javafx.scene.control.Alert;
 import shared.util.NumericCheck;
 import java.text.DateFormat;
@@ -11,11 +10,13 @@ import java.util.Date;
 
 public class ListingViewModel
 {
-  private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private ListingsModel listingsModel;
 
-  public ListingViewModel(ClientModel clientModel)
+  public ListingViewModel(MasterModelInterface masterModel, ListingsModel listingsModel)
   {
-    this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.listingsModel = listingsModel;
   }
 
 
@@ -24,13 +25,13 @@ public class ListingViewModel
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
 
-    int accountId = clientModel.getCurrentAccountID();
+    int accountId = masterModel.getCurrentAccountID();
 
     if (!title.equals("") && !descText.equals("") && !price.equals("") && !category.equals("") && !location.equals("") && !duration.equals(""))
     {
       if (NumericCheck.isNumeric(price))
       {
-        if (clientModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date), accountId, promoted))
+        if (listingsModel.createListing(title, descText, price, category, location, duration, dateFormat.format(date), accountId, promoted))
         {
           return true;
         }
@@ -59,6 +60,6 @@ public class ListingViewModel
   }
 
   public boolean accountCheck(){
-    return clientModel.accountCheck();
+    return masterModel.accountCheck();
   }
 }

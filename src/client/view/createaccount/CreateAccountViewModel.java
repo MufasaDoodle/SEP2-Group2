@@ -1,6 +1,7 @@
 package client.view.createaccount;
 
-import client.model.ClientModel;
+import client.model.AccountModel;
+import client.model.MasterModelInterface;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
@@ -8,12 +9,14 @@ import shared.util.EmailCheck;
 
 public class CreateAccountViewModel
 {
-  private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private AccountModel accountModel;
   private StringProperty error;
 
-  public CreateAccountViewModel(ClientModel clientModel)
+  public CreateAccountViewModel(MasterModelInterface masterModel, AccountModel accountModel)
   {
-    this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.accountModel = accountModel;
     error = new SimpleStringProperty();
   }
 
@@ -34,7 +37,7 @@ public class CreateAccountViewModel
           /*error.set(chatSystem.createAccount(username, password));
           System.out.println(chatSystem.getAllAccounts());*/
 
-          if (clientModel.createAccount(name, email, password1, address, phoneNumber))
+          if (accountModel.createAccount(name, email, password1, address, phoneNumber))
           {
             error.set("Account created");
           }
@@ -87,7 +90,7 @@ public class CreateAccountViewModel
           /*error.set(chatSystem.createAccount(username, password));
           System.out.println(chatSystem.getAllAccounts());*/
 
-          if (clientModel.createAccount(name, email, password1, address, phoneNumber, bio))
+          if (accountModel.createAccount(name, email, password1, address, phoneNumber, bio))
           {
             error.set("Account created");
 

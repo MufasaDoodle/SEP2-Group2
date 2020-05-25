@@ -1,6 +1,8 @@
 package client.view.listingView;
 
-import client.model.ClientModel;
+import client.model.ChatModel;
+import client.model.ListingsModel;
+import client.model.MasterModelInterface;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -14,13 +16,17 @@ import java.util.List;
 
 public class SeeListingViewModel
 {
-  private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private ListingsModel listingsModel;
+  private ChatModel chatModel;
   private StringProperty error;
   private ObservableList<Listing> listings;
 
-  public SeeListingViewModel(ClientModel clientModel)
+  public SeeListingViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, ChatModel chatModel)
   {
-    this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.listingsModel = listingsModel;
+    this.chatModel = chatModel;
     error = new SimpleStringProperty();
   }
 
@@ -31,12 +37,11 @@ public class SeeListingViewModel
 
   public void listOfListings()
   {
-    List<Listing> listListing = clientModel.getListings();
+    List<Listing> listListing = listingsModel.getListings();
     List<Listing> result = new ArrayList<>();
     for (int i = 0; i < listListing.size(); i++)
     {
-      if ((!clientModel.getDeletedItemIds()
-          .contains(listListing.get(i).getId())))
+      if ((!listingsModel.getDeletedItemIds().contains(listListing.get(i).getId())))
       {
         result.add(listListing.get(i));
       }
@@ -49,15 +54,13 @@ public class SeeListingViewModel
     return listings;
   }
 
-  public void listOfChoice(String request, String title, String category,
-      String location)
+  public void listOfChoice(String request, String title, String category, String location)
   {
-    List<Listing> list = clientModel
-        .getSorting(request, title, category, location);
+    List<Listing> list = listingsModel.getSorting(request, title, category, location);
     List<Listing> result = new ArrayList<>();
     for (int i = 0; i < list.size(); i++)
     {
-      if ((!clientModel.getDeletedItemIds().contains(list.get(i).getId())))
+      if ((!listingsModel.getDeletedItemIds().contains(list.get(i).getId())))
       {
         result.add(list.get(i));
       }
@@ -67,34 +70,34 @@ public class SeeListingViewModel
 
   public void setItem(int itemID)
   {
-    clientModel.setCurrentItemID(itemID);
+    masterModel.setCurrentItemID(itemID);
   }
 
   public List<Integer> getDeletedItemIds()
   {
-    return clientModel.getDeletedItemIds();
+    return listingsModel.getDeletedItemIds();
   }
 
   public void setWhereFromOpen(boolean whereFromOpen)
   {
-    clientModel.setFromListingViewOpen(whereFromOpen);
+    listingsModel.setFromListingViewOpen(whereFromOpen);
   }
 
   public void setAccountIDToLocalID()
   {
-    clientModel.setLocalAccountID();
+    chatModel.setLocalAccountID();
   }
 
   public boolean accountCheck()
   {
-    return clientModel.accountCheck();
+    return masterModel.accountCheck();
   }
 
   public Account checkBannedAccount(int itemId)
   {
-    if (clientModel.getListingByID(itemId) == null)
+    if (masterModel.getListingByID(itemId) == null)
     {
-      clientModel.setCurrentItemID(1);
+      masterModel.setCurrentItemID(1);
       Alert alert = new Alert(Alert.AlertType.WARNING);
       alert.setTitle("Warning");
       alert.setHeaderText("Item is deleted");
@@ -102,8 +105,8 @@ public class SeeListingViewModel
     }
     else
     {
-      int accountId = clientModel.getListingByID(itemId).getAccountId();
-      return clientModel.getAccountById(accountId);
+      int accountId = masterModel.getListingByID(itemId).getAccountId();
+      return masterModel.getAccountById(accountId);
     }
     return null;
   }

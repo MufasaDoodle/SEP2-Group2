@@ -1,6 +1,6 @@
 package client.view.accountView;
 
-import client.model.ClientModel;
+import client.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -19,7 +19,12 @@ import java.util.Optional;
 
 public class AccountViewModel
 {
-  private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private ListingsModel listingsModel;
+  private AccountModel accountModel;
+  private ChatModel chatModel;
+  private ModeratorModel moderatorModel;
+  private TransactionModel transactionModel;
   private StringProperty name, address, phone, bio, emailEdit, addressEdit, numberEdit, bioEdit, pass1, pass2;
   private ObservableList<Listing> listings;
 
@@ -27,9 +32,14 @@ public class AccountViewModel
   private ObservableList<TransactionListing> transactions;
   private boolean isDeclined;
 
-  public AccountViewModel(ClientModel clientModel)
+  public AccountViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, ChatModel chatModel, ModeratorModel moderatorModel, TransactionModel transactionModel)
   {
-    this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.listingsModel = listingsModel;
+    this.accountModel = accountModel;
+    this.chatModel = chatModel;
+    this.moderatorModel = moderatorModel;
+    this.transactionModel = transactionModel;
     name = new SimpleStringProperty();
     address = new SimpleStringProperty();
     phone = new SimpleStringProperty();
@@ -104,8 +114,7 @@ public class AccountViewModel
 
   public void setOwner()
   {
-    Account tempCheck = clientModel
-        .getAccountById(clientModel.getCurrentAccountID());
+    Account tempCheck = masterModel.getAccountById(masterModel.getCurrentAccountID());
     if (tempCheck == null)
     {
       Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -113,36 +122,34 @@ public class AccountViewModel
       alert.setHeaderText("Your account is banned");
       alert.showAndWait();
     }
-    else if (clientModel.getFromListingViewOpen())
+    else if (listingsModel.getFromListingViewOpen())
     {
-      Account temp = clientModel
-          .getAccountById(clientModel.getCurrentAccountID());
+      Account temp = masterModel.getAccountById(masterModel.getCurrentAccountID());
       name.set(temp.getName());
       address.set(temp.getAddress());
       phone.set(temp.getPhoneNumber());
       bio.set(temp.getBio());
     }
-    else if (clientModel.getModeratorOpen())
+    else if (moderatorModel.getModeratorOpen())
     {
-      Account temp = clientModel.getModeratedAccount();
+      Account temp = moderatorModel.getModeratedAccount();
       name.set(temp.getName());
       address.set(temp.getAddress());
       phone.set(temp.getPhoneNumber());
       bio.set(temp.getBio());
     }
-    else if (!clientModel.getFromListingViewOpen())
+    else if (!listingsModel.getFromListingViewOpen())
     {
-      Listing listing = clientModel
-          .getListingByID(clientModel.getCurrentItemID());
+      Listing listing = masterModel.getListingByID(masterModel.getCurrentItemID());
       if (listing == null)
       {
-        clientModel.setCurrentChatterID(1);
+        masterModel.setCurrentChatterID(1);
       }
       else
       {
-        int itemId = clientModel.getCurrentItemID();
-        int accountId = clientModel.getListingByID(itemId).getAccountId();
-        Account temp = clientModel.getAccountById(accountId);
+        int itemId = masterModel.getCurrentItemID();
+        int accountId = masterModel.getListingByID(itemId).getAccountId();
+        Account temp = masterModel.getAccountById(accountId);
 
         name.set(temp.getName());
         address.set(temp.getAddress());
@@ -150,10 +157,10 @@ public class AccountViewModel
         bio.set(temp.getBio());
       }
     }
-    else if (!clientModel.getFromListingViewOpen())
+    else if (!listingsModel.getFromListingViewOpen())
     {
-      int itemId = clientModel.getCurrentItemID();
-      if (clientModel.getListingByID(itemId) == null)
+      int itemId = masterModel.getCurrentItemID();
+      if (masterModel.getListingByID(itemId) == null)
       {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
@@ -162,8 +169,8 @@ public class AccountViewModel
       }
       else
       {
-        int accountId = clientModel.getListingByID(itemId).getAccountId();
-        Account temp = clientModel.getAccountById(accountId);
+        int accountId = masterModel.getListingByID(itemId).getAccountId();
+        Account temp = masterModel.getAccountById(accountId);
         name.set(temp.getName());
         address.set(temp.getAddress());
         phone.set(temp.getPhoneNumber());
@@ -181,22 +188,20 @@ public class AccountViewModel
 
   public void listOfOwnerListings()
   {
-    if (clientModel.getFromListingViewOpen())
+    if (listingsModel.getFromListingViewOpen())
     {
-      List<Listing> list = clientModel
-          .getListingsByAccount(clientModel.getCurrentAccountID());
+      List<Listing> list = accountModel.getListingsByAccount(masterModel.getCurrentAccountID());
       listings = FXCollections.observableArrayList(list);
     }
-    else if (clientModel.getModeratorOpen())
+    else if (moderatorModel.getModeratorOpen())
     {
-      List<Listing> list = clientModel
-          .getListingsByAccount(clientModel.getModeratedAccount().getId());
+      List<Listing> list = accountModel.getListingsByAccount(moderatorModel.getModeratedAccount().getId());
       listings = FXCollections.observableArrayList(list);
     }
-    else if (!clientModel.getFromListingViewOpen())
+    else if (!listingsModel.getFromListingViewOpen())
     {
-      Listing temp = clientModel.getListingByID(clientModel.getCurrentItemID());
-      if (clientModel.getListingByID(clientModel.getCurrentItemID()) == null)
+      Listing temp = masterModel.getListingByID(masterModel.getCurrentItemID());
+      if (masterModel.getListingByID(masterModel.getCurrentItemID()) == null)
       {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
@@ -205,20 +210,17 @@ public class AccountViewModel
       }
       else
       {
-        List<Listing> list = clientModel.getListingsByAccount(
-            clientModel.getAccountById(temp.getAccountId()).getId());
+        List<Listing> list = accountModel.getListingsByAccount(masterModel.getAccountById(temp.getAccountId()).getId());
         listings = FXCollections.observableArrayList(list);
       }
     }
-    else if (!clientModel.getFromListingViewOpen())
+    else if (!listingsModel.getFromListingViewOpen())
     {
 
-      if (clientModel.getListingByID(clientModel.getCurrentItemID()) != null)
+      if (masterModel.getListingByID(masterModel.getCurrentItemID()) != null)
       {
-        Listing temp = clientModel
-            .getListingByID(clientModel.getCurrentItemID());
-        List<Listing> list = clientModel.getListingsByAccount(
-            clientModel.getAccountById(temp.getAccountId()).getId());
+        Listing temp = masterModel.getListingByID(masterModel.getCurrentItemID());
+        List<Listing> list = accountModel.getListingsByAccount(masterModel.getAccountById(temp.getAccountId()).getId());
         listings = FXCollections.observableArrayList(list);
       }
     }
@@ -226,10 +228,8 @@ public class AccountViewModel
 
   public void listOfOwnerRentals()
   {
-    List<TransactionListing> rentedTo = clientModel
-        .getTransactionByRentedTo(clientModel.getCurrentAccountID());
-    List<TransactionListing> rentedFrom = clientModel
-        .getTransactionByRentedFrom(clientModel.getCurrentAccountID());
+    List<TransactionListing> rentedTo = transactionModel.getTransactionByRentedTo(masterModel.getCurrentAccountID());
+    List<TransactionListing> rentedFrom = transactionModel.getTransactionByRentedFrom(masterModel.getCurrentAccountID());
 
     List<TransactionListing> result = new ArrayList<>();
 
@@ -245,8 +245,7 @@ public class AccountViewModel
 
   public void listOfOwnerRequests()
   {
-    List<RequestListing> requestList = clientModel
-        .getRequestByAccountId(clientModel.getCurrentAccountID());
+    List<RequestListing> requestList = transactionModel.getRequestByAccountId(masterModel.getCurrentAccountID());
     requests = FXCollections.observableArrayList(requestList);
   }
 
@@ -257,13 +256,12 @@ public class AccountViewModel
 
   public void setItem(int itemID)
   {
-    clientModel.setCurrentItemID(itemID);
+    masterModel.setCurrentItemID(itemID);
   }
 
   public void updateEditFields()
   {
-    Account account = clientModel
-        .getAccountById(clientModel.getCurrentAccountID());
+    Account account = masterModel.getAccountById(masterModel.getCurrentAccountID());
     emailEdit.set(account.getEmail());
     addressEdit.set(account.getAddress());
     numberEdit.set(account.getPhoneNumber());
@@ -272,19 +270,15 @@ public class AccountViewModel
     pass2.set(account.getPassword());
   }
 
-  public void updateAccountInfo(String email, String pass1, String pass2,
-      String address, String number, String bio)
+  public void updateAccountInfo(String email, String pass1, String pass2, String address, String number, String bio)
   {
-    if (!email.equals("") && !pass1.equals("") && !pass2.equals("") && !address
-        .equals("") && !number.equals("") && !bio.equals(""))
+    if (!email.equals("") && !pass1.equals("") && !pass2.equals("") && !address.equals("") && !number.equals("") && !bio.equals(""))
     {
       if (EmailCheck.isValid(email))
       {
         if (pass1.equals(pass2))
         {
-          if (clientModel.isEmailTaken(email) && !clientModel
-              .getAccountById(clientModel.getCurrentAccountID()).getEmail()
-              .equals(email))
+          if (accountModel.isEmailTaken(email) && !masterModel.getAccountById(masterModel.getCurrentAccountID()).getEmail().equals(email))
           {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
@@ -302,7 +296,7 @@ public class AccountViewModel
 
             if (result.get() == ButtonType.OK)
             {
-              if (clientModel.updateAccount(email, pass1, address, number, bio))
+              if (accountModel.updateAccount(email, pass1, address, number, bio))
               {
                 Alert conf = new Alert(Alert.AlertType.INFORMATION);
                 conf.setTitle("Account Updated");
@@ -314,8 +308,7 @@ public class AccountViewModel
               {
                 Alert warning = new Alert(Alert.AlertType.WARNING);
                 warning.setTitle("Account Update");
-                warning.setHeaderText(
-                    "Account could not be updated, try again later");
+                warning.setHeaderText("Account could not be updated, try again later");
                 warning.showAndWait();
               }
             }
@@ -351,7 +344,7 @@ public class AccountViewModel
 
   public boolean checkOwner(String name)
   {
-    if (clientModel.checkOwner())
+    if (chatModel.checkOwner())
     {
       return true;
     }
@@ -367,102 +360,95 @@ public class AccountViewModel
 
   public int getCurrentItemId()
   {
-    return clientModel.getCurrentItemID();
+    return masterModel.getCurrentItemID();
   }
 
   public List<Integer> getDeletedItemIds()
   {
-    return clientModel.getDeletedItemIds();
+    return listingsModel.getDeletedItemIds();
   }
 
   public int getAccountID()
   {
-    return clientModel.getCurrentAccountID();
+    return masterModel.getCurrentAccountID();
   }
 
   public void acceptRent(int itemId, int rentedTo)
   {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
-    int rentedFrom = clientModel.getCurrentAccountID();
-    clientModel.createTransaction(itemId, dateFormat.format(date), rentedTo,
-        rentedFrom);
-    clientModel.deleteRequest(itemId);
+    int rentedFrom = masterModel.getCurrentAccountID();
+    transactionModel.createTransaction(itemId, dateFormat.format(date), rentedTo, rentedFrom);
+    transactionModel.deleteRequest(itemId);
   }
 
   public void declineRent(int itemId, int rentedTo)
   {
-    clientModel.deleteDecline(itemId, rentedTo);
+    transactionModel.deleteDecline(itemId, rentedTo);
   }
 
   public Request getRequest(int itemId, int requestFrom)
   {
-    return clientModel.getRequest(itemId, requestFrom);
+    return transactionModel.getRequest(itemId, requestFrom);
   }
 
   public Listing getListing(int itemId)
   {
-    return clientModel.getListingByID(itemId);
+    return masterModel.getListingByID(itemId);
   }
 
-  public void updateListing(String title, String description, String category,
-      String location, String duration, double price, String rented, int itemId,
-      int accountId, String promoted)
+  public void updateListing(String title, String description, String category, String location, String duration, double price, String rented, int itemId, int accountId, String promoted)
   {
-    clientModel
-        .updateListingRented(title, description, category, location, price,
-            duration, rented, itemId, accountId, promoted);
+    listingsModel.updateListingRented(title, description, category, location, price, duration, rented, itemId, accountId, promoted);
   }
 
   public void reportAccount()
   {
-    if (clientModel.getCurrentAccountID() != 1)
+    if (masterModel.getCurrentAccountID() != 1)
     {
-      int reportFrom = clientModel.getCurrentAccountID();
-      int itemId = clientModel.getCurrentItemID();
-      if (clientModel.getListingByID(itemId) == null)
+      int reportFrom = masterModel.getCurrentAccountID();
+      int itemId = masterModel.getCurrentItemID();
+      if (masterModel.getListingByID(itemId) == null)
       {
-        int accountId = clientModel.getCurrentAccountID();
+        int accountId = masterModel.getCurrentAccountID();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        clientModel
-            .createReport(reportFrom, 0, accountId, 0, dateFormat.format(date));
+        moderatorModel.createReport(reportFrom, 0, accountId, 0, dateFormat.format(date));
       }
       else
       {
-        int accountId = clientModel.getListingByID(itemId).getAccountId();
+        int accountId = masterModel.getListingByID(itemId).getAccountId();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        clientModel
-            .createReport(reportFrom, 0, accountId, 0, dateFormat.format(date));
+        moderatorModel.createReport(reportFrom, 0, accountId, 0, dateFormat.format(date));
       }
     }
   }
 
   public boolean itemCheck()
   {
-    return clientModel.getListingByID(clientModel.getCurrentItemID()) != null;
+    return masterModel.getListingByID(masterModel.getCurrentItemID()) != null;
   }
 
   public boolean getReportByAccountId()
   {
-    int itemId = clientModel.getCurrentItemID();
-    if (clientModel.getListingByID(itemId) != null)
+    int itemId = masterModel.getCurrentItemID();
+    if (masterModel.getListingByID(itemId) != null)
     {
-      int accountId = clientModel.getListingByID(itemId).getAccountId();
-      return clientModel.getReportByAccountId(accountId) == null;
+      int accountId = masterModel.getListingByID(itemId).getAccountId();
+      return moderatorModel.getReportByAccountId(accountId) == null;
     }
     else
     {
-      int accountId = clientModel.getCurrentAccountID();
-      return clientModel.getReportByAccountId(accountId) == null;
+      int accountId = masterModel.getCurrentAccountID();
+      return moderatorModel.getReportByAccountId(accountId) == null;
     }
 
   }
 
   public boolean accountCheck()
   {
-    return clientModel.accountCheck();
+    return masterModel.accountCheck();
   }
 
 }

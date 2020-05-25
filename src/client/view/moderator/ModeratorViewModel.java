@@ -1,6 +1,6 @@
 package client.view.moderator;
 
-import client.model.ClientModel;
+import client.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import stuffs.FeedbackToItem;
@@ -11,17 +11,29 @@ import java.util.List;
 
 public class ModeratorViewModel
 {
-  private ClientModel clientModel;
+  private MasterModelInterface masterModel;
+  private ListingsModel listingsModel;
+  private AccountModel accountModel;
+  private FeedbackModel feedbackModel;
+  private ChatModel chatModel;
+  private ModeratorModel moderatorModel;
+  private TransactionModel transactionModel;
   private ObservableList<Report> reports;
 
-  public ModeratorViewModel(ClientModel clientModel)
+  public ModeratorViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, AccountModel accountModel, FeedbackModel feedbackModel, ChatModel chatModel, ModeratorModel moderatorModel, TransactionModel transactionModel)
   {
-    this.clientModel = clientModel;
+    this.masterModel = masterModel;
+    this.listingsModel = listingsModel;
+    this.accountModel = accountModel;
+    this.feedbackModel = feedbackModel;
+    this.chatModel = chatModel;
+    this.moderatorModel = moderatorModel;
+    this.transactionModel = transactionModel;
   }
 
   public void setReports()
   {
-    List<Report> reportList = clientModel.getAllReports();
+    List<Report> reportList = moderatorModel.getAllReports();
     reports = FXCollections.observableArrayList(reportList);
   }
 
@@ -32,122 +44,122 @@ public class ModeratorViewModel
 
   public void setCurrentItemID(int itemID)
   {
-    clientModel.setCurrentItemID(itemID);
+    masterModel.setCurrentItemID(itemID);
   }
 
   public void setCurrentAccount(int accountId)
   {
-    clientModel.setModeratorOpen(true);
-    clientModel.setModeratedAccount(accountId);
+    moderatorModel.setModeratorOpen(true);
+    moderatorModel.setModeratedAccount(accountId);
   }
 
   public void setItemFeedback(int itemId)
   {
-    clientModel.setCurrentItemID(itemId);
+    masterModel.setCurrentItemID(itemId);
   }
 
   public void setFeedbackId(int feedbackId)
   {
-    clientModel.setFeedbackId(feedbackId);
+    masterModel.setFeedbackId(feedbackId);
   }
 
   public FeedbackToItem getItemFeedback(int feedbackId)
   {
-    return clientModel.getFeedbackById(feedbackId);
+    return masterModel.getFeedbackById(feedbackId);
   }
 
   public void deleteReport(int id)
   {
-    clientModel.deleteReport(id);
+    moderatorModel.deleteReport(id);
   }
 
   public void deleteItem(int id)
   {
-    clientModel.deleteListing(id);
+    listingsModel.deleteListing(id);
   }
 
   public void deleteItemFeedback(int id)
   {
-    clientModel.deleteItemFeedback(id);
+    feedbackModel.deleteItemFeedback(id);
   }
 
   public void deleteAccount(int id)
   {
-    clientModel.deleteAccount(id);
+    moderatorModel.deleteAccount(id);
   }
 
   public void deleteAccountTransaction(int id)
   {
-    clientModel.deleteTransactionByAccount(id);
+    transactionModel.deleteTransactionByAccount(id);
   }
 
   public void deleteItemTransaction(int id)
   {
-    clientModel.deleteTransactionByItem(id);
+    transactionModel.deleteTransactionByItem(id);
   }
 
   public void deleteFeedbackBelongsToItem(int id)
   {
-    clientModel.deleteFeedbackByItemId(id);
+    feedbackModel.deleteFeedbackByItemId(id);
   }
 
   public void deleteRequestByItem(int id)
   {
-    clientModel.deleteRequest(id);
+    transactionModel.deleteRequest(id);
   }
 
   public void deleteRequestByAccount(int id)
   {
-    clientModel.deleteRequestByAccount(id);
+    transactionModel.deleteRequestByAccount(id);
   }
 
   public void deleteItemByAccount(int id)
   {
-    clientModel.deleteItemByAccount(id);
+    listingsModel.deleteItemByAccount(id);
   }
 
   public void deleteReportByAccount(int id)
   {
-    clientModel.deleteReportByAccount(id);
+    moderatorModel.deleteReportByAccount(id);
   }
 
   public void deleteReportByItem(int id)
   {
-    clientModel.deleteReportByItem(id);
+    moderatorModel.deleteReportByItem(id);
   }
 
   public void deleteReportByItemFeedback(int id)
   {
-    clientModel.deleteReportByItemFeedback(id);
+    moderatorModel.deleteReportByItemFeedback(id);
   }
 
   public void deleteMessageByItemAccount(int id)
   {
-    clientModel.deleteMessageByAccount(id);
+    moderatorModel.deleteMessageByAccount(id);
   }
 
   public List<Listing> getItemsByAccount(int accountId)
   {
-    return clientModel.getListingsByAccount(accountId);
+    return accountModel.getListingsByAccount(accountId);
   }
 
   public List<FeedbackToItem> getItemFeedbackByItemDd(int itemId)
   {
-    return clientModel.getFeedbackItems(itemId);
+    return feedbackModel.getFeedbackItems(itemId);
   }
 
   public void saveChatterId(int chatterId)
   {
-    clientModel.setCurrentChatterID(chatterId);
+    masterModel.setCurrentChatterID(chatterId);
   }
 
   public void addDeletedItemId(int itemId)
   {
-    clientModel.addDeletedItemId(itemId);
+    listingsModel.addDeletedItemId(itemId);
   }
 
   public void setAccountIDToLocalID()
   {
-    clientModel.setLocalAccountID();
+    chatModel.setLocalAccountID();
   }
 }
