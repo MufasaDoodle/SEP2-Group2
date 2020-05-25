@@ -4,6 +4,7 @@ import client.networking.Client;
 import javafx.scene.control.Alert;
 import shared.transferobjects.Message;
 import stuffs.*;
+import client.model.ClientModel;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

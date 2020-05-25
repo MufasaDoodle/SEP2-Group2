@@ -12,15 +12,26 @@ public interface ClientModel extends Subject
 {
   //we need these for all
   Account getAccountById(int id);
+  Listing getListingByID(int id);
+  int getCurrentItemID();
+  void setCurrentItemID(int itemID);
+  void setCurrentAccountID(String email);
+  int getCurrentAccountID();
+  String getCurrentAccountName();
+  boolean accountCheck();
+  FeedbackToItem getFeedbackById(int id);
+  void setFeedbackId(int feedbackId);
+  int getFeedbackId();
+  int getCurrentChatterID();
+  void setCurrentChatterID(int currentChatterID);
+  int getViewingAccountID();
+  void setViewingAccountID(int viewingAccountID);
 
 
   //listings
   List<Listing> getListings();
   List<Listing> getSorting(String request, String title, String category, String location);
-  Listing getListingByID(int id);
   boolean createListing(String title, String descText, String price, String category, String location, String duration, String date, int accountId, String promoted);
-  int getCurrentItemID();
-  void setCurrentItemID(int itemID);
   String getItemName();
   boolean updateListing(String title, String description, String category, String location, double price, String duration, String rented, String promoted);
   boolean updateListingRented(String title, String description, String category, String location, double price, String duration, String rented, int itemId, int accountId, String promoted);
@@ -36,21 +47,14 @@ public interface ClientModel extends Subject
   String getAllAccounts() throws IOException, ClassNotFoundException;
   boolean checkLogIn(String email, String password);
   boolean createAccount(String name, String email, String password1, String address, String phoneNumber, String bio);
-  void setCurrentAccountID(String email);
-  int getCurrentAccountID();
   void setCurrentAccountName(String email);
-  String getCurrentAccountName();
   List<Listing> getListingsByAccount(int accountId);
   boolean updateAccount(String email, String pass, String address, String number, String bio);
   boolean isEmailTaken(String email);
-  boolean accountCheck();
 
   //feedback
   boolean createFeedbackItems(int itemId, String starRating, String feedback, int accountId, String accountName);
   List<FeedbackToItem> getFeedbackItems(int itemId);
-  FeedbackToItem getFeedbackById(int id);
-  void setFeedbackId(int feedbackId);
-  int getFeedbackId();
   String getAvgStarRating(int itemId);
   List<Integer> getRentedTo(int itemId);
   void deleteItemFeedback(int id);
@@ -60,10 +64,6 @@ public interface ClientModel extends Subject
   String broadCastMessage(String msg);
   List<Message> getMessage();
   List<ChatItem> getMessagesInvolving();
-  int getCurrentChatterID();
-  void setCurrentChatterID(int currentChatterID);
-  int getViewingAccountID();
-  void setViewingAccountID(int viewingAccountID);
   String getChatterName();
   void setChatterName(String chatterName);
   void saveChatterName();

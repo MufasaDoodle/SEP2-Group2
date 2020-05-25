@@ -26,7 +26,7 @@ public class AccountDAOImpl implements AccountDAO
 
   private Connection getConnection() throws SQLException
   {
-    return DriverManager.getConnection("jdbc:postgresql://localhost:5433/projectsep2", "group2", "password");
+    return DriverManager.getConnection("jdbc:postgresql://localhost:5432/projectsep2", "group2", "password");
   }
 
   @Override public Account createAccount(String name, String email, String password, String address, String phoneNumber, String bio) throws SQLException
