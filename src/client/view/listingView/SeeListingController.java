@@ -59,12 +59,10 @@ public class SeeListingController implements ViewController
     categoryBox.getItems().add("Sports");
     categoryBox.getSelectionModel().selectFirst();
 
-    sortingBox.getItems().add("New to old");
-    sortingBox.getItems().add("Old to new");
+
     sortingBox.getItems().add("Price low to high");
     sortingBox.getItems().add("Price high to low");
-    sortingBox.getItems().add("Star rating  high to low");
-    sortingBox.getItems().add("Star rating  low to high");
+   
 
     sortingBox.getSelectionModel().selectFirst();
   }
