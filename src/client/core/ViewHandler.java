@@ -74,6 +74,7 @@ public class ViewHandler
     }
     itemScene = null;
     accountScene = null;
+    chatScene = null;
     stage.setScene(moderatorScene);
     stage.setResizable(false);
     stage.show();
