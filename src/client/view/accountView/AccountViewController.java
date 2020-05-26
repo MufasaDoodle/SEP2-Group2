@@ -23,7 +23,7 @@ public class AccountViewController implements ViewController
   private @FXML PasswordField passField2;
   private @FXML TextField addressField;
   private @FXML TextField numberField;
-  private @FXML TextField bioField;
+  private @FXML TextArea bioField;
   private @FXML Label nameLabel;
   private @FXML Label addressLabel;
   private @FXML Label phoneLabel;

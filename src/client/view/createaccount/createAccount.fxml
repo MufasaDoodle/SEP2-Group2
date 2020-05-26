@@ -55,15 +55,12 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="AccountErrorLabel" prefHeight="33.0" prefWidth="500.0" textFill="#677184">
+            <Label fx:id="AccountErrorLabel" prefHeight="34.0" prefWidth="374.0" textFill="#677184">
                <font>
                   <Font name="Century Gothic" size="13.0" />
                </font>
-               <padding>
-                  <Insets left="-90.0" right="37.0" />
-               </padding>
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets />
                </VBox.margin>
             </Label>
          </children>
