@@ -1,4 +1,4 @@
-package database.feedback.toitem;
+package database.feedback;
 
 import stuffs.FeedbackToItem;
 

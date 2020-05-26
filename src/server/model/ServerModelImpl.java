@@ -4,10 +4,8 @@ import database.account.AccountDAO;
 import database.account.AccountDAOImpl;
 import database.creatingListings.ListingDAO;
 import database.creatingListings.ListingDAOImpl;
-import database.feedback.toaccount.FeedbackToAccountDAO;
-import database.feedback.toaccount.FeedbackToAccountDAOImpl;
-import database.feedback.toitem.FeedbackToItemDAO;
-import database.feedback.toitem.FeedbackToItemDAOImpl;
+import database.feedback.FeedbackToItemDAO;
+import database.feedback.FeedbackToItemDAOImpl;
 
 import database.messages.MessagesDAO;
 import database.messages.MessagesDAOImpl;
@@ -34,7 +32,6 @@ public class ServerModelImpl implements ServerModel
   private PropertyChangeSupport support = new PropertyChangeSupport(this);
   private AccountDAO accountDAO;
   private ListingDAO listingDAO;
-  private FeedbackToAccountDAO feedbackToAccountDAO;
   private FeedbackToItemDAO feedbackToItemDAO;
   private MessagesDAO messageDAO;
   private List<Message> messages;
@@ -52,7 +49,6 @@ public class ServerModelImpl implements ServerModel
     {
       accountDAO = AccountDAOImpl.getInstance();
       listingDAO = ListingDAOImpl.getInstance();
-      feedbackToAccountDAO = FeedbackToAccountDAOImpl.getInstance();
       feedbackToItemDAO = FeedbackToItemDAOImpl.getInstance();
       reportDAO = ReportDAOImpl.getInstance();
 

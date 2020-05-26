@@ -62,7 +62,7 @@ public class SeeListingController implements ViewController
 
     sortingBox.getItems().add("Price low to high");
     sortingBox.getItems().add("Price high to low");
-   
+
 
     sortingBox.getSelectionModel().selectFirst();
   }
