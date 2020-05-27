@@ -37,7 +37,7 @@ public class ModelFactory
     return transactionModel;
   }
 
-  public ChatModelManager getChatModel()
+  public ChatModel getChatModel()
   {
     if (chatModel == null)
     {
