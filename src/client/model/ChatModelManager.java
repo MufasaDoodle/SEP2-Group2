@@ -6,6 +6,10 @@ import stuffs.ChatItem;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that handles chat details and sends them to the view model
+ * @author Group 2
+ */
 public class ChatModelManager implements ChatModel
 {
   private DataModel dataModel;

@@ -6,6 +6,10 @@ import stuffs.Listing;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * A class that handles account details and sends them to the view model
+ * @author Group 2
+ */
 public class AccountModelManager implements AccountModel
 {
   private DataModel dataModel;

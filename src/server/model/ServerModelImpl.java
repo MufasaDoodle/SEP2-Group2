@@ -27,6 +27,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Group 2
+ */
 public class ServerModelImpl implements ServerModel
 {
   private PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -68,6 +71,15 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
+  /**
+   * A method that returns sorted listings.
+   * Depending on the sorting the user has set, either by title, title and category, category and location etc. this method selects the specific listings from the database
+   * @param request - the type of the requested sorting
+   * @param title - title for the listing
+   * @param category - category of the listing
+   * @param location - location of the listing
+   * @return Returns a list of listing depending on the sorting parameters
+   */
   @Override public List<Listing> getSorting(String request, String title, String category, String location) throws RemoteException
   {
     try
@@ -247,6 +259,11 @@ public class ServerModelImpl implements ServerModel
     return false;
   }
 
+  /**
+   * Checks if the entered email and password match together and with any account created
+   * @param email - email for the account
+   * @param password - password for the account
+   */
   @Override public boolean checkLogIn(String email, String password)
   {
     try
@@ -309,6 +326,13 @@ public class ServerModelImpl implements ServerModel
     }
   }
 
+  /**
+   * Sends a notification to the two chatters whenever a new message is being sent
+   * @param msg - the sent message
+   * @param fromAccount - the sender of the message
+   * @param toAccount - the person the message should go to
+   * @return the sent message
+   */
   @Override public String broadCastMessage(String msg, int fromAccount, int toAccount)
   {
     Message message = new Message(msg, fromAccount, toAccount);

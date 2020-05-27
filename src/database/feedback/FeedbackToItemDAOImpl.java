@@ -6,6 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that handles feedback details in the database
+ * @author Group 2
+ */
 public class FeedbackToItemDAOImpl implements FeedbackToItemDAO
 {
   private static FeedbackToItemDAOImpl instance;

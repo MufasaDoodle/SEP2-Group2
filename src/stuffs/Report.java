@@ -2,6 +2,10 @@ package stuffs;
 
 import java.io.Serializable;
 
+/**
+ * A class containing specific information about reports
+ * @author Group 2
+ */
 public class Report implements Serializable
 {
   private int id;

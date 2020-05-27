@@ -2,6 +2,10 @@ package stuffs;
 
 import java.io.Serializable;
 
+/**
+ * A class containing specific information about transactions
+ * @author Group 2
+ */
 public class Transaction implements Serializable
 {
   private int id;

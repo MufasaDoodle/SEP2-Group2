@@ -7,6 +7,10 @@ import stuffs.TransactionListing;
 
 import java.util.List;
 
+/**
+ * A class that handles transaction details and sends them to the view model
+ * @author Group 2
+ */
 public class TransactionModelManager implements TransactionModel
 {
   private DataModel dataModel;

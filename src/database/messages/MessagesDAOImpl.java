@@ -6,6 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that handles messages details in the database
+ * @author Group 2
+ */
 public class MessagesDAOImpl implements MessagesDAO
 {
 

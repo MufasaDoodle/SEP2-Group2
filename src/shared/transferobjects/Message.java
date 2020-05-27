@@ -2,6 +2,10 @@ package shared.transferobjects;
 
 import java.io.Serializable;
 
+/**
+ * A class containing specific information about messages
+ * @author Group 2
+ */
 public class Message implements Serializable
 {
   private String message;

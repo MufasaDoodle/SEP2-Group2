@@ -138,6 +138,10 @@ public class RMIServerImpl implements RMIServer
     }
   }
 
+  /**
+   * Updates the client with every new message that is being sent
+   * @param client the current client
+   */
   @Override public void registerClient(ClientCallback client)
   {
     PropertyChangeListener listener = null;
@@ -221,6 +225,9 @@ public class RMIServerImpl implements RMIServer
     }
   }
 
+  /**
+   * Disconnects the client from receiving any more messages that are being sent
+   */
   @Override public void unRegisterClient(ClientCallback client)
   {
     PropertyChangeListener listener = listeners.get(client);

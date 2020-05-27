@@ -4,6 +4,10 @@ import stuffs.FeedbackToItem;
 
 import java.util.List;
 
+/**
+ * A class that handles feedback details and sends them to the view model
+ * @author Group 2
+ */
 public class FeedbackModelManager implements FeedbackModel
 {
   private DataModel dataModel;

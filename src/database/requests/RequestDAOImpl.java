@@ -8,7 +8,10 @@ import stuffs.RequestListing;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * A class that handles requests details in the database
+ * @author Group 2
+ */
 public class RequestDAOImpl implements RequestDAO
 {
   private static RequestDAOImpl instance;
