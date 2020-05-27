@@ -1,21 +1,19 @@
-package stuffs;
+package shared.transferobjects;
 
 import java.io.Serializable;
 
-public class Transaction implements Serializable
+public class Request implements Serializable
 {
   private int id;
   private int itemId;
-  private String date;
   private int rentedToId;
   private int rentedFromId;
 
-  public Transaction(int id, int itemId, String date, int rentedToId,
+  public Request(int id, int itemId, int rentedToId,
       int rentedFromId)
   {
     this.id = id;
     this.itemId = itemId;
-    this.date = date;
     this.rentedToId = rentedToId;
     this.rentedFromId = rentedFromId;
   }
@@ -38,16 +36,6 @@ public class Transaction implements Serializable
   public void setItemId(int itemId)
   {
     this.itemId = itemId;
-  }
-
-  public String getDate()
-  {
-    return date;
-  }
-
-  public void setDate(String date)
-  {
-    this.date = date;
   }
 
   public int getRentedToId()

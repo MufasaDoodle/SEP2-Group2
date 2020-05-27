@@ -1,12 +1,9 @@
 package server.model;
 
-import shared.transferobjects.Message;
+import shared.transferobjects.*;
 import shared.util.Subject;
-import stuffs.*;
 
 import java.rmi.RemoteException;
-import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 
 public interface ServerModel extends Subject

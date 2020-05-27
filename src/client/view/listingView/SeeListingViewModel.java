@@ -8,8 +8,8 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import stuffs.Account;
-import stuffs.Listing;
+import shared.transferobjects.Account;
+import shared.transferobjects.Listing;
 
 import java.util.ArrayList;
 import java.util.List;

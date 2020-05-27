@@ -1,8 +1,7 @@
 package database.transactions;
 
-import stuffs.RequestListing;
-import stuffs.Transaction;
-import stuffs.TransactionListing;
+import shared.transferobjects.Transaction;
+import shared.transferobjects.TransactionListing;
 
 import java.sql.*;
 import java.util.ArrayList;

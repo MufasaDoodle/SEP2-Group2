@@ -1,6 +1,6 @@
 package client.model;
 
-import stuffs.Listing;
+import shared.transferobjects.Listing;
 
 import java.util.List;
 

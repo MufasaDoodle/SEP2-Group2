@@ -1,11 +1,10 @@
 package database.transactions;
 
-import stuffs.Transaction;
-import stuffs.TransactionListing;
+import shared.transferobjects.Transaction;
+import shared.transferobjects.TransactionListing;
 
 import java.sql.SQLException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TransactionDAO

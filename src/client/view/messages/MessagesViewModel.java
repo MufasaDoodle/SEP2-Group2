@@ -5,7 +5,7 @@ import client.model.ListingsModel;
 import client.model.MasterModelInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import stuffs.ChatItem;
+import shared.transferobjects.ChatItem;
 
 import java.util.List;
 

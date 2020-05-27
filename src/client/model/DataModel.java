@@ -1,7 +1,7 @@
 package client.model;
 
 import client.networking.Client;
-import stuffs.Account;
+import shared.transferobjects.Account;
 
 import java.beans.PropertyChangeSupport;
 

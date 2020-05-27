@@ -1,6 +1,6 @@
 package database.feedback;
 
-import stuffs.FeedbackToItem;
+import shared.transferobjects.FeedbackToItem;
 
 import java.sql.SQLException;
 import java.util.List;

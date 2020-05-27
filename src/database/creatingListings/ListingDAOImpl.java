@@ -1,8 +1,7 @@
 package database.creatingListings;
 
-import stuffs.Listing;
+import shared.transferobjects.Listing;
 
-import java.rmi.RemoteException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

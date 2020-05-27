@@ -1,9 +1,9 @@
 package client.model;
 
 import shared.util.Subject;
-import stuffs.Account;
-import stuffs.FeedbackToItem;
-import stuffs.Listing;
+import shared.transferobjects.Account;
+import shared.transferobjects.FeedbackToItem;
+import shared.transferobjects.Listing;
 
 public interface MasterModelInterface extends Subject
 {

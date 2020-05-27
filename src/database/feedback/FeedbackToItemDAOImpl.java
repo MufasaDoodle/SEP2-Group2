@@ -1,6 +1,6 @@
 package database.feedback;
 
-import stuffs.FeedbackToItem;
+import shared.transferobjects.FeedbackToItem;
 
 import java.sql.*;
 import java.util.ArrayList;

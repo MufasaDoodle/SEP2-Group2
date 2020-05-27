@@ -1,7 +1,7 @@
 package client.model;
 
 import shared.transferobjects.Message;
-import stuffs.ChatItem;
+import shared.transferobjects.ChatItem;
 
 import java.util.List;
 

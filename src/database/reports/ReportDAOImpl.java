@@ -1,10 +1,6 @@
 package database.reports;
 
-import database.account.AccountDAOImpl;
-import stuffs.Account;
-import stuffs.Report;
-import stuffs.Request;
-import stuffs.RequestListing;
+import shared.transferobjects.Report;
 
 import java.sql.*;
 import java.util.ArrayList;

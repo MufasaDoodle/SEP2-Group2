@@ -4,8 +4,8 @@ import client.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
-import stuffs.Account;
-import stuffs.Listing;
+import shared.transferobjects.Account;
+import shared.transferobjects.Listing;
 
 public class EditItemViewModel
 {

@@ -9,8 +9,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import stuffs.FeedbackToItem;
-import stuffs.Report;
+import shared.transferobjects.FeedbackToItem;
+import shared.transferobjects.Report;
 
 import java.util.Optional;
 

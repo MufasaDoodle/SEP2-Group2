@@ -1,4 +1,4 @@
-package stuffs;
+package shared.transferobjects;
 
 import java.awt.*;
 import java.io.Serializable;

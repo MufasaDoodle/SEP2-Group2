@@ -1,7 +1,7 @@
 package database.requests;
 
-import stuffs.Request;
-import stuffs.RequestListing;
+import shared.transferobjects.Request;
+import shared.transferobjects.RequestListing;
 
 import java.sql.SQLException;
 import java.util.List;

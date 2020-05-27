@@ -1,10 +1,8 @@
 package client.networking;
 
-import shared.transferobjects.Message;
+import shared.transferobjects.*;
 import shared.util.Subject;
-import stuffs.*;
 
-import java.rmi.RemoteException;
 import java.util.List;
 
 public interface Client extends Subject

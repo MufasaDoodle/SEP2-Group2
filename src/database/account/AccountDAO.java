@@ -1,6 +1,6 @@
 package database.account;
 
-import stuffs.Account;
+import shared.transferobjects.Account;
 
 import java.sql.SQLException;
 import java.util.List;

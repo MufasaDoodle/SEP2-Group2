@@ -1,9 +1,9 @@
 package client.model;
 
-import stuffs.Request;
-import stuffs.RequestListing;
-import stuffs.Transaction;
-import stuffs.TransactionListing;
+import shared.transferobjects.Request;
+import shared.transferobjects.RequestListing;
+import shared.transferobjects.Transaction;
+import shared.transferobjects.TransactionListing;
 
 import java.util.List;
 

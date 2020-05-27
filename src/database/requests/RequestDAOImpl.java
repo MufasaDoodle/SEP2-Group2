@@ -1,9 +1,7 @@
 package database.requests;
 
-import stuffs.Account;
-import stuffs.Listing;
-import stuffs.Request;
-import stuffs.RequestListing;
+import shared.transferobjects.Request;
+import shared.transferobjects.RequestListing;
 
 import java.sql.*;
 import java.util.ArrayList;

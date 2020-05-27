@@ -1,6 +1,6 @@
 package client.model;
 
-import stuffs.FeedbackToItem;
+import shared.transferobjects.FeedbackToItem;
 
 import java.util.List;
 

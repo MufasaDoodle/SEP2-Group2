@@ -2,8 +2,7 @@ package client.networking;
 
 import shared.networking.ClientCallback;
 import shared.networking.RMIServer;
-import shared.transferobjects.Message;
-import stuffs.*;
+import shared.transferobjects.*;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

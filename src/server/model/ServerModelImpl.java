@@ -11,13 +11,12 @@ import database.messages.MessagesDAO;
 import database.messages.MessagesDAOImpl;
 import database.reports.ReportDAO;
 import database.reports.ReportDAOImpl;
-import shared.transferobjects.Message;
+import shared.transferobjects.*;
 
 import database.requests.RequestDAO;
 import database.requests.RequestDAOImpl;
 import database.transactions.TransactionDAO;
 import database.transactions.TransactionDAOImpl;
-import stuffs.*;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

@@ -1,9 +1,8 @@
 package client.model;
 
-import stuffs.Account;
-import stuffs.Listing;
+import shared.transferobjects.Account;
+import shared.transferobjects.Listing;
 
-import java.io.IOException;
 import java.util.List;
 
 public class AccountModelManager implements AccountModel

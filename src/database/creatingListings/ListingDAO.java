@@ -1,7 +1,6 @@
 package database.creatingListings;
 
-import shared.networking.Sorting;
-import stuffs.Listing;
+import shared.transferobjects.Listing;
 
 import java.sql.Date;
 import java.sql.SQLException;

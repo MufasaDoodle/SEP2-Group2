@@ -3,9 +3,9 @@ package client.view.moderator;
 import client.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import stuffs.FeedbackToItem;
-import stuffs.Listing;
-import stuffs.Report;
+import shared.transferobjects.FeedbackToItem;
+import shared.transferobjects.Listing;
+import shared.transferobjects.Report;
 
 import java.util.List;
 

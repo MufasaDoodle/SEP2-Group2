@@ -2,9 +2,9 @@ package client.model;
 
 import client.networking.Client;
 import javafx.scene.control.Alert;
-import stuffs.Account;
-import stuffs.FeedbackToItem;
-import stuffs.Listing;
+import shared.transferobjects.Account;
+import shared.transferobjects.FeedbackToItem;
+import shared.transferobjects.Listing;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

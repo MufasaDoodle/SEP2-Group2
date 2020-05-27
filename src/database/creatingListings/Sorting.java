@@ -1,8 +1,7 @@
-package shared.networking;
+package database.creatingListings;
 
-import stuffs.Listing;
+import shared.transferobjects.Listing;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.List;

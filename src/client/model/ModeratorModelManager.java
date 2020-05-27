@@ -1,7 +1,7 @@
 package client.model;
 
-import stuffs.Account;
-import stuffs.Report;
+import shared.transferobjects.Account;
+import shared.transferobjects.Report;
 
 import java.util.List;
 

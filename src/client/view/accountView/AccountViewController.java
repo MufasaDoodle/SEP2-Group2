@@ -6,10 +6,10 @@ import client.view.ViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import stuffs.Listing;
-import stuffs.Request;
-import stuffs.RequestListing;
-import stuffs.TransactionListing;
+import shared.transferobjects.Listing;
+import shared.transferobjects.Request;
+import shared.transferobjects.RequestListing;
+import shared.transferobjects.TransactionListing;
 
 import java.util.Optional;
 
@@ -348,6 +348,8 @@ public class AccountViewController implements ViewController
               viewModel.updateListing(listing.getTitle(), listing.getDescription(), listing.getCategory(), listing.getLocation(), listing.getDuration(), listing.getPrice(), "Rented", listing.getId(), listing.getAccountId(), listing.getPromoted());
               viewModel.listOfOwnerRequests();
               requestTable.setItems(viewModel.getRequests());
+              viewModel.listOfOwnerRentals();
+              transactionTable.setItems(viewModel.getTransactions());
             }
           }
           else

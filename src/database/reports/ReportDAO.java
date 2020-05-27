@@ -1,6 +1,6 @@
 package database.reports;
 
-import stuffs.Report;
+import shared.transferobjects.Report;
 
 import java.sql.Date;
 import java.sql.SQLException;

@@ -6,9 +6,11 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import stuffs.*;
+import shared.transferobjects.Account;
+import shared.transferobjects.FeedbackToItem;
+import shared.transferobjects.Listing;
+import shared.transferobjects.Request;
 
-import java.beans.PropertyChangeEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
