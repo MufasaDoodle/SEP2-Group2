@@ -7,6 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that handles transaction details in the database
+ * @author Group 2
+ */
 public class TransactionDAOImpl implements TransactionDAO
 {
   private static TransactionDAOImpl instance;

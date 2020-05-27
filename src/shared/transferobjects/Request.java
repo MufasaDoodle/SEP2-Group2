@@ -2,6 +2,10 @@ package shared.transferobjects;
 
 import java.io.Serializable;
 
+/**
+ * A class containing specific information about requests
+ * @author Group 2
+ */
 public class Request implements Serializable
 {
   private int id;

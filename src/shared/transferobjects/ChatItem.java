@@ -2,6 +2,10 @@ package shared.transferobjects;
 
 import java.io.Serializable;
 
+/**
+ * A class containing specific information about chat items
+ * @author Group 2
+ */
 public class ChatItem implements Serializable
 {
   private String chatterName;

@@ -2,6 +2,10 @@ package shared.transferobjects;
 
 import java.io.Serializable;
 
+/**
+ * A class containing specific information about transacted listings
+ * @author Group 2
+ */
 public class TransactionListing implements Serializable
 {
   private String title;

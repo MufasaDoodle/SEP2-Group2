@@ -5,6 +5,10 @@ import shared.transferobjects.Report;
 
 import java.util.List;
 
+/**
+ * A class that handles moderator details and sends them to the view model
+ * @author Group 2
+ */
 public class ModeratorModelManager implements ModeratorModel
 {
   private DataModel dataModel;

@@ -5,6 +5,10 @@ import shared.transferobjects.Account;
 
 import java.beans.PropertyChangeSupport;
 
+/**
+ * A class that holds information needed by all the other model managers
+ * @author Group 2
+ */
 public class DataModel
 {
   private Client client;

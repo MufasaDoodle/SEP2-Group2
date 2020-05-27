@@ -2,6 +2,10 @@ package shared.transferobjects;
 
 import java.io.Serializable;
 
+/**
+ * A class containing specific details about feedback for listings
+ * @author Group 2
+ */
 public class FeedbackToItem implements Serializable
 {
   private String startRating;

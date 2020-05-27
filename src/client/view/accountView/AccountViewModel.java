@@ -112,6 +112,7 @@ public class AccountViewModel
     isDeclined = declined;
   }
 
+
   public void setOwner()
   {
     Account tempCheck = masterModel.getAccountById(masterModel.getCurrentAccountID());
@@ -177,8 +178,6 @@ public class AccountViewModel
         bio.set(temp.getBio());
       }
     }
-    //Need an avg rate for account
-    //avgRate.set(String.valueOf(temp.));
   }
 
   ObservableList<Listing> getListings()

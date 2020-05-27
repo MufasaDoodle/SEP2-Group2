@@ -10,6 +10,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * A class that contains methods used by all views of the system
+ * @author Group 2
+ */
 public class MasterModelInterfaceManager implements MasterModelInterface
 {
   private DataModel dataModel;

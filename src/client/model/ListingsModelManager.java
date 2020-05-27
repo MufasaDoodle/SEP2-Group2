@@ -7,6 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * A class that handles listing details and sends them to the view model
+ * @author Group 2
+ */
 public class ListingsModelManager implements ListingsModel
 {
   private DataModel dataModel;
