@@ -12,17 +12,23 @@ public class CreateAccountViewModel
   private MasterModelInterface masterModel;
   private AccountModel accountModel;
   private StringProperty error;
+  private StringProperty result;
 
   public CreateAccountViewModel(MasterModelInterface masterModel, AccountModel accountModel)
   {
     this.masterModel = masterModel;
     this.accountModel = accountModel;
     error = new SimpleStringProperty();
+    result = new SimpleStringProperty();
   }
 
   StringProperty errorProperty()
   {
     return error;
+  }
+  StringProperty resultProperty()
+  {
+    return result;
   }
 
   public void createAccount(String name, String email, String password1, String password2, String address, String phoneNumber)
@@ -40,6 +46,7 @@ public class CreateAccountViewModel
           if (accountModel.createAccount(name, email, password1, address, phoneNumber))
           {
             error.set("Account created");
+            result.setValue("OK");
           }
           else
           {
@@ -48,6 +55,7 @@ public class CreateAccountViewModel
             alert.setHeaderText("Email is already in use!");
             alert.setContentText("Please choose another!");
             alert.showAndWait();
+            result.setValue("Email used");
           }
         }
         else
@@ -57,6 +65,7 @@ public class CreateAccountViewModel
           alert.setHeaderText("Passwords do not match!");
           alert.setContentText("Please check your passwords!");
           alert.showAndWait();
+          result.setValue("Passwords incorrect");
         }
       }
       else
@@ -66,6 +75,7 @@ public class CreateAccountViewModel
         alert.setHeaderText("Email is not valid!");
         alert.setContentText("Please check your email again!");
         alert.showAndWait();
+        result.setValue("Email incorrect");
       }
     }
     else
@@ -75,6 +85,7 @@ public class CreateAccountViewModel
       alert.setHeaderText("All * fields must be filled!");
       alert.setContentText("Please fill all * fields!");
       alert.showAndWait();
+      result.setValue("Fill in all fields");
     }
   }
 

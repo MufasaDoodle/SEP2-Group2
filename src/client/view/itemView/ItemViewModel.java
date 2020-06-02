@@ -30,6 +30,7 @@ public class ItemViewModel
   private StringProperty accountId;
   private StringProperty accountName;
   private StringProperty avgStarRating;
+  private StringProperty result;
   ObservableList<FeedbackToItem> feedback;
 
   public ItemViewModel(MasterModelInterface masterModel, ListingsModel listingsModel, FeedbackModel feedbackModel, ModeratorModel moderatorModel, TransactionModel transactionModel)
@@ -51,8 +52,13 @@ public class ItemViewModel
     accountId = new SimpleStringProperty();
     accountName = new SimpleStringProperty();
     avgStarRating = new SimpleStringProperty();
+    result = new SimpleStringProperty();
   }
 
+  public StringProperty resultProperty()
+  {
+    return result;
+  }
   public boolean leaveFeedback(String starRating, String feedback, int itemId, int accountId, String accountName)
   {
     if (masterModel.getListingByID(itemId) == null)
@@ -193,6 +199,7 @@ public class ItemViewModel
       alert.setTitle("Warning");
       alert.setHeaderText("Your account is banned");
       alert.showAndWait();
+      result.setValue("banned account");
     }
     if (getCurrentItemId() != 0 && tempCheck != null)
     {
@@ -261,6 +268,7 @@ public class ItemViewModel
       alert1.setTitle("Rent the item");
       alert1.setHeaderText("Rent request is sent to the owner!");
       alert1.showAndWait();
+      result.setValue("OK");
     }
     else if (requestFrom == requestTo)
     {
@@ -268,6 +276,7 @@ public class ItemViewModel
       alert.setTitle("Warning");
       alert.setHeaderText("Cannot rent your own item");
       alert.showAndWait();
+      result.setValue("own item");
     }
     else
     {
@@ -275,6 +284,7 @@ public class ItemViewModel
       alert.setTitle("Warning");
       alert.setHeaderText("Request already sent!");
       alert.showAndWait();
+      result.setValue("request already sent");
     }
   }
 
@@ -318,6 +328,7 @@ public class ItemViewModel
       alert.setTitle("Warning");
       alert.setHeaderText("Item is deleted");
       alert.showAndWait();
+      result.setValue("reported");
     }
     else
     {
@@ -329,6 +340,7 @@ public class ItemViewModel
         Date date = new Date();
 
         moderatorModel.createReport(reportFrom, itemId, 0, 0, dateFormat.format(date));
+        result.setValue("OK");
       }
     }
   }
