@@ -53,9 +53,7 @@ public class ServerModelImpl implements ServerModel
       listingDAO = ListingDAOImpl.getInstance();
       feedbackToItemDAO = FeedbackToItemDAOImpl.getInstance();
       reportDAO = ReportDAOImpl.getInstance();
-
       messageDAO = MessagesDAOImpl.getInstance();
-
       requestDAO = RequestDAOImpl.getInstance();
 
       messages = new ArrayList<>();

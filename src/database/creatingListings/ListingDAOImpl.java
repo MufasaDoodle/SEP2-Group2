@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * A class that handles listing details in the database
+ *
  * @author Group 2
  */
 public class ListingDAOImpl implements ListingDAO
@@ -53,8 +54,8 @@ public class ListingDAOImpl implements ListingDAO
       statement.setString(6, duration);
       statement.setDate(7, date);
       statement.setInt(8, accountId);
-      statement.setString(9,"Available");
-      statement.setString(10,promoted);
+      statement.setString(9, "Available");
+      statement.setString(10, promoted);
       statement.executeUpdate();
 
       ResultSet keys = statement.getGeneratedKeys();
@@ -62,7 +63,8 @@ public class ListingDAOImpl implements ListingDAO
       {
         System.out.println("Listing created in database");
         return new Listing(title, description, category, location, price,
-            duration, date.toString(), keys.getInt(8), accountId,"Available",promoted);
+            duration, date.toString(), keys.getInt(8), accountId, "Available",
+            promoted);
       }
       else
         throw new SQLException("No keys generated");
@@ -148,7 +150,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         return new Listing(title, description, category, location, price,
-            duration, date, id, accountId,rented,promoted);
+            duration, date, id, accountId, rented, promoted);
       }
       else
       {
@@ -180,7 +182,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
@@ -210,15 +212,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);;
+            price, duration, date, id, accountId, rented, promoted);
+        ;
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitle(String title) throws SQLException {
+  @Override public List<Listing> availableTitle(String title)
+      throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -240,7 +244,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);;
+            price, duration, date, id, accountId, rented, promoted);
+        ;
         result.add(listing);
       }
       return result;
@@ -271,15 +276,16 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, oldCategory, location,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableCategory(String category) throws SQLException {
+  @Override public List<Listing> availableCategory(String category)
+      throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -301,7 +307,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, oldCategory, location,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
@@ -332,15 +338,16 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, oldLocation,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableLocation(String location) throws SQLException {
+  @Override public List<Listing> availableLocation(String location)
+      throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -362,7 +369,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, oldLocation,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
@@ -395,7 +402,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -427,7 +435,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            location, price, duration, date, id, accountId,rented,promoted);
+            location, price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
@@ -459,7 +467,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, category,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -491,15 +500,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitleCategoryLocation(String title, String category, String location) throws SQLException {
+  @Override public List<Listing> availableTitleCategoryLocation(String title,
+      String category, String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -523,15 +534,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitleCategory(String title, String category) throws SQLException {
+  @Override public List<Listing> availableTitleCategory(String title,
+      String category) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -554,15 +567,16 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            location, price, duration, date, id, accountId,rented,promoted);
+            location, price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitleLocation(String title, String location) throws SQLException {
+  @Override public List<Listing> availableTitleLocation(String title,
+      String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -585,15 +599,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, category,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableCategoryLocation(String category, String location) throws SQLException {
+  @Override public List<Listing> availableCategoryLocation(String category,
+      String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -616,7 +632,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -645,7 +662,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
@@ -674,15 +691,15 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availablePriceHighToLow() throws SQLException{
+  @Override public List<Listing> availablePriceHighToLow() throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -703,15 +720,15 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availablePriceLowToHigh() throws SQLException {
+  @Override public List<Listing> availablePriceLowToHigh() throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -732,7 +749,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
@@ -763,7 +780,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -794,15 +812,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitlePriceLowToHigh(String title) throws SQLException {
+  @Override public List<Listing> availableTitlePriceLowToHigh(String title)
+      throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -824,15 +844,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitlePriceHighToLow(String title) throws SQLException {
+  @Override public List<Listing> availableTitlePriceHighToLow(String title)
+      throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -854,7 +876,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -885,7 +908,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -916,15 +940,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableCategoryPriceLowToHigh(String category) throws SQLException {
+  @Override public List<Listing> availableCategoryPriceLowToHigh(
+      String category) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -946,15 +972,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableCategoryPriceHighToLow(String category) throws SQLException {
+  @Override public List<Listing> availableCategoryPriceHighToLow(
+      String category) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -976,7 +1004,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1007,7 +1036,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1038,15 +1068,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableLocationPriceLowToHigh(String location) throws SQLException {
+  @Override public List<Listing> availableLocationPriceLowToHigh(
+      String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1068,15 +1100,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableLocationPriceHighToLow(String location) throws SQLException {
+  @Override public List<Listing> availableLocationPriceHighToLow(
+      String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1098,7 +1132,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1131,7 +1166,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1164,15 +1200,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitleCategoryLocationPriceLowToHigh(String title, String category, String location) throws SQLException {
+  @Override public List<Listing> availableTitleCategoryLocationPriceLowToHigh(
+      String title, String category, String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1196,15 +1234,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitleCategoryLocationPriceHighToLow(String title, String category, String location) throws SQLException {
+  @Override public List<Listing> availableTitleCategoryLocationPriceHighToLow(
+      String title, String category, String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1228,7 +1268,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1260,7 +1301,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1292,15 +1334,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitleCategoryPriceLowToHigh(String title, String category) throws SQLException {
+  @Override public List<Listing> availableTitleCategoryPriceLowToHigh(
+      String title, String category) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1323,15 +1367,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitleCategoryPriceHighToLow(String title, String category) throws SQLException {
+  @Override public List<Listing> availableTitleCategoryPriceHighToLow(
+      String title, String category) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1354,7 +1400,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1386,7 +1433,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1418,15 +1466,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitleLocationPriceLowToHigh(String title, String location) throws SQLException {
+  @Override public List<Listing> availableTitleLocationPriceLowToHigh(
+      String title, String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1449,15 +1499,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableTitleLocationPriceHighToLow(String title, String location) throws SQLException {
+  @Override public List<Listing> availableTitleLocationPriceHighToLow(
+      String title, String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1480,7 +1532,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1512,7 +1565,8 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
@@ -1544,14 +1598,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
-  @Override
-  public List<Listing> availableCategoryLocationPriceLowToHigh(String category, String location) throws SQLException {
+
+  @Override public List<Listing> availableCategoryLocationPriceLowToHigh(
+      String category, String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1574,15 +1631,17 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> availableCategoryLocationPriceHighToLow(String category, String location) throws SQLException {
+  @Override public List<Listing> availableCategoryLocationPriceHighToLow(
+      String category, String location) throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1605,15 +1664,16 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(oldTitle, description, oldCategory,
-            oldLocation, price, duration, date, id, accountId,rented,promoted);
+            oldLocation, price, duration, date, id, accountId, rented,
+            promoted);
         result.add(listing);
       }
       return result;
     }
   }
 
-  @Override
-  public List<Listing> isAvailable() throws SQLException{
+  @Override public List<Listing> isAvailable() throws SQLException
+  {
     try (Connection connection = getConnection())
     {
       PreparedStatement statement = connection.prepareStatement(
@@ -1634,7 +1694,7 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
@@ -1663,14 +1723,12 @@ public class ListingDAOImpl implements ListingDAO
         String rented = resultSet.getString("rented");
         String promoted = resultSet.getString("promoted");
         Listing listing = new Listing(title, description, category, location,
-            price, duration, date, id, accountId,rented,promoted);
+            price, duration, date, id, accountId, rented, promoted);
         result.add(listing);
       }
       return result;
     }
   }
-
-
 
   @Override public void update(Listing listing) throws SQLException
   {
@@ -1688,11 +1746,12 @@ public class ListingDAOImpl implements ListingDAO
       statement.setDouble(8, listing.getAvgStarRating());
       statement.setInt(9, listing.getAccountId());
       statement.setString(10, listing.getRented());
-      statement.setString(11,listing.getPromoted());
+      statement.setString(11, listing.getPromoted());
       statement.setInt(12, listing.getId());
       statement.executeUpdate();
     }
   }
+
   @Override public void delete(int itemId) throws SQLException
   {
     try (Connection connection = getConnection())
@@ -1708,8 +1767,8 @@ public class ListingDAOImpl implements ListingDAO
   {
     try (Connection connection = getConnection())
     {
-      PreparedStatement statement = connection
-          .prepareStatement("DELETE FROM \"SEP2\".Listings WHERE accountid = ?");
+      PreparedStatement statement = connection.prepareStatement(
+          "DELETE FROM \"SEP2\".Listings WHERE accountid = ?");
       statement.setInt(1, id);
       statement.executeUpdate();
     }
